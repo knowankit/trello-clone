@@ -2,18 +2,44 @@ import React, { useState } from 'react';
 import { Flex, Box, Heading, FormControl, FormLabel, Input, Button } from "@chakra-ui/react"
 
 const Login = () => {
-const [ username, setUsername] = useState('');
-const [ password, setPassword] = useState('')
+  const [ username, setUsername] = useState<string>('');
+  const [ password, setPassword] = useState<string>('')
 
-const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "username") {
+      setUsername(e.target.value);
+    } else {
+      setPassword(e.target.value);
+    }
+  }
 
-  if(e.target.name === "username"){
-    setUsername(e.target.value);
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    const data = {
+      username,
+      password
+    }
+
+    postData('/api/login', data)
   }
-  else {
-    setPassword(e.target.value);
+
+  async function postData(url = '', data = {}) {
+    const response = await fetch(url, {
+      method: 'POST',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+
+    return response.json(); // parses JSON response into native JavaScript objects
   }
-}
+
 
   return (
     <Flex width="full" align="center" justifyContent="center">
@@ -31,7 +57,7 @@ const handleChange = (e) => {
               <FormLabel>Password</FormLabel>
               <Input type="password" name="password" value ={password} placeholder="*******" onChange={handleChange} />
             </FormControl>
-            <Button width="full" mt={4} type="submit">
+            <Button width="full" mt={4} onClick={handleSubmit}>
               Sign In
             </Button>
           </form>
