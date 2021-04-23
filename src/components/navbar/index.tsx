@@ -7,7 +7,7 @@ const NavBar = () => {
     <Box bg="teal" w="100%" color="white" textAlign="center" padding="10px">
       Nav Bar
       <Link href="/login">
-        <Button color="grey" size="xs" float="right">
+        <Button color="grey" size="xs" float="right" bg='brand'>
           Sign in
         </Button>
       </Link>
