@@ -1,23 +1,22 @@
 export default function handler(req, res) {
   if (req.method === 'POST') {
-    const body = req.body
+    const body = req.body;
 
-    if(body.email === 'nidhi@gmail.com' && body.password === 'learning') {
+    if (body.email === 'nidhi@gmail.com' && body.password === 'learning') {
       const data = {
-        'message': 'success',
+        message: 'success',
         status: 200
-      }
+      };
 
-      res.send(data)
+      res.send(data);
     } else {
       const data = {
-        'message': 'Invalid username of password',
+        message: 'Invalid username of password',
         status: 404
-      }
+      };
 
-      res.send(data)
+      res.send(data);
     }
-
   } else {
     // Handle any other HTTP method
   }
