@@ -7,7 +7,8 @@ const theme = extendTheme({
     success: '#70b500',
     danger: '#eb5a46',
     info: '#ff9f1a',
-    warning: '#f2d600'
+    warning: '#f2d600',
+    background: '#c4c9cc'
   },
 })
 function TrelloApp({ Component, pageProps }) {
