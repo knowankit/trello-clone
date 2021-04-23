@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const NavBar = () => {
   return (
-    <Box bg="teal" w="100%" color="white" textAlign="center" padding="10px">
+    <Box bg="brand" w="100%" color="white" textAlign="center" padding="10px">
       Nav Bar
       <Link href="/login">
         <Button color="grey" size="xs" float="right" bg='brand'>

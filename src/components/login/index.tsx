@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Flex, Box, Heading, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  Heading,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Image,
+} from '@chakra-ui/react';
 import NavBar from '@/src/components/navbar';
 import { useRouter } from 'next/router';
 
@@ -51,8 +60,10 @@ const Login = () => {
   return (
     <>
       <NavBar />
-      <Flex width="full" align="center" justifyContent="center">
-        <Box p={2}>
+      <Flex width="full" alignItems="center" justifyContent="center">
+        <Image position='absolute' bottom='5%' left='5%' src="/login.svg" alt="login illustration" height='30vh' />
+        <Image position='absolute' bottom='5%' right='5%' src="/tasks.svg" alt="task illustration" height='30vh' />
+        <Box mt={10} p={2} borderRadius="lg" bg='background' boxShadow='md'>
           <Box textAlign="center">
             <Heading>Login</Heading>
           </Box>
