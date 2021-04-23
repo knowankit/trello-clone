@@ -2,7 +2,7 @@ export default function handler(req, res) {
   if (req.method === 'POST') {
     const body = req.body
 
-    if(body.username === 'nidhi@love.com' && body.password === 'pika') {
+    if(body.email === 'nidhi@gmail.com' && body.password === 'learning') {
       const data = {
         'message': 'success',
         status: 200
