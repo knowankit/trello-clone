@@ -1,18 +1,27 @@
-import React from 'react';
-import { Box, Button } from '@chakra-ui/react';
-import Link from 'next/link';
+import React, { FC } from 'react';
+import { Button, Image, Flex, Box, Spacer, Grid } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 
-const NavBar = () => {
+type IProps = {
+  bg?: string;
+};
+
+const NavBar: FC<IProps> = ({ bg }) => {
   return (
-    <Box bg="brand" w="100%" color="white" textAlign="center" padding="10px">
-      Nav Bar
-      <Link href="/login">
-        <Button color="white" size="xs" float="right" bg="success">
-          Sign in
+    <Box bg={bg}>
+      <Flex>
+        <Image height="8" src="/trello-logo.svg" alt="brand logo" m="5"></Image>
+        <Spacer />
+        <Button fontSize="20" color="brand" variant="link" float="right" mr="2" pr="2">
+          <a href="/login">Log in</a>
         </Button>
-      </Link>
+      </Flex>
     </Box>
   );
+};
+
+NavBar.propTypes = {
+  bg: PropTypes.string
 };
 
 export default NavBar;
