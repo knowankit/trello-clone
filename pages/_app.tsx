@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import '@/src/styles/default.css';
 import PropTypes from 'prop-types';
 
 const theme = extendTheme({
