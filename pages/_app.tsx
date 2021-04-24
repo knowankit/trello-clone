@@ -9,7 +9,7 @@ const theme = extendTheme({
     danger: '#eb5a46',
     info: '#ff9f1a',
     warning: '#f2d600',
-    background: '#c4c9cc'
+    lightblue: '#f2f9fc'
   }
 });
 function TrelloApp({ Component, pageProps }) {

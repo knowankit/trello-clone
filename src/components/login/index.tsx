@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Flex, Box, Heading, FormControl, FormLabel, Input, Button, Image } from '@chakra-ui/react';
-import NavBar from '@/src/components/navbar';
 import { useRouter } from 'next/router';
 
 const Login = () => {
@@ -50,7 +49,15 @@ const Login = () => {
 
   return (
     <>
-      <NavBar />
+      <Image
+        height="30px"
+        ml="auto"
+        mr="auto"
+        mt="40px"
+        mb="40px"
+        src="/trello-logo-blue.svg"
+        alt="login illustration"
+      />
       <Flex width="full" alignItems="center" justifyContent="center">
         <Image
           position="absolute"
@@ -58,7 +65,7 @@ const Login = () => {
           left="5%"
           src="/login.svg"
           alt="login illustration"
-          height="30vh"
+          height="40vh"
         />
         <Image
           position="absolute"
@@ -66,35 +73,39 @@ const Login = () => {
           right="5%"
           src="/tasks.svg"
           alt="task illustration"
-          height="30vh"
+          height="40vh"
         />
-        <Box mt={10} p={2} borderRadius="lg" bg="background" boxShadow="md">
-          <Box textAlign="center">
-            <Heading>Login</Heading>
+        <Box
+          p="25px 40px"
+          width="25%"
+          height="35%"
+          bg="white"
+          borderRadius="3px"
+          boxShadow="rgb(0 0 0 / 10%) 0 0 10px">
+          <Box textAlign="center" color="#5E6C84" mt="5" mb="25">
+            <h1>Log in to Trello</h1>
           </Box>
           <Box my={4} textAlign="left">
             <form>
               <FormControl>
-                <FormLabel>Email</FormLabel>
                 <Input
                   type="email"
                   name="username"
                   value={username}
-                  placeholder="Enter your email "
+                  placeholder="Enter Email "
                   onChange={handleChange}
                 />
               </FormControl>
               <FormControl mt={6}>
-                <FormLabel>Password</FormLabel>
                 <Input
                   type="password"
                   name="password"
                   value={password}
-                  placeholder="*******"
+                  placeholder="Enter Password"
                   onChange={handleChange}
                 />
               </FormControl>
-              <Button width="full" mt={4} onClick={handleSubmit}>
+              <Button width="full" mt={4} bg="success" color="white" onClick={handleSubmit}>
                 Sign In
               </Button>
             </form>
