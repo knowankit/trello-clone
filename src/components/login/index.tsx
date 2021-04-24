@@ -55,7 +55,7 @@ const Login = () => {
           ml="auto"
           mr="auto"
           my="40px"
-          src="/trello-logo-blue.svg"
+          src="/trello-logo.svg"
           display="inline-block"
           alt="brand logo"
         />
@@ -65,7 +65,7 @@ const Login = () => {
           position="absolute"
           bottom="5%"
           left="5%"
-          src="/login.svg"
+          src="/login-left.svg"
           alt="login illustration"
           height="40vh"
         />
@@ -73,7 +73,7 @@ const Login = () => {
           position="absolute"
           bottom="5%"
           right="5%"
-          src="/tasks.svg"
+          src="/login-right.svg"
           alt="task illustration"
           height="40vh"
           borderRadius="3px"
