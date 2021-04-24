@@ -25,7 +25,7 @@ const Login = () => {
 
     const response = await postData('/api/login', data);
     if (response.status === 200) {
-      router.push('/boards');
+      router.push('/home');
     } else {
       alert('Invalid Credentials');
     }
@@ -49,15 +49,17 @@ const Login = () => {
 
   return (
     <>
-      <Image
-        height="30px"
-        ml="auto"
-        mr="auto"
-        mt="40px"
-        mb="40px"
-        src="/trello-logo-blue.svg"
-        alt="login illustration"
-      />
+      <Box display="flex">
+        <Image
+          height="30px"
+          ml="auto"
+          mr="auto"
+          my="40px"
+          src="/trello-logo-blue.svg"
+          display="inline-block"
+          alt="login illustration"
+        />
+      </Box>
       <Flex width="full" alignItems="center" justifyContent="center">
         <Image
           position="absolute"
