@@ -77,6 +77,6 @@ export default (req, res) => {
         break;
     }
 
-    return resolve();
+    // return resolve();
   });
 };
