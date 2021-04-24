@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Flex,
-  Box,
-  Heading,
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Image,
-} from '@chakra-ui/react';
+import { Flex, Box, Heading, FormControl, FormLabel, Input, Button, Image } from '@chakra-ui/react';
 import NavBar from '@/src/components/navbar';
 import { useRouter } from 'next/router';
 
@@ -30,7 +21,7 @@ const Login = () => {
 
     const data = {
       email: username,
-      password,
+      password
     };
 
     const response = await postData('/api/login', data);
@@ -47,11 +38,11 @@ const Login = () => {
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       redirect: 'follow', // manual, *follow, error
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
 
     return response.json(); // parses JSON response into native JavaScript objects
@@ -61,9 +52,23 @@ const Login = () => {
     <>
       <NavBar />
       <Flex width="full" alignItems="center" justifyContent="center">
-        <Image position='absolute' bottom='5%' left='5%' src="/login.svg" alt="login illustration" height='30vh' />
-        <Image position='absolute' bottom='5%' right='5%' src="/tasks.svg" alt="task illustration" height='30vh' />
-        <Box mt={10} p={2} borderRadius="lg" bg='background' boxShadow='md'>
+        <Image
+          position="absolute"
+          bottom="5%"
+          left="5%"
+          src="/login.svg"
+          alt="login illustration"
+          height="30vh"
+        />
+        <Image
+          position="absolute"
+          bottom="5%"
+          right="5%"
+          src="/tasks.svg"
+          alt="task illustration"
+          height="30vh"
+        />
+        <Box mt={10} p={2} borderRadius="lg" bg="background" boxShadow="md">
           <Box textAlign="center">
             <Heading>Login</Heading>
           </Box>
