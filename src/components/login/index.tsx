@@ -57,7 +57,7 @@ const Login = () => {
           my="40px"
           src="/trello-logo-blue.svg"
           display="inline-block"
-          alt="login illustration"
+          alt="brand logo"
         />
       </Box>
       <Flex width="full" alignItems="center" justifyContent="center">
@@ -76,6 +76,7 @@ const Login = () => {
           src="/tasks.svg"
           alt="task illustration"
           height="40vh"
+          borderRadius="3px"
         />
         <Box
           p="25px 40px"

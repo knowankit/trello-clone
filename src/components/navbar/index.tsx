@@ -1,17 +1,15 @@
 import React from 'react';
-import { Box, Button } from '@chakra-ui/react';
-import Link from 'next/link';
+import { Button, Image, Flex, Box, Spacer, Grid } from '@chakra-ui/react';
 
 const NavBar = () => {
   return (
-    <Box bg="brand" w="100%" color="white" textAlign="center" padding="10px">
-      Nav Bar
-      <Link href="/login">
-        <Button color="white" size="xs" float="right" bg="success">
-          Sign in
-        </Button>
-      </Link>
-    </Box>
+    <Flex>
+      <Image height="8" src="/trello-logo-blue.svg" alt="brand logo" m="5"></Image>
+      <Spacer />
+      <Button fontSize="20" color="brand" variant="link" float="right" mr="2" pr="2">
+        <a href="/login">Log in</a>
+      </Button>
+    </Flex>
   );
 };
 
