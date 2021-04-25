@@ -11,7 +11,7 @@ const theme = extendTheme({
     info: '#ff9f1a',
     warning: '#f2d600',
     darkblue: '#eae6ff',
-    lightblue: '#f2f9fc'
+    lightblue: '#f2faf9'
   }
 });
 function TrelloApp({ Component, pageProps }) {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flex, Box, Heading, FormControl, FormLabel, Input, Button, Image } from '@chakra-ui/react';
+import { Flex, Box, FormControl, Input, Button, Image } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 const Login = () => {
@@ -60,32 +60,41 @@ const Login = () => {
           alt="brand logo"
         />
       </Box>
-      <Flex width="full" alignItems="center" justifyContent="center">
+      <Flex
+        alignItems="center"
+        flexDirection={['column', 'column', 'row', 'row']}
+        justifyContent="center">
         <Image
           position="absolute"
           bottom="5%"
           left="5%"
           src="/login-left.svg"
-          alt="login illustration"
-          height="40vh"
+          alt=" new user illustration"
+          width={[0, '30%']}
         />
         <Image
           position="absolute"
           bottom="5%"
           right="5%"
           src="/login-right.svg"
-          alt="task illustration"
-          height="40vh"
+          alt="task scheduler illustration"
+          width={[0, '30%']}
           borderRadius="3px"
         />
         <Box
           p="25px 40px"
-          width="25%"
-          height="35%"
-          bg="white"
+          width={['80%', '60%', '45%', '25%']}
           borderRadius="3px"
+          bg="white"
           boxShadow="rgb(0 0 0 / 10%) 0 0 10px">
-          <Box textAlign="center" color="#5E6C84" mt="5" mb="25">
+          <Box
+            textAlign="center"
+            color="#5E6C84"
+            mt="5"
+            mb="25"
+            fontSize={['16px', '16px', '20px', '20px']}
+            fontWeight="semibold"
+            lineHeight="normal">
             <h1>Log in to Trello</h1>
           </Box>
           <Box my={4} textAlign="left">
