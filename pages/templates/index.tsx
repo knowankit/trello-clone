@@ -1,17 +1,17 @@
 import React from 'react';
-import Home from '@/src/components/home';
+import Templates from '@/src/components/templates';
 import { Box } from '@chakra-ui/layout';
 import withSidebar from '@/src/hoc/with-sidebar';
 import NavBar from '@/src/components/navbar';
 
-const HomePageWithSidebar = withSidebar(Home, { page: 'home' });
+const TemplatesPageWithSidebar = withSidebar(Templates, { page: 'templates' });
 
 const HomePage = () => {
   return (
     <>
       <NavBar bg="white" />
       <Box height="100vh">
-        <HomePageWithSidebar />
+        <TemplatesPageWithSidebar />
       </Box>
     </>
   );
