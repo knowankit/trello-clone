@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button, Image, Flex, Box, Spacer, Grid } from '@chakra-ui/react';
+import { Button, Image, Flex, Box, Spacer } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 type IProps = {

@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react';
 
 const LoginPage = () => {
   return (
-    <Box height="100vh" bg="blue.100">
+    <Box height="100vh" bg="lightblue">
       <Login />
     </Box>
   );

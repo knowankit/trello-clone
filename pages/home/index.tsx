@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <>
       <NavBar bg="darkblue" />
-      <Box bg="blue.100" height="100vh">
+      <Box bg="lightblue" height="100vh">
         <HomePageWithSidebar />
       </Box>
     </>
