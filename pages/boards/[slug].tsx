@@ -1,15 +1,10 @@
 import React, { FC } from 'react';
 import dummyBoard from '@/src/static/boards.json';
-import { Box } from '@chakra-ui/react';
+import Board from '@/src/components/board';
 import PropTypes from 'prop-types';
 
 const BoardPage = ({ board }) => {
-  return (
-    <Box>
-      <p>{board.id}</p>
-      <p>{board.name}</p>
-    </Box>
-  );
+  return <Board board={board} />;
 };
 
 BoardPage.propTypes = {
