@@ -1,13 +1,20 @@
-import { Box, Wrap, WrapItem, Avatar, Heading } from '@chakra-ui/react';
+import { Box, Wrap, WrapItem, Avatar, Heading, Button } from '@chakra-ui/react';
 import PropType from 'prop-types';
+import Link from 'next/link';
+
 import React from 'react';
 
 const SubNavbar = ({ board }) => {
   return (
-    <Box height="50px" bg="brand" boxShadow="md" display="flex">
-      <Heading ml="0.5rem" color="white" as="h3" size="lg" alignSelf="center" whiteSpace="nowrap">
+    <Box height="50px" bg="brand" boxShadow="md" display="flex" alignItems="center">
+      <Heading ml="0.5rem" color="white" as="h3" size="lg" whiteSpace="nowrap">
         {board.name}
       </Heading>
+      <Link href="/boards">
+        <Button size="xs" ml="10px">
+          Boards
+        </Button>
+      </Link>
       <Box display="flex" alignItems="center" justifyContent="center" width="100%">
         <Wrap>
           <WrapItem>

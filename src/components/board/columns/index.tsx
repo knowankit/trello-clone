@@ -5,14 +5,40 @@ const tempData = [
   { columnName: 'To-Do' },
   { columnName: 'In Progress' },
   { columnName: 'PR Raised' },
-  { columnName: 'Done' }
+  { columnName: 'Done' },
+  { columnName: 'addColumn' }
 ];
 
 const BoardColumns = () => {
   const [columns, setColumns] = useState(tempData);
 
+  const loadColumns = (column, index) => {
+    if (column.columnName !== 'addColumn') {
+      return (
+        <React.Fragment key={index}>
+          <Heading as="h6" size="sm" mt="5px" textAlign="center">
+            {column.columnName}
+          </Heading>
+          <Button size="xs" my="10px" mx="5px" bg="brand" color="white">
+            Add a card
+          </Button>
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <Button key={index} size="xs" my="10px" mx="5px" bg="brand" color="white">
+        Add a Column
+      </Button>
+    );
+  };
+
+  // const addColumn = () => {};
+
+  // const addCard = () => {};
+
   return (
-    <Box display="flex" height="calc(100vh - 200px)" bg="lightblue" overflowY="scroll">
+    <Box display="flex" overflowX="scroll">
       {columns.map((column, index) => (
         <Box
           key={index}
@@ -22,13 +48,8 @@ const BoardColumns = () => {
           flexDirection="column"
           mt="10px"
           mx="10px"
-          bg="gray">
-          <Heading color="white" as="h6" size="sm" mt="5px" textAlign="center">
-            {column.columnName}
-          </Heading>
-          <Button size="sm" my="10px" mx="5px">
-            Add a card
-          </Button>
+          bg="#F0F0F0">
+          {loadColumns(column, index)}
         </Box>
       ))}
       {/* <Button size='sm' my='10px' mx='5px' width='20vw'>Add a column</Button> */}
