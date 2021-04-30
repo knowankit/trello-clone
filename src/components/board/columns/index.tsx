@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Box, Button, Heading } from '@chakra-ui/react';
 
-const tempData = [
-  { columnName: 'To-Do' },
-  { columnName: 'In Progress' },
-  { columnName: 'PR Raised' },
-  { columnName: 'Done' },
-  { columnName: 'addColumn' }
-];
-
 const BoardColumns = () => {
+  const tempData = [
+    { columnName: 'To-Do' },
+    { columnName: 'In Progress' },
+    { columnName: 'PR Raised' },
+    { columnName: 'Done' }
+  ];
+
   const [columns, setColumns] = useState(tempData);
 
   const loadColumns = (column, index) => {
-    if (column.columnName !== 'addColumn') {
+    if (columns.length - 1 !== index) {
       return (
         <React.Fragment key={index}>
           <Heading as="h6" size="sm" mt="5px" textAlign="center">
@@ -27,13 +26,24 @@ const BoardColumns = () => {
     }
 
     return (
-      <Button key={index} size="xs" my="10px" mx="5px" bg="brand" color="white">
+      <Button
+        key={index}
+        size="xs"
+        my="10px"
+        mx="5px"
+        colorScheme="blue"
+        color="white"
+        onClick={addColumn}>
         Add a Column
       </Button>
     );
   };
 
-  // const addColumn = () => {};
+  const addColumn = () => {
+    setColumns([...columns, { columnName: 'Test' }]);
+
+    console.log('test', columns);
+  };
 
   // const addCard = () => {};
 
@@ -48,11 +58,10 @@ const BoardColumns = () => {
           flexDirection="column"
           mt="10px"
           mx="10px"
-          bg="#F0F0F0">
+          bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'}>
           {loadColumns(column, index)}
         </Box>
       ))}
-      {/* <Button size='sm' my='10px' mx='5px' width='20vw'>Add a column</Button> */}
     </Box>
   );
 };
