@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flex, Box, FormControl, Input, Button, Image } from '@chakra-ui/react';
+import { Flex, Box, FormControl, Input, Button, Image, Link } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 const Login = () => {
@@ -120,6 +120,11 @@ const Login = () => {
               <Button width="full" mt={4} bg="success" color="white" onClick={handleSubmit}>
                 Sign In
               </Button>
+              <Box m="5" textAlign="center">
+                <Link href="/signup" color="brand" p="2">
+                  Sign up for an account
+                </Link>
+              </Box>
             </form>
           </Box>
         </Box>
