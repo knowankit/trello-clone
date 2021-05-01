@@ -20,7 +20,6 @@ const BoardColumns = () => {
   const tempData = [
     { columnName: 'To-Do', cards: [] },
     { columnName: 'In Progress', cards: [] },
-    { columnName: 'PR Raised', cards: [] },
     { columnName: 'Done', cards: [] }
   ];
 
@@ -116,7 +115,7 @@ const BoardColumns = () => {
       height="calc(100vh - 122px)"
       overflowX="auto"
       id="parent-of-columns">
-      <Box display="flex" position="absolute">
+      <Box display="flex" position="absolute" height="100%">
         {columns.map((column, index) => (
           <Box
             key={index}
