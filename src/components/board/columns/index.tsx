@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { Box, Button, Heading } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Modal,
+  ModalBody,
+  ModalOverlay,
+  useDisclosure,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalFooter,
+  Input,
+  createStandaloneToast
+} from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
 
 const BoardColumns = () => {
@@ -11,6 +25,7 @@ const BoardColumns = () => {
   ];
 
   const [columns, setColumns] = useState(tempData);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const loadColumns = (column, index) => {
     return (
@@ -19,7 +34,22 @@ const BoardColumns = () => {
           {column.columnName}
         </Heading>
         {column.cards.map((card, index) => (
-          <Box key={index}>{card.title}</Box>
+          <Box
+            key={index}
+            m="5px"
+            p="10px"
+            textAlign="center"
+            height="80px"
+            borderWidth="1px"
+            bg="white"
+            borderRadius="md"
+            overflow="auto"
+            _hover={{
+              backgroundColor: 'darkblue'
+            }}
+            onClick={onOpen}>
+            {card.title}
+          </Box>
         ))}
         <Button
           size="xs"
@@ -27,7 +57,9 @@ const BoardColumns = () => {
           mx="5px"
           bg="brand"
           color="white"
-          onClick={() => addCard(index)}>
+          onClick={() => {
+            addCard(index);
+          }}>
           Add a card
         </Button>
       </React.Fragment>
@@ -47,7 +79,7 @@ const BoardColumns = () => {
     const column = columns[index];
 
     // Push the card details
-    column.cards.push({ title: 'Card title' });
+    column.cards.push({ title: 'card title' });
 
     // Fetch all the columns
     const temp = columns;
@@ -55,6 +87,26 @@ const BoardColumns = () => {
     // Delete the old list and add the new list
     temp.splice(index, 1, column);
     setColumns([...temp]);
+  };
+
+  const showCardModal = () => {
+    return (
+      <>
+        <Modal onClose={onClose} isOpen={isOpen} isCentered>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Create card</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Input name="cardname" value="card title" placeholder="card name" />
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={onClose}>Close</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </>
+    );
   };
 
   return (
@@ -80,6 +132,7 @@ const BoardColumns = () => {
         ))}
         <AddColumnButton addColumn={addColumn} />
       </Box>
+      {showCardModal()}
     </Box>
   );
 };
