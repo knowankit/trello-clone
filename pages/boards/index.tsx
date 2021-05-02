@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 const BoardsPageWithSidebar = withSidebar(Boards, { page: 'boards' });
 
 const HomePage = ({ boards }) => {
-  console.log('baords', boards);
   return (
     <>
       <NavBar bg="white" />
