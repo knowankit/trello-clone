@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Heading,
-  Modal,
-  ModalBody,
-  ModalOverlay,
-  useDisclosure,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalFooter,
-  Input,
-  createStandaloneToast
-} from '@chakra-ui/react';
+import { Box, Button, Heading, useDisclosure } from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
+import CardDetailsModal from '@/src/components/board/columns/modals/card-details-modal';
+import Cards from '@/src/components/board/columns/cards';
+
+import { CardDetail } from '@/src/types/cards';
 
 const BoardColumns = () => {
   const tempData = [
@@ -24,32 +14,30 @@ const BoardColumns = () => {
   ];
 
   const [columns, setColumns] = useState(tempData);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0);
+  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 
-  const loadColumns = (column, index) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [cardDetail, setCardDetail] = useState<CardDetail>({ title: '' });
+
+  const showCardDetail = (cardIndex, columnsIndex) => {
+    setCurrentColumnIndex(columnsIndex);
+    setCurrentCardIndex(cardIndex);
+
+    const column = columns[columnsIndex];
+    const card = column.cards[cardIndex];
+
+    setCardDetail(card);
+    onOpen();
+  };
+
+  const loadColumns = (column, columnIndex) => {
     return (
-      <React.Fragment key={index}>
+      <React.Fragment key={columnIndex}>
         <Heading as="h6" size="sm" mt="5px" textAlign="center">
           {column.columnName}
         </Heading>
-        {column.cards.map((card, index) => (
-          <Box
-            key={index}
-            m="5px"
-            p="10px"
-            textAlign="center"
-            height="80px"
-            borderWidth="1px"
-            bg="white"
-            borderRadius="md"
-            overflow="auto"
-            _hover={{
-              backgroundColor: 'darkblue'
-            }}
-            onClick={onOpen}>
-            {card.title}
-          </Box>
-        ))}
+        <Cards showCardDetail={showCardDetail} cards={column.cards} columnIndex={columnIndex} />
         <Button
           size="xs"
           my="10px"
@@ -57,7 +45,7 @@ const BoardColumns = () => {
           bg="brand"
           color="white"
           onClick={() => {
-            addCard(index);
+            addCard(columnIndex);
           }}>
           Add a card
         </Button>
@@ -78,7 +66,7 @@ const BoardColumns = () => {
     const column = columns[index];
 
     // Push the card details
-    column.cards.push({ title: 'card title' });
+    column.cards.push({ title: 'Card title' + new Date().toString() });
 
     // Fetch all the columns
     const temp = columns;
@@ -88,24 +76,23 @@ const BoardColumns = () => {
     setColumns([...temp]);
   };
 
-  const showCardModal = () => {
-    return (
-      <>
-        <Modal onClose={onClose} isOpen={isOpen} isCentered>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Create card</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Input name="cardname" value="card title" placeholder="card name" />
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    );
+  const handleCardChange = (event) => {
+    // Fetch active card and update the value
+    const tempCard = cardDetail;
+    tempCard[event.target.name] = event.target.value;
+
+    // Set the current card to state. This will update the fiels present in the modal
+    setCardDetail({ ...tempCard });
+
+    // Fetch edit card column and update the edited card value in that column
+    const column = columns[currentColumnIndex];
+    column.cards[currentCardIndex] = tempCard;
+
+    // Fetch all the columns and update the edited column
+    const tempColumns = columns;
+    tempColumns.splice(currentColumnIndex, 1, column);
+
+    setColumns([...tempColumns]);
   };
 
   return (
@@ -123,6 +110,7 @@ const BoardColumns = () => {
             width="300px"
             display="flex"
             flexDirection="column"
+            height="calc(100vh - 150px)"
             mt="10px"
             mx="10px"
             bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'}>
@@ -131,7 +119,12 @@ const BoardColumns = () => {
         ))}
         <AddColumnButton addColumn={addColumn} />
       </Box>
-      {showCardModal()}
+      <CardDetailsModal
+        isOpen={isOpen}
+        onClose={onClose}
+        cardDetail={cardDetail}
+        handleCardChange={handleCardChange}
+      />
     </Box>
   );
 };
