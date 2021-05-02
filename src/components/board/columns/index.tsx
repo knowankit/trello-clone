@@ -41,8 +41,10 @@ const BoardColumns = () => {
         <Button
           size="xs"
           my="10px"
-          mx="5px"
+          mx="auto"
+          width="80%"
           bg="brand"
+          display="block"
           color="white"
           onClick={() => {
             addCard(columnIndex);
@@ -102,14 +104,13 @@ const BoardColumns = () => {
       height="calc(100vh - 122px)"
       overflowX="auto"
       id="parent-of-columns">
-      <Box display="flex" position="absolute" height="100%">
+      <Box display="flex" position="absolute" overflowY="auto" height="100%">
         {columns.map((column, index) => (
           <Box
-            key={index}
             rounded="lg"
+            key={index}
             width="300px"
-            display="flex"
-            flexDirection="column"
+            overflowY="auto"
             height="calc(100vh - 150px)"
             mt="10px"
             mx="10px"
