@@ -29,7 +29,7 @@ export async function getServerSideProps() {
 }
 
 HomePage.propTypes = {
-  boards: PropTypes.object.isRequired
+  boards: PropTypes.array
 };
 
 export default HomePage;
