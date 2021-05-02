@@ -11,10 +11,10 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalFooter,
-  Input,
-  createStandaloneToast
+  Input
 } from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
+import { CardDetail } from '@/src/types/cards';
 
 const BoardColumns = () => {
   const tempData = [
@@ -24,29 +24,44 @@ const BoardColumns = () => {
   ];
 
   const [columns, setColumns] = useState(tempData);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0);
+  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 
-  const loadColumns = (column, index) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [cardDetail, setCardDetail] = useState<CardDetail>({ title: '' });
+
+  const showCardDetail = (cardIndex, columnsIndex) => {
+    setCurrentColumnIndex(columnsIndex);
+    setCurrentCardIndex(cardIndex);
+
+    const column = columns[columnsIndex];
+    const card = column.cards[cardIndex];
+
+    setCardDetail(card);
+    onOpen();
+  };
+
+  const loadColumns = (column, columnIndex) => {
     return (
-      <React.Fragment key={index}>
+      <React.Fragment key={columnIndex}>
         <Heading as="h6" size="sm" mt="5px" textAlign="center">
           {column.columnName}
         </Heading>
-        {column.cards.map((card, index) => (
+        {column.cards.map((card, cardIndex) => (
           <Box
-            key={index}
+            key={cardIndex}
             m="5px"
             p="10px"
-            textAlign="center"
             height="80px"
             borderWidth="1px"
             bg="white"
+            cursor="pointer"
             borderRadius="md"
             overflow="auto"
             _hover={{
               backgroundColor: 'darkblue'
             }}
-            onClick={onOpen}>
+            onClick={() => showCardDetail(cardIndex, columnIndex)}>
             {card.title}
           </Box>
         ))}
@@ -57,7 +72,7 @@ const BoardColumns = () => {
           bg="brand"
           color="white"
           onClick={() => {
-            addCard(index);
+            addCard(columnIndex);
           }}>
           Add a card
         </Button>
@@ -78,7 +93,7 @@ const BoardColumns = () => {
     const column = columns[index];
 
     // Push the card details
-    column.cards.push({ title: 'card title' });
+    column.cards.push({ title: 'Card title' + new Date().toString() });
 
     // Fetch all the columns
     const temp = columns;
@@ -86,6 +101,25 @@ const BoardColumns = () => {
     // Delete the old list and add the new list
     temp.splice(index, 1, column);
     setColumns([...temp]);
+  };
+
+  const handleCardChange = (event) => {
+    // Fetch active card and update the value
+    const tempCard = cardDetail;
+    tempCard[event.target.name] = event.target.value;
+
+    // Set the current card to state. This will update the fiels present in the modal
+    setCardDetail({ ...tempCard });
+
+    // Fetch edit card column and update the edited card value in that column
+    const column = columns[currentColumnIndex];
+    column.cards[currentCardIndex] = tempCard;
+
+    // Fetch all the columns and update the edited column
+    const tempColumns = columns;
+    tempColumns.splice(currentColumnIndex, 1, column);
+
+    setColumns([...tempColumns]);
   };
 
   const showCardModal = () => {
@@ -97,7 +131,13 @@ const BoardColumns = () => {
             <ModalHeader>Create card</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Input name="cardname" value="card title" placeholder="card name" />
+              <Input
+                name="title"
+                size="sm"
+                value={cardDetail && cardDetail.title}
+                onChange={(e) => handleCardChange(e)}
+                placeholder="card name"
+              />
             </ModalBody>
             <ModalFooter>
               <Button onClick={onClose}>Close</Button>
@@ -123,6 +163,7 @@ const BoardColumns = () => {
             width="300px"
             display="flex"
             flexDirection="column"
+            height="calc(100vh - 150px)"
             mt="10px"
             mx="10px"
             bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'}>
