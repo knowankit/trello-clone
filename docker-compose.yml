@@ -1,0 +1,38 @@
+version: '3.3'
+
+services:
+  fe:
+    container_name: trello-front-end
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app/trello
+      - /usr/src/app/trello/node_modules
+      - /usr/src/app/trello/.next
+      - /usr/src/app/trello/.husky
+    env_file:
+      - .env.development
+    depends_on:
+      - mongodb
+    networks:
+      - trello-app
+
+  mongodb:
+    container_name: trello-mongo
+    image: mongo:4.4-bionic
+    volumes:
+      - trello-db:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - trello-app
+
+networks:
+  trello-app:
+    driver: bridge
+
+volumes:
+  trello-db:
