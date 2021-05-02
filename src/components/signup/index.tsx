@@ -2,13 +2,30 @@ import React, { useState } from 'react';
 import { Flex, Box, FormControl, Input, Button, Image, Text } from '@chakra-ui/react';
 
 const SignUp = () => {
-  const [emailID, setEmailID] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailID(e.target.value);
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value
+    });
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (values.password == values.confirmPassword) {
+      alert('submitted successfully');
+    } else {
+      alert('Password do not match');
+    }
+  };
+
   return (
     <>
       <Box display="flex">
@@ -61,12 +78,12 @@ const SignUp = () => {
           </Box>
           <Box my={4} textAlign="left">
             <form>
-              <FormControl>
+              <FormControl isRequired>
                 <Input
                   type="email"
                   name="email"
-                  value={emailID}
-                  placeholder="Enter Email "
+                  value={values.email}
+                  placeholder="Enter Email"
                   onChange={handleChange}
                 />
               </FormControl>
@@ -74,21 +91,27 @@ const SignUp = () => {
                 <Input
                   type="password"
                   name="password"
-                  value={password}
-                  placeholder="Create password "
+                  value={values.password}
+                  placeholder="Create password"
                   onChange={handleChange}
                 />
               </FormControl>
               <FormControl my="8">
                 <Input
-                  type="confirm password"
-                  name="confirm password"
-                  value={confirmPassword}
-                  placeholder="Create password "
-                  // onChange={handleChange}
+                  type="password"
+                  name="confirmPassword"
+                  value={values.confirmPassword}
+                  placeholder="Create password"
+                  onChange={handleChange}
                 />
               </FormControl>
-              <Button fontWeight="semibold" width="full" mt={4} bg="success" color="white">
+              <Button
+                fontWeight="semibold"
+                width="full"
+                mt={4}
+                bg="success"
+                color="white"
+                onClick={handleSubmit}>
                 Sign up
               </Button>
             </form>
