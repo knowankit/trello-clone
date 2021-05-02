@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Heading,
-  Modal,
-  ModalBody,
-  ModalOverlay,
-  useDisclosure,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalFooter,
-  Input
-} from '@chakra-ui/react';
+import { Box, Button, Heading, useDisclosure } from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
+import CardDetailsModal from '@/src/components/board/columns/modals/card-details-modal';
+import Cards from '@/src/components/board/columns/cards';
+
 import { CardDetail } from '@/src/types/cards';
 
 const BoardColumns = () => {
@@ -47,24 +37,7 @@ const BoardColumns = () => {
         <Heading as="h6" size="sm" mt="5px" textAlign="center">
           {column.columnName}
         </Heading>
-        {column.cards.map((card, cardIndex) => (
-          <Box
-            key={cardIndex}
-            m="5px"
-            p="10px"
-            height="80px"
-            borderWidth="1px"
-            bg="white"
-            cursor="pointer"
-            borderRadius="md"
-            overflow="auto"
-            _hover={{
-              backgroundColor: 'darkblue'
-            }}
-            onClick={() => showCardDetail(cardIndex, columnIndex)}>
-            {card.title}
-          </Box>
-        ))}
+        <Cards showCardDetail={showCardDetail} cards={column.cards} columnIndex={columnIndex} />
         <Button
           size="xs"
           my="10px"
@@ -122,32 +95,6 @@ const BoardColumns = () => {
     setColumns([...tempColumns]);
   };
 
-  const showCardModal = () => {
-    return (
-      <>
-        <Modal onClose={onClose} isOpen={isOpen} isCentered>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Create card</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Input
-                name="title"
-                size="sm"
-                value={cardDetail && cardDetail.title}
-                onChange={(e) => handleCardChange(e)}
-                placeholder="card name"
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    );
-  };
-
   return (
     <Box
       display="block"
@@ -172,7 +119,12 @@ const BoardColumns = () => {
         ))}
         <AddColumnButton addColumn={addColumn} />
       </Box>
-      {showCardModal()}
+      <CardDetailsModal
+        isOpen={isOpen}
+        onClose={onClose}
+        cardDetail={cardDetail}
+        handleCardChange={handleCardChange}
+      />
     </Box>
   );
 };
