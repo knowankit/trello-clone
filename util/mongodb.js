@@ -32,7 +32,10 @@ export async function connectToDatabase() {
       useUnifiedTopology: true
     };
 
-    cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
+    const mongoURL =
+      process.env.NODE_ENV === 'development' ? process.env.LOCAL_MONGODB : process.env.MONGODB_URI;
+
+    cached.promise = MongoClient.connect(mongoURL, opts).then((client) => {
       return {
         client,
         db: client.db(MONGODB_DB)
