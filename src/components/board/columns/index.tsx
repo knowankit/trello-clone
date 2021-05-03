@@ -3,8 +3,9 @@ import { Box, Button, Heading, useDisclosure } from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
 import CardDetailsModal from '@/src/components/board/columns/modals/card-details-modal';
 import Cards from '@/src/components/board/columns/cards';
-
+import { GrDrag } from 'react-icons/gr';
 import { CardDetail } from '@/src/types/cards';
+import shortId from 'shortid';
 
 const BoardColumns = () => {
   const tempData = [
@@ -18,7 +19,7 @@ const BoardColumns = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cardDetail, setCardDetail] = useState<CardDetail>({ title: '' });
+  const [cardDetail, setCardDetail] = useState<CardDetail>({ title: '', id: '' });
 
   const showCardDetail = (cardIndex, columnsIndex) => {
     setCurrentColumnIndex(columnsIndex);
@@ -34,9 +35,15 @@ const BoardColumns = () => {
   const loadColumns = (column, columnIndex) => {
     return (
       <React.Fragment key={columnIndex}>
-        <Heading as="h6" size="sm" mt="5px" textAlign="center">
-          {column.columnName}
-        </Heading>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <Heading as="h6" size="sm" ml="10px" mt="5px" textAlign="center">
+            {column.columnName}
+          </Heading>
+          <Box my="10px" mr="10px" float="right" cursor="grab">
+            <GrDrag />
+          </Box>
+        </Box>
+
         <Cards showCardDetail={showCardDetail} cards={column.cards} columnIndex={columnIndex} />
         <Button
           size="xs"
@@ -66,9 +73,9 @@ const BoardColumns = () => {
   const addCard = (index: number) => {
     // Fetch particular column
     const column = columns[index];
-
+    const cardId = shortId.generate();
     // Push the card details
-    column.cards.push({ title: 'Card title' + new Date().toString() });
+    column.cards.push({ title: 'Card title' + new Date().toString(), id: cardId });
 
     // Fetch all the columns
     const temp = columns;
