@@ -3,14 +3,16 @@ import { Box, Button, Heading, useDisclosure } from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
 import CardDetailsModal from '@/src/components/board/columns/modals/card-details-modal';
 import Cards from '@/src/components/board/columns/cards';
-
+import Column from '@/src/components/board/columns/column';
+import { GrDrag } from 'react-icons/gr';
 import { CardDetail } from '@/src/types/cards';
+import shortId from 'shortid';
 
 const BoardColumns = () => {
   const tempData = [
-    { columnName: 'To-Do', cards: [] },
-    { columnName: 'In Progress', cards: [] },
-    { columnName: 'Done', cards: [] }
+    { columnName: 'To-Do', cards: [], id: 'wq3ead' },
+    { columnName: 'In Progress', cards: [], id: '9hw23' },
+    { columnName: 'Done', cards: [], id: 'j320fj' }
   ];
 
   const [columns, setColumns] = useState(tempData);
@@ -18,7 +20,7 @@ const BoardColumns = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cardDetail, setCardDetail] = useState<CardDetail>({ title: '' });
+  const [cardDetail, setCardDetail] = useState<CardDetail>({ title: '', id: '' });
 
   const showCardDetail = (cardIndex, columnsIndex) => {
     setCurrentColumnIndex(columnsIndex);
@@ -31,32 +33,9 @@ const BoardColumns = () => {
     onOpen();
   };
 
-  const loadColumns = (column, columnIndex) => {
-    return (
-      <React.Fragment key={columnIndex}>
-        <Heading as="h6" size="sm" mt="5px" textAlign="center">
-          {column.columnName}
-        </Heading>
-        <Cards showCardDetail={showCardDetail} cards={column.cards} columnIndex={columnIndex} />
-        <Button
-          size="xs"
-          my="10px"
-          mx="auto"
-          width="80%"
-          bg="brand"
-          display="block"
-          color="white"
-          onClick={() => {
-            addCard(columnIndex);
-          }}>
-          Add a card
-        </Button>
-      </React.Fragment>
-    );
-  };
-
   const addColumn = () => {
-    setColumns([...columns, { columnName: 'Test', cards: [] }]);
+    const columnId = shortId.generate();
+    setColumns([...columns, { columnName: 'Test', id: columnId, cards: [] }]);
 
     // Scroll to the right when column is added
     // const parentOfColumns = document.getElementById('parent-of-columns')
@@ -66,9 +45,9 @@ const BoardColumns = () => {
   const addCard = (index: number) => {
     // Fetch particular column
     const column = columns[index];
-
+    const cardId = shortId.generate();
     // Push the card details
-    column.cards.push({ title: 'Card title' + new Date().toString() });
+    column.cards.push({ title: 'Card title' + new Date().toString(), id: cardId });
 
     // Fetch all the columns
     const temp = columns;
@@ -106,17 +85,13 @@ const BoardColumns = () => {
       id="parent-of-columns">
       <Box display="flex" position="absolute" overflowY="auto" height="100%">
         {columns.map((column, index) => (
-          <Box
-            rounded="lg"
+          <Column
             key={index}
-            width="300px"
-            overflowY="auto"
-            height="calc(100vh - 150px)"
-            mt="10px"
-            mx="10px"
-            bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'}>
-            {loadColumns(column, index)}
-          </Box>
+            column={column}
+            index={index}
+            addCard={addCard}
+            showCardDetail={showCardDetail}
+          />
         ))}
         <AddColumnButton addColumn={addColumn} />
       </Box>

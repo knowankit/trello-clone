@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { Box } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { CardDetail } from '@/src/types/cards';
+import Card from '@/src/components/board/columns/card';
 
 type Props = {
   cards: CardDetail[];
@@ -13,23 +13,14 @@ const Cards: FC<Props> = ({ cards, showCardDetail, columnIndex }) => {
   return (
     <>
       {cards &&
-        cards.map((card, cardIndex) => (
-          <Box
-            key={cardIndex}
-            m="5px"
-            p="10px"
-            height="80px"
-            borderWidth="1px"
-            bg="white"
-            cursor="pointer"
-            borderRadius="md"
-            overflow="auto"
-            _hover={{
-              backgroundColor: 'darkblue'
-            }}
-            onClick={() => showCardDetail(cardIndex, columnIndex)}>
-            {card.title}
-          </Box>
+        cards.map((card, index) => (
+          <Card
+            key={index}
+            card={card}
+            cardIndex={index}
+            columnIndex={columnIndex}
+            showCardDetail={showCardDetail}
+          />
         ))}
     </>
   );

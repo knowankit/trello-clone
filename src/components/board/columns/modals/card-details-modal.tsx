@@ -50,7 +50,8 @@ CardDetailsModal.propTypes = {
   onClose: PropTypes.func,
   isOpen: PropTypes.bool,
   cardDetail: PropTypes.exact({
-    title: PropTypes.string
+    title: PropTypes.string,
+    id: PropTypes.string
   }),
   handleCardChange: PropTypes.func
 };
