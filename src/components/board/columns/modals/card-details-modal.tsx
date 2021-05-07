@@ -8,7 +8,8 @@ import {
   Button,
   ModalCloseButton,
   Input,
-  ModalOverlay
+  ModalOverlay,
+  Textarea
 } from '@chakra-ui/react';
 import { CardDetail } from '@/src/types/cards';
 import PropTypes from 'prop-types';
@@ -35,6 +36,14 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, cardDetail, handleCardCh
               value={cardDetail.title}
               onChange={(e) => handleCardChange(e)}
               placeholder="card name"
+            />
+            <Textarea
+              my="4"
+              name="description"
+              value={cardDetail.description}
+              onChange={(e) => handleCardChange(e)}
+              placeholder="description"
+              overflow="hidden"
             />
           </ModalBody>
           <ModalFooter>
