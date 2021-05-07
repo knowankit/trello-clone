@@ -14,8 +14,7 @@ const Card: FC<Props> = ({ cardIndex, showCardDetail, card, columnIndex }) => {
   const [{ opacity }, dragRef] = useDrag(
     () => ({
       type: ItemTypes.CARD,
-      item: 'Dragging',
-      id: card.id,
+      item: { id: card.id, column: columnIndex },
       collect: (monitor) => ({
         opacity: monitor.isDragging() ? 0 : 1
       })
