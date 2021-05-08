@@ -23,8 +23,7 @@ function TrelloApp({ Component, pageProps }) {
 }
 
 TrelloApp.propTypes = {
-  pageProps: PropTypes.object,
-  Component: PropTypes.element
+  pageProps: PropTypes.object
 };
 
 export default TrelloApp;

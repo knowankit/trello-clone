@@ -1,32 +1,30 @@
 import React from 'react';
 import Boards from '@/src/components/boards';
-import { Box } from '@chakra-ui/layout';
 import withSidebar from '@/src/hoc/with-sidebar';
-import NavBar from '@/src/components/navbar';
-import checkEnvironment from '@/util/check-environment';
+import { fetchBoards } from '@/src/slices/boards';
+import { setOrGetStore } from '@/util/initialise-store';
 import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
 
 const BoardsPageWithSidebar = withSidebar(Boards, { page: 'boards' });
 
-const HomePage = ({ boards }) => {
+const HomePage = ({ state }) => {
   return (
-    <>
-      <NavBar bg="white" />
-      <Box height="100vh">
-        <BoardsPageWithSidebar />
-      </Box>
-    </>
+    <Provider store={setOrGetStore(state)}>
+      <BoardsPageWithSidebar />
+    </Provider>
   );
 };
 
-export async function getServerSideProps() {
-  const host = checkEnvironment();
-  const boards = await fetch(`${host}/api/boards`).then((response) => response.json());
+HomePage.getInitialProps = async (appContext) => {
+  //initialise redux store on server side
+  const reduxStore = setOrGetStore();
+  const { dispatch } = reduxStore;
 
-  return {
-    props: { boards }
-  };
-}
+  await dispatch(fetchBoards());
+
+  return { state: reduxStore.getState() };
+};
 
 HomePage.propTypes = {
   boards: PropTypes.array
