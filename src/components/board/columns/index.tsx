@@ -20,7 +20,7 @@ const BoardColumns = () => {
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cardDetail, setCardDetail] = useState<CardDetail>({ title: '', description: '' });
+  const [cardDetail, setCardDetail] = useState<CardDetail>({ id: '', title: '', description: '' });
 
   const showCardDetail = (cardIndex, columnsIndex) => {
     setCurrentColumnIndex(columnsIndex);
