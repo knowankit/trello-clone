@@ -15,7 +15,6 @@ import {
 import Link from 'next/link';
 import dummyBoard from '@/src/static/boards.json';
 import { Board } from '@/src/types/boards';
-
 import shortId from 'shortid';
 
 const Boards = () => {
@@ -76,7 +75,7 @@ const Boards = () => {
 
   const loadExistingBoards = () => {
     return (
-      <Box mt="1rem">
+      <Box mt="1rem" minWidth="50vw">
         {boards.map((board, index) => (
           <Link
             key={index}
@@ -94,10 +93,12 @@ const Boards = () => {
   };
 
   return (
-    <Box minHeight="50vh" flexGrow={3} ml="2%" boxShadow="lg" rounded="lg" bg="white" p="1rem">
-      <h1>Boards page</h1>
-      {createBoardModal()}
-      {loadExistingBoards()}
+    <Box>
+      <Box minHeight="50vh" flexGrow={3} ml="2%" boxShadow="lg" rounded="lg" bg="white" p="1rem">
+        <h1>Boards page</h1>
+        {createBoardModal()}
+        {loadExistingBoards()}
+      </Box>
     </Box>
   );
 };

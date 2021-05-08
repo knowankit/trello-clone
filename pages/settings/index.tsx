@@ -9,7 +9,6 @@ const SettingsPageWithSidebar = withSidebar(Settings, { page: 'settings' });
 const HomePage = () => {
   return (
     <>
-      <NavBar bg="white" />
       <Box height="100vh">
         <SettingsPageWithSidebar />
       </Box>

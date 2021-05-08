@@ -9,7 +9,6 @@ const TemplatesPageWithSidebar = withSidebar(Templates, { page: 'templates' });
 const HomePage = () => {
   return (
     <>
-      <NavBar bg="white" />
       <Box height="100vh">
         <TemplatesPageWithSidebar />
       </Box>

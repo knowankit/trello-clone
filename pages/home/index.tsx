@@ -9,7 +9,6 @@ const HomePageWithSidebar = withSidebar(Home, { page: 'home' });
 const HomePage = () => {
   return (
     <>
-      <NavBar bg="white" />
       <Box height="100vh">
         <HomePageWithSidebar />
       </Box>
