@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
-import { Flex, Box, FormControl, Input, Button, Image, Text } from '@chakra-ui/react';
+import React from 'react';
+import { Flex, Box, FormControl, Input, Button, Image } from '@chakra-ui/react';
+import { updateUserData, registerUser } from '@/src/slices/user';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@/src/hooks';
 
 const SignUp = () => {
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
+  const dispatch = useDispatch();
+  const user = useAppSelector((state) => state.user);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value
-    });
+
+    const payload = {
+      type: name,
+      value: value
+    };
+
+    dispatch(updateUserData(payload));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (values.password == values.confirmPassword) {
-      alert('submitted successfully');
-    } else {
-      alert('Password do not match');
-    }
+    await dispatch(registerUser());
+
+    // if (user.message === 'success') {
+    //   alert('SignUp successfully');
+    // }
   };
 
   return (
@@ -48,7 +51,7 @@ const SignUp = () => {
           bottom="5%"
           left="5%"
           src="/sign-up-left.svg"
-          alt=" team work illustration"
+          alt="Team work illustration"
           width={[0, '25%']}
         />
         <Image
@@ -56,7 +59,7 @@ const SignUp = () => {
           bottom="5%"
           right="5%"
           src="/sign-up-right.svg"
-          alt="work together illustration"
+          alt="Work together illustration"
           width={[0, '25%']}
           borderRadius="3px"
         />
@@ -82,7 +85,7 @@ const SignUp = () => {
                 <Input
                   type="email"
                   name="email"
-                  value={values.email}
+                  value={user.email}
                   placeholder="Enter Email"
                   onChange={handleChange}
                 />
@@ -91,7 +94,7 @@ const SignUp = () => {
                 <Input
                   type="password"
                   name="password"
-                  value={values.password}
+                  value={user.password}
                   placeholder="Create password"
                   onChange={handleChange}
                 />
@@ -100,7 +103,7 @@ const SignUp = () => {
                 <Input
                   type="password"
                   name="confirmPassword"
-                  value={values.confirmPassword}
+                  value={user.confirmPassword}
                   placeholder="Create password"
                   onChange={handleChange}
                 />
@@ -109,6 +112,7 @@ const SignUp = () => {
                 fontWeight="semibold"
                 width="full"
                 mt={4}
+                disabled={user.password !== user.confirmPassword}
                 bg="success"
                 color="white"
                 onClick={handleSubmit}>
