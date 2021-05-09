@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, Box, FormControl, Input, Button, Image } from '@chakra-ui/react';
-import { updateUserData, registerUser } from '@/src/slices/user';
+import { updateUserData, registerUser, resetUserData } from '@/src/slices/user';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/src/hooks';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
+
+  if (!user.isCreating && user.message === 'success') {
+    dispatch(resetUserData());
+    alert('SignUp successfully');
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,7 +29,7 @@ const SignUp = () => {
 
     await dispatch(registerUser());
 
-    // if (user.message === 'success') {
+    // if (!user.isCreating && user.message === 'success') {
     //   alert('SignUp successfully');
     // }
   };

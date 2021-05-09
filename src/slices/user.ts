@@ -48,9 +48,7 @@ export const userSlice = createSlice({
     updateUserData: (state, { payload }) => {
       state[payload.type] = payload.value;
     },
-    resetUserData: (state) => {
-      state = initialState;
-    }
+    resetUserData: () => initialState
   },
   extraReducers: {
     [registerUser.pending.toString()]: (state, { payload }) => {
@@ -71,6 +69,6 @@ export const userSlice = createSlice({
   }
 });
 
-export const { updateUserData } = userSlice.actions;
+export const { updateUserData, resetUserData } = userSlice.actions;
 
 export default userSlice.reducer;
