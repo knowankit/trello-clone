@@ -68,7 +68,7 @@ const Login = () => {
           position="absolute"
           bottom="5%"
           left="5%"
-          src="/login-left.svg"
+          src="/login/left.svg"
           alt=" new user illustration"
           width={[0, '30%']}
         />
@@ -76,7 +76,7 @@ const Login = () => {
           position="absolute"
           bottom="5%"
           right="5%"
-          src="/login-right.svg"
+          src="/login/right.svg"
           alt="task scheduler illustration"
           width={[0, '30%']}
           borderRadius="3px"

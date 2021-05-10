@@ -30,7 +30,7 @@ const HomePage = () => {
           <Box>
             <Image
               height={['200px', '300px', '400px', '500px']}
-              src="/home-illustration.svg"
+              src="/homepage/home-illustration.svg"
               alt="brand logo"></Image>
           </Box>
         </Flex>
