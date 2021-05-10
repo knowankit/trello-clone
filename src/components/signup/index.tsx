@@ -55,16 +55,16 @@ const SignUp = () => {
           position="absolute"
           bottom="5%"
           left="5%"
-          src="/sign-up-left.svg"
-          alt="Team work illustration"
+          src="/signup/sign-up-left.svg"
+          alt=" team work illustration"
           width={[0, '25%']}
         />
         <Image
           position="absolute"
           bottom="5%"
           right="5%"
-          src="/sign-up-right.svg"
-          alt="Work together illustration"
+          src="/signup/sign-up-right.svg"
+          alt="work together illustration"
           width={[0, '25%']}
           borderRadius="3px"
         />
