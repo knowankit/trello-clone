@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Flex, Box, FormControl, Input, Button, Image } from '@chakra-ui/react';
 import { updateUserData, registerUser, resetUserData } from '@/src/slices/user';
 import { useDispatch } from 'react-redux';

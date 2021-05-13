@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 const BoardsPageWithSidebar = withSidebar(Boards, { page: 'boards' });
 
 const HomePage = ({ state }) => {
+  console.log(state.boards.boards);
   return (
     <Provider store={setOrGetStore(state)}>
       <BoardsPageWithSidebar />

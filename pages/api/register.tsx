@@ -36,7 +36,7 @@ const createUser = async (body, res) => {
         let user = {};
         bcrypt.hash(password, SALTROUNDS, async (err, hash) => {
           // Store hash in your password DB.
-          user = await db.collection('users').insert({ email, password: hash });
+          user = await db.collection('users').insertOne({ email, password: hash });
         });
 
         if (user) {
