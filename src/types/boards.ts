@@ -1,7 +1,16 @@
 export type Board = {
-  id: string;
+  _id: string;
   name: string;
   columns?: Columns[];
+  createdBy: string;
+  dateCreated: string;
+};
+
+export type BoardSlice = {
+  board: Board;
+  status: string;
+  doneFetching: boolean;
+  error: string;
 };
 
 type Columns = {

@@ -41,6 +41,33 @@ export const registerUser = createAsyncThunk('user/register', async (obj, { getS
   return inJSON;
 });
 
+export const loginUser = createAsyncThunk('user/login', async (obj, { getState }) => {
+  const { user } = getState() as { user: UserDetail };
+
+  const data = {
+    email: user.email,
+    password: user.password
+  };
+
+  const url = `${host}/api/login`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
+  });
+
+  const inJSON = await response.json();
+  return inJSON;
+});
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
@@ -64,6 +91,18 @@ export const userSlice = createSlice({
     [registerUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
       state.isCreating = false;
+      state.message = payload && payload.message;
+    },
+    [loginUser.pending.toString()]: (state, { payload }) => {
+      state.status = 'pending';
+      state.message = payload && payload.message;
+    },
+    [loginUser.fulfilled.toString()]: (state, { payload }) => {
+      state.status = 'success';
+      state.message = payload && payload.message;
+    },
+    [loginUser.rejected.toString()]: (state, { payload }) => {
+      state.status = 'failed';
       state.message = payload && payload.message;
     }
   }
