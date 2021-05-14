@@ -8,7 +8,7 @@ const SubNavbar = ({ board }) => {
   return (
     <Box height="50px" bg="brand" boxShadow="md" display="flex" alignItems="center">
       <Heading ml="0.5rem" color="white" as="h3" size="lg" whiteSpace="nowrap">
-        {board.name}
+        {board && board.name}
       </Heading>
       <Link href="/boards">
         <Button size="xs" ml="10px">

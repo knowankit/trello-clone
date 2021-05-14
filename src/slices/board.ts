@@ -47,6 +47,15 @@ export const createBoard = createAsyncThunk('board/create', async (obj, { getSta
   return inJSON;
 });
 
+export const fetchBoard = createAsyncThunk('board/get', async (slug: string) => {
+  const url = `${host}/api/boards/${slug}`;
+
+  const response = await fetch(url);
+  const json = await response.json();
+
+  return json;
+});
+
 export const boardSlice = createSlice({
   name: 'board',
   initialState: initialState,
@@ -64,6 +73,16 @@ export const boardSlice = createSlice({
       state.status = 'success';
     },
     [createBoard.rejected.toString()]: (state) => {
+      state.status = 'failed';
+    },
+    [fetchBoard.pending.toString()]: (state) => {
+      state.status = 'pending';
+    },
+    [fetchBoard.fulfilled.toString()]: (state, { payload }) => {
+      state.board = payload;
+      state.status = 'success';
+    },
+    [fetchBoard.rejected.toString()]: (state) => {
       state.status = 'failed';
     }
   }
