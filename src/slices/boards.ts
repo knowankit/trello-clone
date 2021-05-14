@@ -18,7 +18,9 @@ export const fetchBoards = createAsyncThunk('boards/fetchBoards', async () => {
 export const boardSlice = createSlice({
   name: 'boards',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    resetBoards: () => initialState
+  },
   extraReducers: {
     [fetchBoards.pending.toString()]: (state) => {
       state.status = 'pending';
@@ -32,5 +34,7 @@ export const boardSlice = createSlice({
     }
   }
 });
+
+export const { resetBoards } = boardSlice.actions;
 
 export default boardSlice.reducer;

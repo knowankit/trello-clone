@@ -9,6 +9,9 @@ import { Provider } from 'react-redux';
 import { GetStaticProps, GetStaticPaths } from 'next';
 
 const BoardPage = ({ state }) => {
+  console.log('State', state);
+  console.log('Board', state.board.board);
+
   return (
     <Provider store={setOrGetStore(state)}>
       <Board board={state.board.board} />;
@@ -29,7 +32,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // https://github.com/reduxjs/redux-toolkit/issues/489
   await dispatch(fetchBoard(params.slug.toString()));
   const state = await reduxStore.getState();
-
+  console.log('static props', state);
   // Pass post data to the page via props
   return { props: { state }, revalidate: 1 };
 };
@@ -42,6 +45,7 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
   await dispatch(fetchBoards());
 
   const boards = await reduxStore.getState().boards.boards;
+  console.log('boards from server', boards);
   // Get the paths we want to pre-render based on posts
   const paths = boards.map((board) => ({
     params: { slug: board._id.toString() }
