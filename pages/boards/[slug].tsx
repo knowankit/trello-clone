@@ -31,7 +31,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const state = await reduxStore.getState();
 
   // Pass post data to the page via props
-  return { props: { state } };
+  return { props: { state }, revalidate: 1 };
 };
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
@@ -41,7 +41,7 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 
   await dispatch(fetchBoards());
 
-  const boards = reduxStore.getState().boards.boards;
+  const boards = await reduxStore.getState().boards.boards;
   // Get the paths we want to pre-render based on posts
   const paths = boards.map((board) => ({
     params: { slug: board._id.toString() }
