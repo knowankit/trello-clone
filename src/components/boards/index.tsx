@@ -13,8 +13,6 @@ import {
   Input
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import dummyBoard from '@/src/static/boards.json';
-import { Board } from '@/src/types/boards';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/src/hooks';
 import { createBoard, updateBoardDetail, resetBoard } from '@/src/slices/board';
