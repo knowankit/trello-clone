@@ -55,7 +55,7 @@ const Boards = () => {
   const createBoardModal = () => {
     return (
       <>
-        <Button onClick={onOpen} colorScheme="blue" size="lg" mt="1rem">
+        <Button onClick={onOpen} colorScheme="green" size="lg" mt="1rem">
           Create a board
         </Button>
         <Modal onClose={onClose} isOpen={isOpen} isCentered>

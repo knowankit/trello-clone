@@ -109,7 +109,7 @@ const SignUp = () => {
                   type="password"
                   name="confirmPassword"
                   value={user.confirmPassword}
-                  placeholder="Create password"
+                  placeholder="Confirm password"
                   onChange={handleChange}
                 />
               </FormControl>

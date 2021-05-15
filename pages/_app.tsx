@@ -2,6 +2,7 @@ import React from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import '@/src/styles/default.css';
 import PropTypes from 'prop-types';
+import Head from 'next/head';
 
 const theme = extendTheme({
   colors: {
@@ -16,9 +17,14 @@ const theme = extendTheme({
 });
 function TrelloApp({ Component, pageProps }) {
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <>
+      <Head>
+        <title>Trello clone</title>
+      </Head>
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </>
   );
 }
 
