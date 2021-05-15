@@ -9,7 +9,7 @@ export type Board = {
 export type BoardSlice = {
   board: Board;
   status: string;
-  doneFetching: boolean;
+  isLoading: boolean;
   error: string;
 };
 

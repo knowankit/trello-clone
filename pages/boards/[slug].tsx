@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import Board from '@/src/components/board';
-import PropTypes from 'prop-types';
 import { fetchBoard } from '@/src/slices/board';
 import { setOrGetStore } from '@/util/initialise-store';
 import { Provider } from 'react-redux';

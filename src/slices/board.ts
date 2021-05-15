@@ -11,7 +11,7 @@ const initialState = {
     dateCreated: ''
   },
   status: 'idle',
-  doneFetching: true,
+  isLoading: false,
   error: ''
 };
 
@@ -32,6 +32,36 @@ export const createBoard = createAsyncThunk('board/create', async (obj, { getSta
 
   const response = await fetch(url, {
     method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
+  });
+
+  const inJSON = await response.json();
+  return inJSON;
+});
+
+export const saveBoard = createAsyncThunk('board/save', async (obj, { getState }) => {
+  const { board } = getState() as { board: BoardSlice };
+
+  const data = {
+    _id: board.board._id,
+    name: board.board.name,
+    dateCreated: board.board.dateCreated,
+    createdBy: board.board.createdBy,
+    columns: board.board.columns
+  };
+
+  const url = `${host}/api/boards/${data._id}`;
+
+  const response = await fetch(url, {
+    method: 'PATCH',
     mode: 'cors',
     cache: 'no-cache',
     credentials: 'same-origin',
@@ -84,6 +114,19 @@ export const boardSlice = createSlice({
     },
     [fetchBoard.rejected.toString()]: (state) => {
       state.status = 'failed';
+    },
+    [saveBoard.pending.toString()]: (state) => {
+      state.status = 'pending';
+      state.isLoading = true;
+    },
+    [saveBoard.fulfilled.toString()]: (state, { payload }) => {
+      state.board = payload;
+      state.isLoading = false;
+      state.status = 'success';
+    },
+    [saveBoard.rejected.toString()]: (state) => {
+      state.status = 'failed';
+      state.isLoading = false;
     }
   }
 });
