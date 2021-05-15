@@ -86,6 +86,29 @@ export const fetchBoard = createAsyncThunk('board/get', async (slug: string) => 
   return json;
 });
 
+export const deleteBoard = createAsyncThunk('board/delete', async (obj, { getState }) => {
+  const { board } = getState() as { board: BoardSlice };
+
+  const _id = board.board._id;
+
+  const url = `${host}/api/boards/${_id}`;
+
+  const response = await fetch(url, {
+    method: 'DELETE',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer'
+  });
+
+  const inJSON = await response.json();
+  return inJSON;
+});
+
 export const boardSlice = createSlice({
   name: 'board',
   initialState: initialState,
@@ -125,6 +148,18 @@ export const boardSlice = createSlice({
       state.status = 'success';
     },
     [saveBoard.rejected.toString()]: (state) => {
+      state.status = 'failed';
+      state.isLoading = false;
+    },
+    [deleteBoard.pending.toString()]: (state) => {
+      state.status = 'pending';
+      state.isLoading = true;
+    },
+    [deleteBoard.fulfilled.toString()]: (state, { payload }) => {
+      state.isLoading = false;
+      state.status = 'success';
+    },
+    [deleteBoard.rejected.toString()]: (state) => {
       state.status = 'failed';
       state.isLoading = false;
     }

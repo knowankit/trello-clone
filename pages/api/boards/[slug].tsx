@@ -33,6 +33,14 @@ export default async function handler(req, res) {
         break;
       }
 
+      case 'DELETE': {
+        await db.collection('boards').deleteOne({ _id: slug });
+
+        res.send({ messsage: 'success' });
+
+        break;
+      }
+
       default:
         res.send({ message: 'DB error' });
         break;

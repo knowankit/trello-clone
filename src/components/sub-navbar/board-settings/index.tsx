@@ -24,14 +24,16 @@ import {
 import Link from 'next/link';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
-import { updateBoardDetail, saveBoard, fetchBoard } from '@/src/slices/board';
-import { AiFillSetting } from 'react-icons/ai';
+import { updateBoardDetail, saveBoard, fetchBoard, deleteBoard } from '@/src/slices/board';
+import { AiFillSetting, AiOutlineDelete } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 const BoardSettings = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const board = useAppSelector((state) => state.board.board);
-  const isLoading = useAppSelector((state) => state.board.isLoading);
+  const boardDetail = useAppSelector((state) => state.board);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleSave = async () => {
     await dispatch(saveBoard());
@@ -66,7 +68,11 @@ const BoardSettings = () => {
             <Button variant="ghost" mr="10px">
               Cancel
             </Button>
-            <Button colorScheme="blue" mr={3} onClick={handleSave} isLoading={isLoading}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={handleSave}
+              isLoading={boardDetail.isLoading}>
               Save
             </Button>
           </ModalFooter>
@@ -77,6 +83,14 @@ const BoardSettings = () => {
 
   const onMenuClick = () => {
     onOpen();
+  };
+
+  const handleDelete = async () => {
+    await dispatch(deleteBoard());
+
+    if (boardDetail.status === 'success') {
+      router.push('/boards');
+    }
   };
 
   return (
@@ -96,7 +110,9 @@ const BoardSettings = () => {
               <MenuItem onClick={onMenuClick}>Change name</MenuItem>
               <MenuItem>Add Background Image</MenuItem>
               <MenuDivider />
-              <MenuItem>Delete board</MenuItem>
+              <MenuItem onClick={handleDelete} closeOnSelect={false}>
+                <AiOutlineDelete color="red" /> &nbsp; Delete board
+              </MenuItem>
             </MenuGroup>
           </MenuList>
         </Menu>
