@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import React from 'react';
 import NavBar from '@/src/components/navbar';
 import { Box, Image, Flex, Text } from '@chakra-ui/react';
@@ -6,9 +5,6 @@ import { Box, Image, Flex, Text } from '@chakra-ui/react';
 const HomePage = () => {
   return (
     <>
-      <Head>
-        <title>Trello clone</title>
-      </Head>
       <Box bgGradient="linear(darkblue, white)" height="100vh">
         <NavBar />
         <Flex

@@ -16,7 +16,7 @@ const NavBar: FC<IProps> = ({ bg }) => {
         <Button fontSize="20" color="brand" variant="link" float="right" mr="2" pr="2">
           <Link href="/login">Log in</Link>
         </Button>
-        <Button fontSize="md" bg="brand" color="white" m="4">
+        <Button fontSize="md" colorScheme="green" color="white" m="4">
           <Link href="/signup">Sign up</Link>
         </Button>
       </Flex>
