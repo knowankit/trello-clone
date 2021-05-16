@@ -24,7 +24,13 @@ import {
 import Link from 'next/link';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
-import { updateBoardDetail, saveBoard, fetchBoard, deleteBoard } from '@/src/slices/board';
+import {
+  updateBoardDetail,
+  saveBoard,
+  fetchBoard,
+  deleteBoard,
+  resetBoard
+} from '@/src/slices/board';
 import { AiFillSetting, AiOutlineDelete } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 

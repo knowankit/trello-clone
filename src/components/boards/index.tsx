@@ -36,7 +36,7 @@ const Boards = () => {
 
     await dispatch(createBoard());
     await dispatch(fetchBoards());
-    dispatch(resetBoard());
+    await dispatch(resetBoard());
 
     onClose();
   };
