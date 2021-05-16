@@ -27,5 +27,5 @@ Install docker on your machine and start it
 ## Some free resources used in this project
 
 1. [Color Code](https://www.designpieces.com/palette/trello-color-palette-hex-and-rgb/)
-2. [Illustration](https://www.uistore.design/items/free-remote-work-illustrations/?ref=lapaninja)
+2. [Illustration](https://undraw.co/illustrations)
 3. [Icons](https://github.com/react-icons/react-icons)
