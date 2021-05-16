@@ -1,27 +1,55 @@
 import React from 'react';
-import { Flex, Box, FormControl, Input, Button, Image } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  FormControl,
+  Input,
+  Button,
+  Image,
+  FormHelperText,
+  Link
+} from '@chakra-ui/react';
 import { updateUserData, registerUser, resetUserData } from '@/src/slices/user';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/src/hooks';
+import { useState } from 'react';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
+
+  const [emailErr, setEmailErr] = useState(false);
+  const [passwordErr, setPasswordErr] = useState(false);
+  const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
+  const validPassword = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$');
 
   if (!user.isCreating && user.message === 'success') {
     dispatch(resetUserData());
     alert('SignUp successfully');
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const validate = () => {
+    if (!validEmail.test(user.email)) {
+      setEmailErr(true);
+    } else {
+      setEmailErr(false);
+    }
+    if (!validPassword.test(user.password)) {
+      setPasswordErr(true);
+    } else {
+      setPasswordErr(false);
+    }
+  };
 
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     const payload = {
       type: name,
       value: value
     };
 
-    dispatch(updateUserData(payload));
+    await dispatch(updateUserData(payload));
+    validate();
   };
 
   const handleSubmit = async (e) => {
@@ -85,45 +113,50 @@ const SignUp = () => {
             <h1>Sign up for your account</h1>
           </Box>
           <Box my={4} textAlign="left">
-            <form>
-              <FormControl isRequired>
-                <Input
-                  type="email"
-                  name="email"
-                  value={user.email}
-                  placeholder="Enter Email"
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <FormControl my="8">
-                <Input
-                  type="password"
-                  name="password"
-                  value={user.password}
-                  placeholder="Create password"
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <FormControl my="8">
-                <Input
-                  type="password"
-                  name="confirmPassword"
-                  value={user.confirmPassword}
-                  placeholder="Confirm password"
-                  onChange={handleChange}
-                />
-              </FormControl>
-              <Button
-                fontWeight="semibold"
-                width="full"
-                mt={4}
-                disabled={user.password !== user.confirmPassword}
-                bg="success"
-                color="white"
-                onClick={handleSubmit}>
-                Sign up
-              </Button>
-            </form>
+            <FormControl isRequired>
+              <Input
+                type="email"
+                name="email"
+                value={user.email}
+                placeholder="Enter Email"
+                onChange={handleChange}
+              />
+              {emailErr && <FormHelperText>Invalid email.</FormHelperText>}
+            </FormControl>
+            <FormControl my="8">
+              <Input
+                type="password"
+                name="password"
+                value={user.password}
+                placeholder="Create password"
+                onChange={handleChange}
+              />
+              {passwordErr && <p>Invalid password.</p>}
+            </FormControl>
+            <FormControl my="8">
+              <Input
+                type="password"
+                name="confirmPassword"
+                value={user.confirmPassword}
+                placeholder="Confirm password"
+                onChange={handleChange}
+              />
+            </FormControl>
+            <Button
+              fontWeight="semibold"
+              width="full"
+              mt={4}
+              disabled={user.password !== user.confirmPassword}
+              bg="success"
+              color="white"
+              onClick={handleSubmit}>
+              Sign up
+            </Button>
+            <Box m="5" textAlign="center">
+              <Link href="/login" color="brand" p="2">
+                Already have an account? Log in.
+              </Link>
+            </Box>
           </Box>
         </Box>
       </Flex>
