@@ -131,7 +131,7 @@ const SignUp = () => {
                 placeholder="Create password"
                 onChange={handleChange}
               />
-              {passwordErr && <p>Invalid password.</p>}
+              {passwordErr && <FormHelperText>Invalid password.</FormHelperText>}
             </FormControl>
             <FormControl my="8">
               <Input
