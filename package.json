@@ -27,7 +27,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@reduxjs/toolkit": "^1.5.1",
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.0.1",
     "framer-motion": "^4",
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
@@ -42,6 +42,8 @@
     "shortid": "^2.2.16"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/react": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
