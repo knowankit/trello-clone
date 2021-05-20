@@ -28,6 +28,7 @@
     "@emotion/styled": "^11",
     "@reduxjs/toolkit": "^1.5.1",
     "bcrypt": "^5.0.1",
+    "cookie": "^0.4.1",
     "framer-motion": "^4",
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",

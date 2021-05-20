@@ -1,5 +1,6 @@
 import { connectToDatabase } from '@/util/mongodb';
 import { compare } from 'bcrypt';
+import { serialize } from 'cookie';
 
 import { sign } from 'jsonwebtoken';
 
@@ -30,10 +31,22 @@ export default async function handler(req, res) {
       if (userDetail) {
         compare(password, userDetail.password, function (err, isMatched) {
           if (isMatched === true) {
-            const claim = { email: userDetail.email };
-            const token = sign(claim, KEY, { expiresIn: '1h' });
+            const claim = { id: userDetail._id, email: userDetail.email };
+            const token = sign({ user: claim }, KEY, { expiresIn: '1h' });
 
-            res.send({ token, status: 200 });
+            res.setHeader(
+              'Set-Cookie',
+              serialize('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV !== 'development',
+                maxAge: 60 * 60,
+                sameSite: 'strict',
+                path: '/'
+              })
+            );
+            // res.cookie('token', token, { httpOnly: true });
+
+            res.send({ token, id: userDetail._id, status: 200 });
           }
         });
       } else {
