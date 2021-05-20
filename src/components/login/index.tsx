@@ -106,6 +106,7 @@ const Login = () => {
                   value={username}
                   placeholder="Enter Email "
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </FormControl>
               <FormControl mt={6}>

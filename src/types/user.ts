@@ -5,5 +5,6 @@ export type UserDetail = {
   confirmPassword?: string;
   status: string;
   isCreating: boolean;
+  isFetching: boolean;
   message: string;
 };

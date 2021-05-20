@@ -1,22 +1,16 @@
 import React from 'react';
-import {
-  Flex,
-  Box,
-  FormControl,
-  Input,
-  Button,
-  Image,
-  FormHelperText,
-  Link
-} from '@chakra-ui/react';
+import { Flex, Box, FormControl, Input, Button, Image, Link, useToast } from '@chakra-ui/react';
 import { updateUserData, registerUser, resetUserData } from '@/src/slices/user';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/src/hooks';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
+  const toast = useToast();
+  const router = useRouter();
 
   const [emailErr, setEmailErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
@@ -25,7 +19,6 @@ const SignUp = () => {
 
   if (!user.isCreating && user.message === 'success') {
     dispatch(resetUserData());
-    alert('SignUp successfully');
   }
 
   const validate = () => {
@@ -56,12 +49,23 @@ const SignUp = () => {
     e.preventDefault();
 
     await dispatch(registerUser());
-
-    // if (!user.isCreating && user.message === 'success') {
-    //   alert('SignUp successfully');
-    // }
+    showToast();
+    setTimeout(() => {
+      router.push('/login');
+    }, 3000);
   };
 
+  const showToast = () => {
+    toast({
+      position: 'top',
+      title: 'Account created.',
+      description:
+        "We've created your account for you. Redirecting you to login page in 3 seconds ",
+      status: 'success',
+      duration: 2500,
+      isClosable: true
+    });
+  };
   return (
     <>
       <Box display="flex">
@@ -120,8 +124,9 @@ const SignUp = () => {
                 value={user.email}
                 placeholder="Enter Email"
                 onChange={handleChange}
+                autoComplete="off"
               />
-              {emailErr && <FormHelperText>Invalid email.</FormHelperText>}
+              {emailErr && <p color="red">Invalid email.</p>}
             </FormControl>
             <FormControl my="8">
               <Input
@@ -131,7 +136,7 @@ const SignUp = () => {
                 placeholder="Create password"
                 onChange={handleChange}
               />
-              {passwordErr && <FormHelperText>Invalid password.</FormHelperText>}
+              {passwordErr && <p color="red">Invalid password.</p>}
             </FormControl>
             <FormControl my="8">
               <Input
@@ -149,7 +154,9 @@ const SignUp = () => {
               disabled={user.password !== user.confirmPassword}
               bg="success"
               color="white"
-              onClick={handleSubmit}>
+              onClick={handleSubmit}
+              isLoading={user.isCreating}
+              loadingText="Registering">
               Sign up
             </Button>
             <Box m="5" textAlign="center">
