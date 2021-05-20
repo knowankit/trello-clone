@@ -44,7 +44,6 @@ export default async function handler(req, res) {
                 path: '/'
               })
             );
-            // res.cookie('token', token, { httpOnly: true });
 
             res.send({ token, id: userDetail._id, status: 200 });
           }
