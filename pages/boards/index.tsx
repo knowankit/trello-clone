@@ -1,6 +1,8 @@
 import React from 'react';
 import Boards from '@/src/components/boards';
 import withSidebar from '@/src/hoc/with-sidebar';
+import withAuth from '@/src/hoc/with-auth';
+
 import { fetchBoards } from '@/src/slices/boards';
 
 import { setOrGetStore } from '@/util/initialise-store';
@@ -17,7 +19,9 @@ const HomePage = ({ state }) => {
   );
 };
 
-HomePage.getInitialProps = async (appContext) => {
+const HomePageWithAuth = withAuth(HomePage);
+
+HomePage.getInitialProps = async (ctx) => {
   // initialise redux store on server side
   const reduxStore = setOrGetStore();
   const { dispatch } = reduxStore;
@@ -31,4 +35,4 @@ HomePage.propTypes = {
   boards: PropTypes.array
 };
 
-export default HomePage;
+export default HomePageWithAuth;

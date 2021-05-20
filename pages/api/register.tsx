@@ -1,8 +1,6 @@
 import { connectToDatabase } from '@/util/mongodb';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { hash } from 'bcrypt';
 
-const KEY = process.env.JWT_SECRET_KEY;
 const SALTROUNDS = 10;
 
 const isUserExists = async (db, email) => {
@@ -34,18 +32,17 @@ const createUser = async (body, res) => {
         res.send(data);
       } else {
         let user = {};
-        bcrypt.hash(password, SALTROUNDS, async (err, hash) => {
+        hash(password, SALTROUNDS, async (err, hash) => {
           // Store hash in your password DB.
           user = await db.collection('users').insertOne({ email, password: hash });
         });
 
         if (user) {
           const data = {
-            message: 'success',
-            status: 200
+            message: 'success'
           };
 
-          res.send(data);
+          res.status(200).send(data);
         }
       }
 

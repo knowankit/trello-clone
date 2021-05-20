@@ -2,7 +2,7 @@ import React from 'react';
 import Home from '@/src/components/home';
 import { Box } from '@chakra-ui/layout';
 import withSidebar from '@/src/hoc/with-sidebar';
-import NavBar from '@/src/components/navbar';
+import withAuth from '@/src/hoc/with-auth';
 
 const HomePageWithSidebar = withSidebar(Home, { page: 'home' });
 
@@ -16,4 +16,6 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+const HomePageWithAuth = withAuth(HomePage);
+
+export default HomePageWithAuth;
