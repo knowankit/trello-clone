@@ -29,3 +29,12 @@ Install docker on your machine and start it
 1. [Color Code](https://www.designpieces.com/palette/trello-color-palette-hex-and-rgb/)
 2. [Illustration](https://undraw.co/illustrations)
 3. [Icons](https://github.com/react-icons/react-icons)
+
+## What is next?
+
+1. Add card drag and drop - Ankit
+2. Add column drag and drop - Ankit
+3. Delete user - Nidhi
+4. Add unsplash - Nidhi
+5. Load only boards assigned to user - Ankit
+6. Verify email on sign up - Ankit
