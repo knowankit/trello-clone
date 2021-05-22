@@ -6,33 +6,28 @@ import withAuth from '@/src/hoc/with-auth';
 import { fetchBoards } from '@/src/slices/boards';
 
 import { setOrGetStore } from '@/util/initialise-store';
-import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
-
-const BoardsPageWithSidebar = withSidebar(Boards, { page: 'boards' });
+import withStore from '@/src/hoc/with-store';
 
 const HomePage = ({ state }) => {
-  return (
-    <Provider store={setOrGetStore(state)}>
-      <BoardsPageWithSidebar />
-    </Provider>
-  );
+  return <Boards />;
 };
 
-const HomePageWithAuth = withAuth(HomePage);
+const BoardsPageWithSidebar = withSidebar(HomePage, { page: 'boards' });
+const HomePageWithAuth = withAuth(BoardsPageWithSidebar);
+const BoardsPageWithStore = withStore(HomePageWithAuth);
 
 HomePage.getInitialProps = async (ctx) => {
+  console.log('from  board apge');
   // initialise redux store on server side
   const reduxStore = setOrGetStore();
   const { dispatch } = reduxStore;
 
   await dispatch(fetchBoards());
+  ctx.initialReduxStore = reduxStore.getState();
 
-  return { state: reduxStore.getState() };
+  return {
+    initialReduxStore: ctx.initialReduxStore
+  };
 };
 
-HomePage.propTypes = {
-  boards: PropTypes.array
-};
-
-export default HomePageWithAuth;
+export default BoardsPageWithStore;
