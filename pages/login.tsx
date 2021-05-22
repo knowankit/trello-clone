@@ -1,12 +1,16 @@
 import React from 'react';
 import Login from '@/src/components/login';
 import { Box } from '@chakra-ui/react';
+import { Provider } from 'react-redux';
+import { setOrGetStore } from '@/util/initialise-store';
 
 const LoginPage = () => {
   return (
-    <Box height="100vh" bg="lightblue">
-      <Login />
-    </Box>
+    <Provider store={setOrGetStore()}>
+      <Box height="100vh" bg="lightblue">
+        <Login />
+      </Box>
+    </Provider>
   );
 };
 

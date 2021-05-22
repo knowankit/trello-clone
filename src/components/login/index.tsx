@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Flex, Box, FormControl, Input, Button, Image, Link } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { useAppSelector } from '@/src/hooks';
 
 const Login = () => {
   const router = useRouter();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const user = useAppSelector((state) => state.user);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'username') {
@@ -106,6 +108,7 @@ const Login = () => {
                   value={username}
                   placeholder="Enter Email "
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </FormControl>
               <FormControl mt={6}>
@@ -117,7 +120,14 @@ const Login = () => {
                   onChange={handleChange}
                 />
               </FormControl>
-              <Button width="full" mt={4} bg="success" color="white" onClick={handleSubmit}>
+              <Button
+                width="full"
+                mt={4}
+                bg="success"
+                color="white"
+                onClick={handleSubmit}
+                isLoading={user.isFetching}
+                loadingText="Logging">
                 Sign In
               </Button>
               <Box m="5" textAlign="center">
