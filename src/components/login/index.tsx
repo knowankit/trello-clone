@@ -3,7 +3,7 @@ import { Flex, Box, FormControl, Input, Button, Image, Link } from '@chakra-ui/r
 import { useRouter } from 'next/router';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
-import { loginUser, updateUserData, resetUserData } from '@/src/slices/user';
+import { loginUser, updateUserData } from '@/src/slices/user';
 
 const Login = () => {
   const user = useAppSelector((state) => state.user);
