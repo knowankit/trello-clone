@@ -8,6 +8,7 @@ const initialState: UserDetail = {
   password: '',
   confirmPassword: '',
   isCreating: false,
+  isFetching: false,
   message: ''
 };
 
@@ -95,14 +96,17 @@ export const userSlice = createSlice({
     },
     [loginUser.pending.toString()]: (state, { payload }) => {
       state.status = 'pending';
+      state.isFetching = true;
       state.message = payload && payload.message;
     },
     [loginUser.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
+      state.isFetching = false;
       state.message = payload && payload.message;
     },
     [loginUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
+      state.isFetching = false;
       state.message = payload && payload.message;
     }
   }
