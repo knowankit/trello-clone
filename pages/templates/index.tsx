@@ -1,6 +1,4 @@
-import React from 'react';
 import Templates from '@/src/components/templates';
-import { Box } from '@chakra-ui/layout';
 import withSidebar from '@/src/hoc/with-sidebar';
 import isValidUser from '@/util/is-valid-user';
 import withStore from '@/src/hoc/with-store';

@@ -1,25 +1,13 @@
-import React from 'react';
 import Settings from '@/src/components/settings';
-import { Box } from '@chakra-ui/layout';
 import withSidebar from '@/src/hoc/with-sidebar';
 import isValidUser from '@/util/is-valid-user';
 import withStore from '@/src/hoc/with-store';
 import { setOrGetStore } from '@/util/initialise-store';
 
-const SettingsPage = () => {
-  return (
-    <>
-      <Box height="100vh">
-        <SettingsPageWithSidebar />
-      </Box>
-    </>
-  );
-};
-
 const SettingsPageWithSidebar = withSidebar(Settings, { page: 'settings' });
 const SettingsPageWithStore = withStore(SettingsPageWithSidebar);
 
-SettingsPage.getInitialProps = async (ctx) => {
+SettingsPageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
   const isValid = isValidUser(ctx);
 
@@ -36,4 +24,4 @@ SettingsPage.getInitialProps = async (ctx) => {
   };
 };
 
-export default SettingsPage;
+export default SettingsPageWithStore;
