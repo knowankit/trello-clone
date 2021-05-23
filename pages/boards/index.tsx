@@ -1,38 +1,33 @@
-import React from 'react';
 import Boards from '@/src/components/boards';
 import withSidebar from '@/src/hoc/with-sidebar';
-import withAuth from '@/src/hoc/with-auth';
+import withStore from '@/src/hoc/with-store';
 
 import { fetchBoards } from '@/src/slices/boards';
-
 import { setOrGetStore } from '@/util/initialise-store';
-import PropTypes from 'prop-types';
-import { Provider } from 'react-redux';
+import isValidUser from '@/util/is-valid-user';
 
 const BoardsPageWithSidebar = withSidebar(Boards, { page: 'boards' });
+const BoardsPageWithStore = withStore(BoardsPageWithSidebar);
 
-const HomePage = ({ state }) => {
-  return (
-    <Provider store={setOrGetStore(state)}>
-      <BoardsPageWithSidebar />
-    </Provider>
-  );
-};
-
-const HomePageWithAuth = withAuth(HomePage);
-
-HomePage.getInitialProps = async (ctx) => {
-  // initialise redux store on server side
+BoardsPageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
   const { dispatch } = reduxStore;
 
   await dispatch(fetchBoards());
 
-  return { state: reduxStore.getState() };
+  const isValid = isValidUser(ctx);
+
+  if (!isValid && typeof window === 'undefined') {
+    ctx.res.writeHead(307, {
+      Location: '/login'
+    });
+
+    ctx.res.end();
+  }
+
+  return {
+    initialReduxStore: reduxStore.getState()
+  };
 };
 
-HomePage.propTypes = {
-  boards: PropTypes.array
-};
-
-export default HomePageWithAuth;
+export default BoardsPageWithStore;

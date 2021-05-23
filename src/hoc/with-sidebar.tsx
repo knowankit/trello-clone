@@ -9,10 +9,22 @@ import {
 import Link from 'next/link';
 import NavBar from '@/src/components/navbar';
 
-const withSidebar = (WrappedComponent, props) => {
+const withSidebar = (App, props) => {
   return class BoardWithSidebar extends Component {
     constructor(props) {
       super(props);
+    }
+
+    static async getInitialProps(ctx) {
+      let appProps = {};
+
+      if (App.getInitialProps) {
+        appProps = await App.getInitialProps(ctx);
+      }
+
+      return {
+        ...appProps
+      };
     }
 
     render() {
@@ -47,7 +59,7 @@ const withSidebar = (WrappedComponent, props) => {
                   ))}
                 </Box>
               </Box>
-              <WrappedComponent />
+              <App />
             </Box>
           </Container>
         </>
