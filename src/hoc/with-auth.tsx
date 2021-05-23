@@ -6,6 +6,9 @@ const KEY = process.env.JWT_SECRET_KEY;
 
 const WithAuth = (App) => {
   return class AppWithAuth extends Component {
+    constructor(props) {
+      super(props);
+    }
     static getInitialProps(ctx) {
       let isAuthenticated;
       let appProps = {};

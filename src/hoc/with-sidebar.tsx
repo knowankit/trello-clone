@@ -15,17 +15,17 @@ const withSidebar = (App, props) => {
       super(props);
     }
 
-    // static async getInitialProps (ctx) {
-    //   let appProps = {}
+    static async getInitialProps(ctx) {
+      let appProps = {};
 
-    //   if (App.getInitialProps) {
-    //     appProps = await App.getInitialProps(ctx)
-    //   }
+      if (App.getInitialProps) {
+        appProps = await App.getInitialProps(ctx);
+      }
 
-    //   return {
-    //     ...appProps
-    //   }
-    // }
+      return {
+        ...appProps
+      };
+    }
 
     render() {
       const { page } = props;

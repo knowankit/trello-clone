@@ -1,32 +1,32 @@
-import React from 'react';
 import Boards from '@/src/components/boards';
 import withSidebar from '@/src/hoc/with-sidebar';
-import withAuth from '@/src/hoc/with-auth';
-
-import { fetchBoards } from '@/src/slices/boards';
-
-import { setOrGetStore } from '@/util/initialise-store';
 import withStore from '@/src/hoc/with-store';
 
-const HomePage = ({ state }) => {
-  return <Boards />;
-};
+import { fetchBoards } from '@/src/slices/boards';
+import { setOrGetStore } from '@/util/initialise-store';
+import isValidUser from '@/util/is-valid-user';
 
-const BoardsPageWithSidebar = withSidebar(HomePage, { page: 'boards' });
-const HomePageWithAuth = withAuth(BoardsPageWithSidebar);
-const BoardsPageWithStore = withStore(HomePageWithAuth);
+const BoardsPageWithSidebar = withSidebar(Boards, { page: 'boards' });
+const BoardsPageWithStore = withStore(BoardsPageWithSidebar);
 
-HomePage.getInitialProps = async (ctx) => {
-  console.log('from  board apge');
-  // initialise redux store on server side
+BoardsPageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
   const { dispatch } = reduxStore;
 
   await dispatch(fetchBoards());
-  ctx.initialReduxStore = reduxStore.getState();
+
+  const isValid = isValidUser(ctx);
+
+  if (!isValid && typeof window === 'undefined') {
+    ctx.res.writeHead(307, {
+      Location: '/login'
+    });
+
+    ctx.res.end();
+  }
 
   return {
-    initialReduxStore: ctx.initialReduxStore
+    initialReduxStore: reduxStore.getState()
   };
 };
 
