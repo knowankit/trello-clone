@@ -9,7 +9,9 @@ const initialState: UserDetail = {
   confirmPassword: '',
   isCreating: false,
   isFetching: false,
-  message: ''
+  doneFetching: true,
+  message: '',
+  error: ''
 };
 
 const host = checkEnvironment();
@@ -65,8 +67,9 @@ export const loginUser = createAsyncThunk('user/login', async (obj, { getState }
     body: JSON.stringify(data)
   });
 
-  const inJSON = await response.json();
-  return inJSON;
+  const dataInJson = await response.json();
+
+  return dataInJson;
 });
 
 export const userSlice = createSlice({
@@ -96,17 +99,19 @@ export const userSlice = createSlice({
     },
     [loginUser.pending.toString()]: (state, { payload }) => {
       state.status = 'pending';
-      state.isFetching = true;
+      state.doneFetching = false;
       state.message = payload && payload.message;
     },
     [loginUser.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
-      state.isFetching = false;
+      state.error = payload && payload.error;
+      state.doneFetching = true;
       state.message = payload && payload.message;
     },
     [loginUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
-      state.isFetching = false;
+      state.doneFetching = true;
+      state.error = payload && payload.error;
       state.message = payload && payload.message;
     }
   }

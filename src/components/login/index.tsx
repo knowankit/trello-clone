@@ -6,9 +6,14 @@ import { useDispatch } from 'react-redux';
 import { loginUser, updateUserData } from '@/src/slices/user';
 
 const Login = () => {
+  const user = useAppSelector((state) => state.user);
+
   const router = useRouter();
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+
+  if (!user.error && user.status === 'success') {
+    router.push('/home');
+  }
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,11 +26,9 @@ const Login = () => {
     await dispatch(updateUserData(payload));
   };
 
-  if (user.status === 'success') {
-    router.push('/home');
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = async () => {
     await dispatch(loginUser());
   };
 
