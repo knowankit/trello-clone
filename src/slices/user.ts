@@ -9,6 +9,7 @@ const initialState: UserDetail = {
   email: '',
   password: '',
   confirmPassword: '',
+  isValid: false,
   isCreating: false,
   isFetching: false,
   doneFetching: true,
