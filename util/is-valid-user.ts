@@ -22,12 +22,12 @@ const isValidUser = (ctx) => {
       // Use !isAuthenticated for error cases
       // If it is a valid token then let them in else redirect to the login page
       if (isAuthenticated?.user) {
-        return true;
+        return { id: isAuthenticated?.user.id, isValid: true };
       } else {
-        return false;
+        return { isValid: false };
       }
     } else {
-      return false;
+      return { isValid: false };
     }
   }
 };

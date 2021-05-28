@@ -3,6 +3,8 @@ import withSidebar from '@/src/hoc/with-sidebar';
 import withStore from '@/src/hoc/with-store';
 
 import { fetchBoards } from '@/src/slices/boards';
+import { updateUserData, fetchUser } from '@/src/slices/user';
+
 import { setOrGetStore } from '@/util/initialise-store';
 import isValidUser from '@/util/is-valid-user';
 
@@ -15,15 +17,18 @@ BoardsPageWithStore.getInitialProps = async (ctx) => {
 
   await dispatch(fetchBoards());
 
-  const isValid = isValidUser(ctx);
+  const userDetails = isValidUser(ctx);
 
-  if (!isValid && typeof window === 'undefined') {
+  if (userDetails && !userDetails.isValid && typeof window === 'undefined') {
     ctx.res.writeHead(307, {
       Location: '/login'
     });
 
     ctx.res.end();
   }
+
+  await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
+  await dispatch(fetchUser());
 
   return {
     initialReduxStore: reduxStore.getState()
