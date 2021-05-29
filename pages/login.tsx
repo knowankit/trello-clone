@@ -4,7 +4,7 @@ import { Box } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
 import { setOrGetStore } from '@/util/initialise-store';
 
-const LoginPage = () => {
+const LoginPage = (): JSX.Element => {
   return (
     <Provider store={setOrGetStore()}>
       <Box height="100vh" bg="lightblue">

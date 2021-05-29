@@ -6,7 +6,7 @@ import { useAppSelector } from '@/src/hooks';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-const SignUp = () => {
+const SignUp = (): JSX.Element => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
   const toast = useToast();

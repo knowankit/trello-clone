@@ -3,7 +3,12 @@ import { verify } from 'jsonwebtoken';
 
 const KEY = process.env.JWT_SECRET_KEY;
 
-const isValidUser = (ctx) => {
+type UserValidProps = {
+  isValid: boolean;
+  id?: string;
+};
+
+const isValidUser = (ctx): UserValidProps => {
   let isAuthenticated;
 
   // Is code running on the server

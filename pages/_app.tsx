@@ -15,7 +15,8 @@ const theme = extendTheme({
     lightblue: '#f2faf9'
   }
 });
-function TrelloApp({ Component, pageProps }) {
+
+const TrelloApp = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
@@ -26,7 +27,7 @@ function TrelloApp({ Component, pageProps }) {
       </ChakraProvider>
     </>
   );
-}
+};
 
 TrelloApp.propTypes = {
   pageProps: PropTypes.object

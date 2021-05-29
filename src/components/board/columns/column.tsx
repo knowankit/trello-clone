@@ -5,12 +5,12 @@ import Cards from '@/src/components/board/columns/cards';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '@/util/items';
 
-const Column = ({ showCardDetail, addCard, column, index }) => {
-  const [collectedProps, drop] = useDrop(() => ({
+const Column = ({ showCardDetail, addCard, column, index }): JSX.Element => {
+  const [_collectedProps, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: (item, monitor) => {
-      // console.log('item', item)
-      // console.log('monitor', monitor)
+      console.log('item', item);
+      console.log('monitor', monitor);
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver()

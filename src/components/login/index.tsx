@@ -5,7 +5,7 @@ import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { loginUser, updateUserData } from '@/src/slices/user';
 
-const Login = () => {
+const Login = (): JSX.Element => {
   const user = useAppSelector((state) => state.user);
 
   const router = useRouter();

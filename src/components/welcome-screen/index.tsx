@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '@/src/components/navbar';
 import { Box, Image, Flex, Text } from '@chakra-ui/react';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = (): JSX.Element => {
   return (
     <>
       <Box bgGradient="linear(darkblue, white)" height="100vh">

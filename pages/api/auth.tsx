@@ -1,9 +1,9 @@
-// import bcrypt from 'bcryptjs';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 
 const KEY = process.env.JWT_KEY;
 
-export default (req, res) => {
+export default (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   return new Promise((resolve) => {
     const { method } = req;
 
@@ -34,8 +34,7 @@ export default (req, res) => {
         /* Variables checking */
         if (isVerifiedUser) {
           const userId = user.id,
-            userEmail = user.email,
-            userPassword = user.password;
+            userEmail = user.email;
 
           /* Create JWT Payload */
           const payload = {
@@ -77,6 +76,6 @@ export default (req, res) => {
         break;
     }
 
-    // return resolve();
+    return resolve();
   });
 };
