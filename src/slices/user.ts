@@ -118,14 +118,14 @@ export const userSlice = createSlice({
     },
     [loginUser.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
-      state.error = payload && payload.error;
+      state.error = (payload && payload.error) || '';
       state.doneFetching = true;
       state.message = payload && payload.message;
     },
     [loginUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
       state.doneFetching = true;
-      state.error = payload && payload.error;
+      state.error = (payload && payload.error) || '';
       state.message = payload && payload.message;
     },
     [fetchUser.pending.toString()]: (state, { payload }) => {

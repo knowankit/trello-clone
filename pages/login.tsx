@@ -1,17 +1,15 @@
-import React from 'react';
 import Login from '@/src/components/login';
-import { Box } from '@chakra-ui/react';
-import { Provider } from 'react-redux';
 import { setOrGetStore } from '@/util/initialise-store';
+import withStore from '@/src/hoc/with-store';
 
-const LoginPage = (): JSX.Element => {
-  return (
-    <Provider store={setOrGetStore()}>
-      <Box height="100vh" bg="lightblue">
-        <Login />
-      </Box>
-    </Provider>
-  );
+const LoginPageWithStore = withStore(Login);
+
+LoginPageWithStore.getInitialProps = async () => {
+  const reduxStore = setOrGetStore();
+
+  return {
+    initialReduxStore: reduxStore.getState()
+  };
 };
 
-export default LoginPage;
+export default LoginPageWithStore;
