@@ -97,12 +97,10 @@ const Boards = (): JSX.Element => {
   };
 
   return (
-    <Box>
-      <Box minHeight="50vh" flexGrow={3} ml="2%" boxShadow="lg" rounded="lg" bg="white" p="1rem">
-        <h1>Boards page</h1>
-        {createBoardModal()}
-        {loadExistingBoards()}
-      </Box>
+    <Box flexGrow={3} mx="2%" boxShadow="md" rounded="lg" bg="white" p="1rem">
+      <h1>Boards page</h1>
+      {createBoardModal()}
+      {loadExistingBoards()}
     </Box>
   );
 };
