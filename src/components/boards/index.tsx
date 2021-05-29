@@ -20,7 +20,7 @@ import { fetchBoards } from '@/src/slices/boards';
 
 import shortId from 'shortid';
 
-const Boards = () => {
+const Boards = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const boards = useAppSelector((state) => state.boards.boards);
 

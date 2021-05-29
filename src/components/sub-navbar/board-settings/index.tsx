@@ -34,7 +34,7 @@ import {
 import { AiFillSetting, AiOutlineDelete } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
-const BoardSettings = () => {
+const BoardSettings = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const board = useAppSelector((state) => state.board.board);
   const boardDetail = useAppSelector((state) => state.board);
@@ -48,7 +48,7 @@ const BoardSettings = () => {
     onClose();
   };
 
-  const settingsModal = () => {
+  const settingsModal = (): JSX.Element => {
     if (!isOpen) return;
 
     return (

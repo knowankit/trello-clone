@@ -1,5 +1,4 @@
 import createStore from '@/src/store';
-
 let store;
 
 export const setOrGetStore = (preloadedState = {}) => {

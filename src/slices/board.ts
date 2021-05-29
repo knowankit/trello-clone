@@ -155,7 +155,7 @@ export const boardSlice = createSlice({
       state.status = 'pending';
       state.isLoading = true;
     },
-    [deleteBoard.fulfilled.toString()]: (state, { payload }) => {
+    [deleteBoard.fulfilled.toString()]: (state) => {
       state.isLoading = false;
       state.status = 'success';
     },

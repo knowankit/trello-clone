@@ -5,7 +5,7 @@ import BoardSettings from '@/src/components/sub-navbar/board-settings';
 import React from 'react';
 import { useAppSelector } from '@/src/hooks';
 
-const SubNavbar = () => {
+const SubNavbar = (): JSX.Element => {
   const board = useAppSelector((state) => state.board.board);
 
   return (

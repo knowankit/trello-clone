@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Box, Button, Heading, useDisclosure } from '@chakra-ui/react';
+import React, { useState, FC } from 'react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
 import CardDetailsModal from '@/src/components/board/columns/modals/card-details-modal';
-import Cards from '@/src/components/board/columns/cards';
+// import Cards from '@/src/components/board/columns/cards';
 import Column from '@/src/components/board/columns/column';
-import { GrDrag } from 'react-icons/gr';
+// import { GrDrag } from 'react-icons/gr';
 import { CardDetail } from '@/src/types/cards';
 import shortId from 'shortid';
 
-const BoardColumns = () => {
+const BoardColumns: FC = (): JSX.Element => {
   const tempData = [
     { columnName: 'To-Do', cards: [], id: 'wq3ead' },
     { columnName: 'In Progress', cards: [], id: '9hw23' },
