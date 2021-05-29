@@ -3,7 +3,6 @@ import { Button, Image, Flex, Box, Spacer } from '@chakra-ui/react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useAppSelector } from '@/src/hooks';
-import { useDispatch } from 'react-redux';
 
 type IProps = {
   bg?: string;
@@ -13,7 +12,7 @@ const NavBar: FC<IProps> = ({ bg }) => {
   const user = useAppSelector((state) => state.user);
 
   const renderButtons = () => {
-    if (user.isValid) {
+    if (user?.isValid) {
       return (
         <Button fontSize="20" color="danger" variant="link" float="right" mr="2" pr="2">
           Log out
