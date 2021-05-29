@@ -1,3 +1,5 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { connectToDatabase } from '@/util/mongodb';
 import { compare } from 'bcrypt';
 import { serialize } from 'cookie';
@@ -16,7 +18,7 @@ const isUserExists = async (db, email) => {
   return null;
 };
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'POST') {
     const { email, password } = req.body;
 

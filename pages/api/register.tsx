@@ -1,3 +1,5 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { connectToDatabase } from '@/util/mongodb';
 import { hash } from 'bcrypt';
 
@@ -58,7 +60,7 @@ const createUser = async (body, res) => {
   }
 };
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'POST') {
     createUser(req.body, res);
 

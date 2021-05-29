@@ -4,7 +4,7 @@ import { setOrGetStore } from '@/util/initialise-store';
 
 const WelcomeScreenWithStore = withStore(WelcomeScreen);
 
-WelcomeScreenWithStore.getInitialProps = async (ctx) => {
+WelcomeScreenWithStore.getInitialProps = async () => {
   const reduxStore = setOrGetStore();
 
   return {
