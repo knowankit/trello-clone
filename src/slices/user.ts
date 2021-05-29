@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import checkEnvironment from '@/util/check-environment';
+import shortId from 'shortid';
 import { UserDetail } from '@/src/types/user';
 
 const initialState: UserDetail = {
+  id: '',
   status: 'idle',
   email: '',
   password: '',
   confirmPassword: '',
+  isValid: false,
   isCreating: false,
   isFetching: false,
   doneFetching: true,
@@ -17,9 +20,11 @@ const initialState: UserDetail = {
 const host = checkEnvironment();
 
 export const registerUser = createAsyncThunk('user/register', async (obj, { getState }) => {
+  const id = shortId.generate();
   const { user } = getState() as { user: UserDetail };
 
   const data = {
+    id: id,
     email: user.email,
     password: user.password,
     confirmPassword: user.confirmPassword
@@ -72,6 +77,15 @@ export const loginUser = createAsyncThunk('user/login', async (obj, { getState }
   return dataInJson;
 });
 
+export const fetchUser = createAsyncThunk('users/fetchUser', async (obj, { getState }) => {
+  const { user } = getState() as { user: UserDetail };
+
+  const response = await fetch(`${host}/api/login/${user.id}`);
+  const responseInjson = await response.json();
+
+  return responseInjson;
+});
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
@@ -109,6 +123,25 @@ export const userSlice = createSlice({
       state.message = payload && payload.message;
     },
     [loginUser.rejected.toString()]: (state, { payload }) => {
+      state.status = 'failed';
+      state.doneFetching = true;
+      state.error = payload && payload.error;
+      state.message = payload && payload.message;
+    },
+    [fetchUser.pending.toString()]: (state, { payload }) => {
+      state.status = 'pending';
+      state.doneFetching = false;
+      state.message = payload && payload.message;
+    },
+    [fetchUser.fulfilled.toString()]: (state, { payload }) => {
+      state.status = 'success';
+      state.error = payload && payload.error;
+      state.doneFetching = true;
+      state.id = payload && payload.id;
+      state.message = payload && payload.message;
+      state.email = payload && payload.email;
+    },
+    [fetchUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
       state.doneFetching = true;
       state.error = payload && payload.error;

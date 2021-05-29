@@ -6,6 +6,8 @@ import isValidUser from '@/util/is-valid-user';
 import withStore from '@/src/hoc/with-store';
 import { setOrGetStore } from '@/util/initialise-store';
 
+import { updateUserData } from '@/src/slices/user';
+
 const HomePage = () => {
   return (
     <>
@@ -21,6 +23,8 @@ const HomePageWithStore = withStore(HomePage);
 
 HomePageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
+  const { dispatch } = reduxStore;
+
   const isValid = isValidUser(ctx);
 
   if (!isValid && typeof window === 'undefined') {
@@ -30,6 +34,8 @@ HomePageWithStore.getInitialProps = async (ctx) => {
 
     ctx.res.end();
   }
+
+  await dispatch(updateUserData({ type: 'isValid', value: true }));
 
   return {
     initialReduxStore: reduxStore.getState()
