@@ -40,28 +40,29 @@ const withSidebar = (App, props) => {
       return (
         <>
           <NavBar bg="white" />
-          <Container maxW="container.xl" display="table">
-            <Box display="flex" mt="5%">
-              <Box minHeight="50vh" width="25vw" boxShadow="lg" rounded="lg" p="1em">
-                <Box display="flex" flexDirection="column">
-                  {sidebarMenu.map((menu, index) => (
-                    <Link href={menu.path} key={index}>
-                      <Button
-                        mb="5px"
-                        display="flex"
-                        justifyContent="left"
-                        colorScheme={page === menu.page ? 'blue' : 'gray'}>
-                        <>
-                          <menu.icon /> &nbsp; {menu.buttonName}
-                        </>
-                      </Button>
-                    </Link>
-                  ))}
-                </Box>
+          <Box display="flex" mt="10px">
+            <Box minHeight="100vh" width="15vw" boxShadow="lg" p="1em">
+              <Box display="flex" flexDirection="column">
+                {sidebarMenu.map((menu, index) => (
+                  <Link href={menu.path} key={index}>
+                    <Button
+                      mt="5px"
+                      mb="5px"
+                      height="4rem"
+                      borderRadius="1rem"
+                      display="flex"
+                      justifyContent="left"
+                      colorScheme={page === menu.page ? 'blue' : 'gray'}>
+                      <>
+                        <menu.icon size="20px" /> &nbsp; {menu.buttonName}
+                      </>
+                    </Button>
+                  </Link>
+                ))}
               </Box>
-              <App />
             </Box>
-          </Container>
+            <App />
+          </Box>
         </>
       );
     }
