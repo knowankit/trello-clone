@@ -40,7 +40,7 @@ const withSidebar = (App, props) => {
       return (
         <>
           <NavBar bg="white" />
-          <Box display="flex" mt="4px">
+          <Box display="flex" mt="10px">
             <Box minHeight="100vh" width="15vw" boxShadow="lg" p="1em">
               <Box display="flex" flexDirection="column">
                 {sidebarMenu.map((menu, index) => (
