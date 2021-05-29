@@ -6,7 +6,7 @@ import PropType from 'prop-types';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const Board = ({ board }) => {
+const Board = ({ board }): JSX.Element => {
   return (
     <>
       <Navbar />
