@@ -25,9 +25,9 @@ HomePageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
   const { dispatch } = reduxStore;
 
-  const isValid = isValidUser(ctx);
+  const userDetails = isValidUser(ctx);
 
-  if (!isValid && typeof window === 'undefined') {
+  if (userDetails && !userDetails.isValid && typeof window === 'undefined') {
     ctx.res.writeHead(307, {
       Location: '/login'
     });
