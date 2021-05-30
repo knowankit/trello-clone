@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import checkEnvironment from '@/util/check-environment';
 import { BoardSlice } from '@/src/types/boards';
+import { SingleUser } from '@/src/types/user';
 
 const initialState = {
   board: {
@@ -19,12 +20,13 @@ const host = checkEnvironment();
 
 export const createBoard = createAsyncThunk('board/create', async (obj, { getState }) => {
   const { board } = getState() as { board: BoardSlice };
+  const { user } = getState() as { user: SingleUser };
 
   const data = {
     _id: board.board._id,
     name: board.board.name,
     dateCreated: board.board.dateCreated,
-    createdBy: board.board.createdBy,
+    createdBy: user.id,
     columns: []
   };
 

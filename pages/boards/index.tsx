@@ -29,6 +29,10 @@ BoardsPageWithStore.getInitialProps = async (ctx) => {
 
   await dispatch(updateUserData({ type: 'isValid', value: true }));
 
+  if (ctx.req) {
+    await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
+  }
+
   return {
     initialReduxStore: reduxStore.getState()
   };

@@ -11,3 +11,8 @@ export type UserDetail = {
   message: string;
   error: string;
 };
+
+export type SingleUser = {
+  id: string;
+  email: string;
+};
