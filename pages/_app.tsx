@@ -11,7 +11,7 @@ const theme = extendTheme({
     danger: '#eb5a46',
     info: '#ff9f1a',
     warning: '#f2d600',
-    darkblue: '#eae6ff',
+    darkmode: '#071e3d',
     lightblue: '#f2faf9'
   }
 });

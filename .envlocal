@@ -1,0 +1,2 @@
+MONGODB_URI=mongodb+srv://knowankit:GHH7ewBnchHDfzeX@trello-clone.ia9se.mongodb.net/trello?retryWrites=true&w=majority
+MONGODB_DB=trello

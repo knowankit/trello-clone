@@ -58,7 +58,7 @@ const Boards = (): JSX.Element => {
         <Button onClick={onOpen} colorScheme="green" size="lg" mt="1rem">
           Create a board
         </Button>
-        <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <Modal onClose={onClose} isOpen={isOpen} backgroundColor="darkmode" isCentered>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Create board</ModalHeader>
@@ -99,8 +99,8 @@ const Boards = (): JSX.Element => {
   };
 
   return (
-    <Box flexGrow={3} mx="2%" boxShadow="md" rounded="lg" bg="white" p="1rem">
-      <h1>Boards page</h1>
+    <Box flexGrow={3} mx="2%" boxShadow="dark-lg" rounded="lg" backgroundColor="darkmode" p="1rem">
+      <p color="white">Boards page</p>
       {createBoardModal()}
       {loadExistingBoards()}
     </Box>
