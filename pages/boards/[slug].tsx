@@ -36,6 +36,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ctx.res.end();
   }
 
+  await dispatch(updateUserData({ type: 'isValid', value: true }));
+
   // https://github.com/reduxjs/redux-toolkit/issues/489
   await dispatch(fetchBoard(ctx.params.slug.toString()));
 
