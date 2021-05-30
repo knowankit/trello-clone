@@ -1,12 +1,6 @@
 import React from 'react';
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuGroup,
   Button,
-  MenuDivider,
   Input,
   Box,
   useDisclosure,
@@ -19,7 +13,12 @@ import {
   ModalContent,
   FormControl,
   FormLabel,
-  FormHelperText
+  FormHelperText,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useAppSelector } from '@/src/hooks';
@@ -48,49 +47,6 @@ const BoardSettings = (): JSX.Element => {
     onClose();
   };
 
-  const settingsModal = (): JSX.Element => {
-    if (!isOpen) return;
-
-    return (
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Settings</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl id="email">
-              <FormLabel>Board name</FormLabel>
-              <Input
-                value={board.name}
-                onChange={(e) =>
-                  dispatch(updateBoardDetail({ type: 'name', value: e.target.value }))
-                }
-              />
-              <FormHelperText>You can change this any time</FormHelperText>
-            </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button variant="ghost" mr="10px">
-              Cancel
-            </Button>
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={handleSave}
-              isLoading={boardDetail.isLoading}>
-              Save
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    );
-  };
-
-  const onMenuClick = () => {
-    onOpen();
-  };
-
   const handleDelete = async () => {
     await dispatch(deleteBoard());
 
@@ -107,23 +63,65 @@ const BoardSettings = (): JSX.Element => {
             Boards
           </Button>
         </Link>
-        <Menu>
-          <MenuButton size="sm" as={Button} bg="darkblue">
-            <AiFillSetting />
-          </MenuButton>
-          <MenuList>
-            <MenuGroup title="Board Settings">
-              <MenuItem onClick={onMenuClick}>Change name</MenuItem>
-              <MenuItem>Add Background Image</MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={handleDelete} closeOnSelect={false}>
-                <AiOutlineDelete color="red" /> &nbsp; Delete board
-              </MenuItem>
-            </MenuGroup>
-          </MenuList>
-        </Menu>
+        <Button onClick={onOpen} size="sm" as={Button} bg="darkblue">
+          <AiFillSetting />
+        </Button>
+        <Modal onClose={onClose} isOpen={isOpen} size="xl" isCentered>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Board Settings</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Tabs isFitted variant="enclosed">
+                <TabList mb="2rem">
+                  <Tab>Change Name</Tab>
+                  <Tab>Add Background Image</Tab>
+                  <Tab>
+                    <AiOutlineDelete color="red" /> &nbsp; Delete board{' '}
+                  </Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel>
+                    <FormControl id="email">
+                      <FormLabel>Board name</FormLabel>
+                      <Input
+                        value={board.name}
+                        onChange={(e) =>
+                          dispatch(updateBoardDetail({ type: 'name', value: e.target.value }))
+                        }
+                      />
+                      <FormHelperText>You can change this any time</FormHelperText>
+                    </FormControl>
+                    <Box align="right">
+                      <Button variant="ghost" mr="10px">
+                        Cancel
+                      </Button>
+                      <Button
+                        colorScheme="blue"
+                        onClick={handleSave}
+                        isLoading={boardDetail.isLoading}>
+                        Save
+                      </Button>
+                    </Box>
+                  </TabPanel>
+                  <TabPanel>
+                    <p>Unsplash</p>
+                  </TabPanel>
+                  <TabPanel>
+                    <p>To delete your board, Click on Delete button.</p>
+                    <Box align="right">
+                      <Button bg="red.500" color="white" onClick={handleDelete}>
+                        Delete
+                      </Button>
+                    </Box>
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </ModalBody>
+            <ModalFooter />
+          </ModalContent>
+        </Modal>
       </Box>
-      {settingsModal()}
     </>
   );
 };
