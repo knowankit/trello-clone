@@ -15,8 +15,6 @@ BoardsPageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
   const { dispatch } = reduxStore;
 
-  await dispatch(fetchBoards());
-
   const userDetails = isValidUser(ctx);
 
   if (userDetails && !userDetails.isValid && typeof window === 'undefined') {
@@ -28,6 +26,12 @@ BoardsPageWithStore.getInitialProps = async (ctx) => {
   }
 
   await dispatch(updateUserData({ type: 'isValid', value: true }));
+
+  if (ctx.req) {
+    await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
+  }
+
+  await dispatch(fetchBoards());
 
   return {
     initialReduxStore: reduxStore.getState()

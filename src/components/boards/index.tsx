@@ -15,7 +15,9 @@ import {
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/src/hooks';
-import { createBoard, updateBoardDetail, resetBoard } from '@/src/slices/board';
+import { updateBoardDetail, resetBoard } from '@/src/slices/board';
+import { createBoard } from '@/src/slices/boards';
+
 import { fetchBoards } from '@/src/slices/boards';
 
 import shortId from 'shortid';

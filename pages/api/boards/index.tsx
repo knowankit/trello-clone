@@ -26,8 +26,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
       }
       case 'GET': {
-        const boards = await db.collection('boards').find({}).limit(10).toArray();
+        const { userid } = req.query;
+
+        const boards = await db
+          .collection('boards')
+          .find({ createdBy: userid })
+          .limit(10)
+          .toArray();
         res.send(boards);
+
         return;
       }
 

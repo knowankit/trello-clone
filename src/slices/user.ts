@@ -118,6 +118,9 @@ export const userSlice = createSlice({
     },
     [loginUser.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
+      state.id = payload && payload.id;
+      state.password = undefined;
+      state.confirmPassword = undefined;
       state.error = (payload && payload.error) || '';
       state.doneFetching = true;
       state.message = payload && payload.message;
