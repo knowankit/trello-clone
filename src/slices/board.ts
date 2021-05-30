@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import checkEnvironment from '@/util/check-environment';
 import { BoardSlice } from '@/src/types/boards';
-import { SingleUser } from '@/src/types/user';
 
 const initialState = {
   board: {
@@ -17,37 +16,6 @@ const initialState = {
 };
 
 const host = checkEnvironment();
-
-export const createBoard = createAsyncThunk('board/create', async (obj, { getState }) => {
-  const { board } = getState() as { board: BoardSlice };
-  const { user } = getState() as { user: SingleUser };
-
-  const data = {
-    _id: board.board._id,
-    name: board.board.name,
-    dateCreated: board.board.dateCreated,
-    createdBy: user.id,
-    columns: []
-  };
-
-  const url = `${host}/api/boards`;
-
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(data)
-  });
-
-  const inJSON = await response.json();
-  return inJSON;
-});
 
 export const saveBoard = createAsyncThunk('board/save', async (obj, { getState }) => {
   const { board } = getState() as { board: BoardSlice };
@@ -108,6 +76,7 @@ export const deleteBoard = createAsyncThunk('board/delete', async (obj, { getSta
   });
 
   const inJSON = await response.json();
+
   return inJSON;
 });
 
@@ -121,15 +90,6 @@ export const boardSlice = createSlice({
     resetBoard: () => initialState
   },
   extraReducers: {
-    [createBoard.pending.toString()]: (state) => {
-      state.status = 'pending';
-    },
-    [createBoard.fulfilled.toString()]: (state) => {
-      state.status = 'success';
-    },
-    [createBoard.rejected.toString()]: (state) => {
-      state.status = 'failed';
-    },
     [fetchBoard.pending.toString()]: (state) => {
       state.status = 'pending';
     },
