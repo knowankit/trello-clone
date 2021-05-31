@@ -30,7 +30,7 @@ import {
   deleteBoard,
   resetBoard
 } from '@/src/slices/board';
-import { AiFillSetting, AiOutlineDelete } from 'react-icons/ai';
+import { AiFillSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 const BoardSettings = (): JSX.Element => {
@@ -74,11 +74,8 @@ const BoardSettings = (): JSX.Element => {
             <ModalBody>
               <Tabs isFitted variant="enclosed">
                 <TabList mb="2rem">
-                  <Tab>Change Name</Tab>
-                  <Tab>Add Background Image</Tab>
-                  <Tab>
-                    <AiOutlineDelete color="red" /> &nbsp; Delete board{' '}
-                  </Tab>
+                  <Tab>Basic</Tab>
+                  <Tab>Advance</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>
@@ -92,6 +89,7 @@ const BoardSettings = (): JSX.Element => {
                       />
                       <FormHelperText>You can change this any time</FormHelperText>
                     </FormControl>
+                    <Box mt="5px">Set Background Image</Box>
                     <Box align="right">
                       <Button variant="ghost" mr="10px">
                         Cancel
@@ -103,9 +101,6 @@ const BoardSettings = (): JSX.Element => {
                         Save
                       </Button>
                     </Box>
-                  </TabPanel>
-                  <TabPanel>
-                    <p>Unsplash</p>
                   </TabPanel>
                   <TabPanel>
                     <p>To delete your board, Click on Delete button.</p>
