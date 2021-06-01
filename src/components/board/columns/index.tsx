@@ -34,6 +34,7 @@ const BoardColumns: FC = (): JSX.Element => {
 
   const addColumn = async () => {
     const columnId = shortId.generate();
+
     await dispatch(addColumnToBoard(columnId));
     await dispatch(fetchColumns());
   };
