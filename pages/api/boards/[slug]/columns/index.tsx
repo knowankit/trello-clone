@@ -38,6 +38,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
       }
 
+      case 'DELETE': {
+        const { slug } = req.query;
+
+        await db.collection('columns').remove({ boardId: slug });
+        res.send({ message: 'All columns deleted' });
+
+        return;
+      }
+
       default:
         res.send({ message: 'DB error' });
         break;

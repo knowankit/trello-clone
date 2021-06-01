@@ -5,7 +5,7 @@ import Cards from '@/src/components/board/columns/cards';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '@/util/items';
 import { useDispatch } from 'react-redux';
-import columns, { deleteColumn, fetchColumns, updateColumn } from '@/src/slices/columns';
+import { deleteColumn, fetchColumns, updateColumn } from '@/src/slices/columns';
 import debounce from 'lodash.debounce';
 
 const Column = ({ showCardDetail, column, index, id }): JSX.Element => {
@@ -69,6 +69,7 @@ const Column = ({ showCardDetail, column, index, id }): JSX.Element => {
       columnName: value,
       columnId: column._id
     };
+
     await dispatch(updateColumn(data));
   };
 
@@ -94,7 +95,6 @@ const Column = ({ showCardDetail, column, index, id }): JSX.Element => {
           </Button>
         </Box>
       </Box>
-
       <Cards showCardDetail={showCardDetail} cards={column.cards} columnIndex={index} />
       <Button
         size="xs"
