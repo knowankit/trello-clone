@@ -56,7 +56,6 @@ export const addColumnToBoard = createAsyncThunk(
     const data = {
       id: columnId,
       boardId: board.board._id,
-      boardName: board.board.name,
       columnName: 'Add name',
       dateCreated: new Date().toLocaleString(),
       userId: user.id,
@@ -67,6 +66,38 @@ export const addColumnToBoard = createAsyncThunk(
 
     const response = await fetch(url, {
       method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data)
+    });
+
+    const inJSON = await response.json();
+
+    return inJSON;
+  }
+);
+
+export const updateColumn = createAsyncThunk(
+  'column/updateColumn',
+  async (obj: { columnName: string; columnId: string }, { getState }) => {
+    const { board } = getState() as { board: BoardSlice };
+
+    const data = {
+      _id: obj.columnId,
+      boardName: board.board.name,
+      columnName: obj.columnName
+    };
+
+    const url = `${host}/api/boards/${board.board._id}/columns/${obj.columnId}`;
+
+    const response = await fetch(url, {
+      method: 'PATCH',
       mode: 'cors',
       cache: 'no-cache',
       credentials: 'same-origin',
@@ -117,6 +148,15 @@ export const boardSlice = createSlice({
       state.status = 'success';
     },
     [deleteColumn.rejected.toString()]: (state) => {
+      state.status = 'failed';
+    },
+    [updateColumn.pending.toString()]: (state) => {
+      state.status = 'pending';
+    },
+    [updateColumn.fulfilled.toString()]: (state, { payload }) => {
+      state.status = 'success';
+    },
+    [updateColumn.rejected.toString()]: (state) => {
       state.status = 'failed';
     }
   }

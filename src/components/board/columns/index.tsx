@@ -38,21 +38,6 @@ const BoardColumns: FC = (): JSX.Element => {
     await dispatch(fetchColumns());
   };
 
-  const addCard = (index: number) => {
-    // Fetch particular column
-    const column = columns[index];
-    const cardId = shortId.generate();
-    // Push the card details
-    column.cards.push({ title: 'Card title' + new Date().toString(), id: cardId });
-
-    // Fetch all the columns
-    const temp = columns;
-
-    // Delete the old list and add the new list
-    // temp.splice(index, 1, column);
-    // setColumns([...temp]);
-  };
-
   const handleCardChange = (event) => {
     // Fetch active card and update the value
     const tempCard = cardDetail;
@@ -85,7 +70,6 @@ const BoardColumns: FC = (): JSX.Element => {
             column={column}
             id={column._id}
             index={index}
-            addCard={addCard}
             showCardDetail={showCardDetail}
           />
         ))}

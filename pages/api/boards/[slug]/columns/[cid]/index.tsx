@@ -10,6 +10,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const requestType = req.method;
 
     switch (requestType) {
+      case 'PATCH': {
+        const { _id, boardName, columnName } = req.body;
+
+        const data = {
+          boardName,
+          columnName
+        };
+
+        const board = await db.collection('columns').updateOne({ _id: cid }, { $set: data });
+        res.send(board);
+
+        break;
+      }
+
       case 'DELETE': {
         await db.collection('columns').deleteOne({ _id: cid });
 
