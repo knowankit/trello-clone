@@ -6,16 +6,15 @@ import CardDetailsModal from '@/src/components/board/columns/modals/card-details
 import Column from '@/src/components/board/columns/column';
 // import { GrDrag } from 'react-icons/gr';
 import { CardDetail } from '@/src/types/cards';
+import { useAppSelector } from '@/src/hooks';
+import { useDispatch } from 'react-redux';
+import { addColumnToBoard, fetchColumns } from '@/src/slices/columns';
 import shortId from 'shortid';
 
 const BoardColumns: FC = (): JSX.Element => {
-  const tempData = [
-    { columnName: 'To-Do', cards: [], id: 'wq3ead' },
-    { columnName: 'In Progress', cards: [], id: '9hw23' },
-    { columnName: 'Done', cards: [], id: 'j320fj' }
-  ];
+  const dispatch = useDispatch();
+  const columns = useAppSelector((state) => state.columns.columns);
 
-  const [columns, setColumns] = useState(tempData);
   const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0);
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 
@@ -33,13 +32,10 @@ const BoardColumns: FC = (): JSX.Element => {
     onOpen();
   };
 
-  const addColumn = () => {
+  const addColumn = async () => {
     const columnId = shortId.generate();
-    setColumns([...columns, { columnName: 'Test', id: columnId, cards: [] }]);
-
-    // Scroll to the right when column is added
-    // const parentOfColumns = document.getElementById('parent-of-columns')
-    // parentOfColumns.scrollLeft = 300
+    await dispatch(addColumnToBoard(columnId));
+    await dispatch(fetchColumns());
   };
 
   const addCard = (index: number) => {
@@ -53,8 +49,8 @@ const BoardColumns: FC = (): JSX.Element => {
     const temp = columns;
 
     // Delete the old list and add the new list
-    temp.splice(index, 1, column);
-    setColumns([...temp]);
+    // temp.splice(index, 1, column);
+    // setColumns([...temp]);
   };
 
   const handleCardChange = (event) => {
@@ -71,11 +67,10 @@ const BoardColumns: FC = (): JSX.Element => {
 
     // Fetch all the columns and update the edited column
     const tempColumns = columns;
-    tempColumns.splice(currentColumnIndex, 1, column);
+    // tempColumns.splice(currentColumnIndex, 1, column);
 
-    setColumns([...tempColumns]);
+    // setColumns([...tempColumns]);
   };
-
   return (
     <Box
       display="block"
@@ -88,6 +83,7 @@ const BoardColumns: FC = (): JSX.Element => {
           <Column
             key={index}
             column={column}
+            id={column._id}
             index={index}
             addCard={addCard}
             showCardDetail={showCardDetail}

@@ -1,11 +1,15 @@
 import React from 'react';
 import { Box, Button, Heading } from '@chakra-ui/react';
 import { GrDrag } from 'react-icons/gr';
+import { AiOutlineDelete } from 'react-icons/ai';
 import Cards from '@/src/components/board/columns/cards';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '@/util/items';
+import { useDispatch } from 'react-redux';
+import { deleteColumn, fetchColumns } from '@/src/slices/columns';
+const Column = ({ showCardDetail, addCard, column, index, id }): JSX.Element => {
+  const dispatch = useDispatch();
 
-const Column = ({ showCardDetail, addCard, column, index }): JSX.Element => {
   const [_collectedProps, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: (item, monitor) => {
@@ -20,6 +24,11 @@ const Column = ({ showCardDetail, addCard, column, index }): JSX.Element => {
   // const moveCard = (fromColumn, toColumn, cardId) => {
   //   const fromColumn =
   // }
+
+  const handleColumnDelete = () => {
+    dispatch(deleteColumn(id));
+    dispatch(fetchColumns());
+  };
 
   return (
     <Box
@@ -36,8 +45,12 @@ const Column = ({ showCardDetail, addCard, column, index }): JSX.Element => {
         <Heading as="h6" size="sm" ml="10px" mt="5px" textAlign="center">
           {column.columnName}
         </Heading>
-        <Box my="10px" mr="10px" float="right" cursor="grab">
-          <GrDrag />
+
+        <Box my="10px" mr="10px" float="right" cursor="grab" display="flex">
+          {/* <GrDrag /> */}
+          <Button size="xs" onClick={handleColumnDelete}>
+            <AiOutlineDelete />
+          </Button>
         </Box>
       </Box>
 
