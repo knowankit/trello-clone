@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { RootState } from '@/src/store';
 import { GetServerSideProps } from 'next';
 import { updateUserData } from '@/src/slices/user';
+import { fetchColumns } from '@/src/slices/columns';
+
 import isValidUser from '@/util/is-valid-user';
 
 type Props = {
@@ -40,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   // https://github.com/reduxjs/redux-toolkit/issues/489
   await dispatch(fetchBoard(ctx.params.slug.toString()));
+  await dispatch(fetchColumns());
 
   if (ctx.req) {
     await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
