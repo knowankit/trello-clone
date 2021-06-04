@@ -11,27 +11,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     switch (requestType) {
       case 'GET': {
-        const columns = await db.collection('columns').find({ boardId: slug }).toArray();
+        const columns = await db.collection('cards').find({ boardId: slug }).toArray();
         res.send(columns);
-
         return;
       }
 
       case 'POST': {
-        const { id, boardId, boardName, columnName, dateCreated, userId, cards } = req.body;
+        const { id, boardId, columnId, dateCreated, userId, title, type, description } = req.body;
 
         const data = {
           _id: id,
           boardId,
-          boardName,
-          columnName,
+          columnId,
+          title,
+          type,
           dateCreated,
           userId,
-          cards
+          description
         };
 
-        const board = await db.collection('columns').insertOne(data);
-        res.send(board);
+        const card = await db.collection('cards').insertOne(data);
+        res.send(card);
 
         return;
       }

@@ -140,11 +140,11 @@ export const updateColumn = createAsyncThunk(
   }
 );
 
-export const boardSlice = createSlice({
-  name: 'boards',
+export const columnsSlice = createSlice({
+  name: 'columns',
   initialState: initialState,
   reducers: {
-    resetBoards: () => initialState
+    resetColumns: () => initialState
   },
   extraReducers: {
     [addColumnToBoard.pending.toString()]: (state) => {
@@ -196,6 +196,6 @@ export const boardSlice = createSlice({
   }
 });
 
-export const { resetBoards } = boardSlice.actions;
+export const { resetColumns } = columnsSlice.actions;
 
-export default boardSlice.reducer;
+export default columnsSlice.reducer;

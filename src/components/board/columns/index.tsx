@@ -14,6 +14,7 @@ import shortId from 'shortid';
 const BoardColumns: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const columns = useAppSelector((state) => state.columns.columns);
+  const cards = useAppSelector((state) => state.cards.cards);
 
   const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0);
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
@@ -57,6 +58,13 @@ const BoardColumns: FC = (): JSX.Element => {
 
     // setColumns([...tempColumns]);
   };
+
+  const filterCards = (columnId: string) => {
+    const filteredCards = cards.filter((card) => card.columnId === columnId);
+
+    return filteredCards;
+  };
+
   return (
     <Box
       display="block"
@@ -71,6 +79,7 @@ const BoardColumns: FC = (): JSX.Element => {
             column={column}
             id={column._id}
             index={index}
+            cards={filterCards(column._id)}
             showCardDetail={showCardDetail}
           />
         ))}
