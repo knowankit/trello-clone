@@ -4,6 +4,12 @@ import { SingleUser } from '@/src/types/user';
 import { BoardSlice } from '@/src/types/boards';
 import shortId from 'shortid';
 
+type CardPatch = {
+  _id: string;
+  title: string;
+  description: string;
+};
+
 const initialState = {
   cards: [],
   status: 'idle',
@@ -28,31 +34,6 @@ export const deleteCard = createAsyncThunk(
     const { board } = getState() as { board: BoardSlice };
 
     const url = `${host}/api/boards/${board.board._id}/cards/${cardId}`;
-
-    const response = await fetch(url, {
-      method: 'DELETE',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer'
-    });
-
-    const inJSON = await response.json();
-
-    return inJSON;
-  }
-);
-
-export const deleteAllCards = createAsyncThunk(
-  'column/deleteAllColumn',
-  async (_obj, { getState }) => {
-    const { board } = getState() as { board: BoardSlice };
-
-    const url = `${host}/api/boards/${board.board._id}/columns`;
 
     const response = await fetch(url, {
       method: 'DELETE',
@@ -110,17 +91,17 @@ export const addCard = createAsyncThunk('card/addCard', async (columnId: string,
 });
 
 export const updateCard = createAsyncThunk(
-  'column/updateColumn',
-  async (obj: { columnName: string; columnId: string }, { getState }) => {
+  'card/updateCard',
+  async (obj: CardPatch, { getState }) => {
     const { board } = getState() as { board: BoardSlice };
+    const { _id, title, description } = obj;
 
     const data = {
-      _id: obj.columnId,
-      boardName: board.board.name,
-      columnName: obj.columnName
+      title,
+      description
     };
 
-    const url = `${host}/api/boards/${board.board._id}/columns/${obj.columnId}`;
+    const url = `${host}/api/boards/${board.board._id}/cards/${_id}`;
 
     const response = await fetch(url, {
       method: 'PATCH',
@@ -170,7 +151,7 @@ export const cardsSlice = createSlice({
     [deleteCard.pending.toString()]: (state) => {
       state.status = 'pending';
     },
-    [deleteCard.fulfilled.toString()]: (state, { payload }) => {
+    [deleteCard.fulfilled.toString()]: (state) => {
       state.status = 'success';
     },
     [deleteCard.rejected.toString()]: (state) => {
@@ -179,19 +160,10 @@ export const cardsSlice = createSlice({
     [updateCard.pending.toString()]: (state) => {
       state.status = 'pending';
     },
-    [updateCard.fulfilled.toString()]: (state, { payload }) => {
+    [updateCard.fulfilled.toString()]: (state) => {
       state.status = 'success';
     },
     [updateCard.rejected.toString()]: (state) => {
-      state.status = 'failed';
-    },
-    [deleteAllCards.pending.toString()]: (state) => {
-      state.status = 'pending';
-    },
-    [deleteAllCards.fulfilled.toString()]: (state, { payload }) => {
-      state.status = 'success';
-    },
-    [deleteAllCards.rejected.toString()]: (state) => {
       state.status = 'failed';
     }
   }

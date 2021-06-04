@@ -2,7 +2,6 @@ import React, { useState, FC } from 'react';
 import { Box, useDisclosure } from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
 import CardDetailsModal from '@/src/components/board/columns/modals/card-details-modal';
-// import Cards from '@/src/components/board/columns/cards';
 import Column from '@/src/components/board/columns/column';
 // import { GrDrag } from 'react-icons/gr';
 import { CardDetail } from '@/src/types/cards';
@@ -68,12 +67,7 @@ const BoardColumns: FC = (): JSX.Element => {
         ))}
         <AddColumnButton addColumn={addColumn} />
       </Box>
-      <CardDetailsModal
-        isOpen={isOpen}
-        onClose={onClose}
-        card={cardDetail}
-        handleCardChange={handleCardChange}
-      />
+      {isOpen && <CardDetailsModal isOpen={isOpen} onClose={onClose} card={cardDetail} />}
     </Box>
   );
 };

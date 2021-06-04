@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDatabase } from '@/util/mongodb';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  const { cardId } = req.query;
+  const { cardId, slug } = req.query;
 
   const { db, client } = await connectToDatabase();
 
@@ -20,6 +20,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         res.send({ message: 'A card has been deleted' });
 
+        return;
+      }
+
+      case 'PATCH': {
+        const { title, description } = req.body;
+
+        const updatedData = {
+          title,
+          description
+        };
+
+        await db
+          .collection('cards')
+          .updateOne({ _id: cardId, boardId: slug }, { $set: updatedData });
+
+        res.send({ message: 'Card updated' });
         return;
       }
 
