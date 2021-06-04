@@ -2,13 +2,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import boardsSlice from '@/src/slices/boards';
 import userSlice from '@/src/slices/user';
 import boardSlice from '@/src/slices/board';
+import columnsSlice from '@/src/slices/columns';
 
 const createStore = (preloadedState = {}) => {
   return configureStore({
     reducer: {
       boards: boardsSlice,
+      board: boardSlice,
       user: userSlice,
-      board: boardSlice
+      columns: columnsSlice
     },
     preloadedState
   });
@@ -18,7 +20,8 @@ const store = configureStore({
   reducer: {
     boards: boardsSlice,
     user: userSlice,
-    board: boardSlice
+    board: boardSlice,
+    columns: columnsSlice
   }
 });
 

@@ -3,15 +3,18 @@ import withSidebar from '@/src/hoc/with-sidebar';
 import isValidUser from '@/util/is-valid-user';
 import withStore from '@/src/hoc/with-store';
 import { setOrGetStore } from '@/util/initialise-store';
+import { updateUserData } from '@/src/slices/user';
 
 const TemplatesPageWithSidebar = withSidebar(Templates, { page: 'templates' });
 const HomePageWithStore = withStore(TemplatesPageWithSidebar);
 
 HomePageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
-  const isValid = isValidUser(ctx);
+  const { dispatch } = reduxStore;
 
-  if (!isValid && typeof window === 'undefined') {
+  const userDetails = isValidUser(ctx);
+
+  if (userDetails && !userDetails.isValid && typeof window === 'undefined') {
     ctx.res.writeHead(307, {
       Location: '/login'
     });
@@ -19,6 +22,11 @@ HomePageWithStore.getInitialProps = async (ctx) => {
     ctx.res.end();
   }
 
+  await dispatch(updateUserData({ type: 'isValid', value: true }));
+
+  if (ctx.req) {
+    await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
+  }
   return {
     initialReduxStore: reduxStore.getState()
   };

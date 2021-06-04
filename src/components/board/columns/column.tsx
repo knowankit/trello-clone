@@ -1,11 +1,18 @@
-import React from 'react';
-import { Box, Button, Heading } from '@chakra-ui/react';
-import { GrDrag } from 'react-icons/gr';
+import React, { useState, useCallback } from 'react';
+import { Box, Button, Heading, Input } from '@chakra-ui/react';
+import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import Cards from '@/src/components/board/columns/cards';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '@/util/items';
+import { useDispatch } from 'react-redux';
+import { deleteColumn, fetchColumns, updateColumn } from '@/src/slices/columns';
+import debounce from 'lodash.debounce';
 
-const Column = ({ showCardDetail, addCard, column, index }): JSX.Element => {
+const Column = ({ showCardDetail, column, index, id }): JSX.Element => {
+  const dispatch = useDispatch();
+  const [showEditBox, setEditBoxVisibility] = useState<boolean>(false);
+  const [columnName, setColumnName] = useState<string>(column.columnName);
+
   const [_collectedProps, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: (item, monitor) => {
@@ -17,9 +24,54 @@ const Column = ({ showCardDetail, addCard, column, index }): JSX.Element => {
     })
   }));
 
-  // const moveCard = (fromColumn, toColumn, cardId) => {
-  //   const fromColumn =
-  // }
+  const loadColumnTitle = () => {
+    if (showEditBox) {
+      return (
+        <Input
+          bg="white"
+          value={columnName}
+          size="xs"
+          width="60%"
+          ml="20px"
+          onChange={handleChange}
+        />
+      );
+    }
+
+    return (
+      <Heading as="h6" size="sm" ml="10px" mt="5px" textAlign="center">
+        {columnName}
+      </Heading>
+    );
+  };
+
+  const addCard = () => {
+    console.log('Still to be implemented');
+  };
+
+  const handleChange = (e) => {
+    setColumnName(e.target.value);
+    handleColumnNameChange(e.target.value);
+  };
+
+  const handleColumnDelete = async () => {
+    await dispatch(deleteColumn(id));
+    await dispatch(fetchColumns());
+  };
+
+  const handleColumnNameChange = useCallback(
+    debounce((value) => nameChange(value), 800),
+    []
+  );
+
+  const nameChange = async (value) => {
+    const data = {
+      columnName: value,
+      columnId: column._id
+    };
+
+    await dispatch(updateColumn(data));
+  };
 
   return (
     <Box
@@ -28,19 +80,21 @@ const Column = ({ showCardDetail, addCard, column, index }): JSX.Element => {
       key={index}
       width="300px"
       overflowY="auto"
-      height="calc(100vh - 150px)"
+      maxHeight="calc(100vh - 150px)"
       mt="10px"
       mx="10px"
       bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'}>
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Heading as="h6" size="sm" ml="10px" mt="5px" textAlign="center">
-          {column.columnName}
-        </Heading>
-        <Box my="10px" mr="10px" float="right" cursor="grab">
-          <GrDrag />
+        {loadColumnTitle()}
+        <Box my="10px" mr="10px" float="right" cursor="grab" display="flex">
+          <Button size="xs" mr="5px" onClick={() => setEditBoxVisibility(!showEditBox)}>
+            <AiOutlineEdit />
+          </Button>
+          <Button size="xs" onClick={handleColumnDelete}>
+            <AiOutlineDelete />
+          </Button>
         </Box>
       </Box>
-
       <Cards showCardDetail={showCardDetail} cards={column.cards} columnIndex={index} />
       <Button
         size="xs"
@@ -50,9 +104,7 @@ const Column = ({ showCardDetail, addCard, column, index }): JSX.Element => {
         bg="brand"
         display="block"
         color="white"
-        onClick={() => {
-          addCard(index);
-        }}>
+        onClick={addCard}>
         Add a card
       </Button>
     </Box>

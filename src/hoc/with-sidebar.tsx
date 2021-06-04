@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Box, Button } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import {
   AiOutlineHome,
   AiOutlineSetting,
