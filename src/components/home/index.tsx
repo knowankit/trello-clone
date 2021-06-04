@@ -9,7 +9,7 @@ const Boards = (): JSX.Element => {
       mx="2%"
       boxShadow="dark-lg"
       rounded="lg"
-      backgroundColor="darkmode"
+      backgroundColor="darkblue"
       color="white"
       p="1rem">
       <p>Instructions or Basic information about this tool</p>

@@ -5,7 +5,7 @@ import { Box, Image, Flex, Text } from '@chakra-ui/react';
 const WelcomeScreen = (): JSX.Element => {
   return (
     <>
-      <Box backgroundColor="darkmode" color="white" height="100vh">
+      <Box backgroundColor="bg" color="color" height="100vh">
         <NavBar />
         <Flex
           alignItems="center"

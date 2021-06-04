@@ -56,22 +56,20 @@ const NavBar: FC<IProps> = ({ bg }) => {
       <>
         <Button
           fontSize="20"
-          backgroundColor="darkmode"
-          color="white"
+          backgroundColor="bg"
+          color="color"
           variant="link"
           float="right"
           mr="2"
           pr="2">
           <Link href="/login">Log in</Link>
         </Button>
-        <Button fontSize="md" colorScheme="green" color="white" m="4">
+        <Button fontSize="md" backgroundColor="success" color="white" m="4">
           <Link href="/signup">Sign up</Link>
         </Button>
       </>
     );
   };
-
-  // const logout = () => {};
 
   return (
     <Box bg={bg} boxShadow="lg">

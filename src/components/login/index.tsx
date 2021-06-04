@@ -34,10 +34,10 @@ const Login = (): JSX.Element => {
 
   return (
     <>
-      <Box backgroundColor="darkmode" height="100vh">
+      <Box backgroundColor="bg" height="100vh" overflow="hidden">
         <Box display="flex" justifyContent="center" my="40px">
           <Image height="30px" mt="2" src="/trello-icon.svg" alt="brand logo"></Image>
-          <Text fontWeight="bold" fontSize="30px" color="white" ml="2">
+          <Text fontWeight="bold" fontSize="30px" color="color" ml="2">
             Trello
           </Text>
         </Box>
@@ -71,7 +71,7 @@ const Login = (): JSX.Element => {
             boxShadow="dark-lg">
             <Box
               textAlign="center"
-              color="white"
+              color="color"
               mt="5"
               mb="25"
               fontSize={['16px', '16px', '20px', '20px']}
@@ -83,7 +83,7 @@ const Login = (): JSX.Element => {
               <form>
                 <FormControl>
                   <Input
-                    color="white"
+                    color="color"
                     type="email"
                     name="email"
                     value={user.email}
@@ -94,7 +94,7 @@ const Login = (): JSX.Element => {
                 </FormControl>
                 <FormControl mt={6}>
                   <Input
-                    color="white"
+                    color="color"
                     type="password"
                     name="password"
                     value={user.password}
@@ -113,7 +113,7 @@ const Login = (): JSX.Element => {
                   Sign In
                 </Button>
                 <Box m="5" textAlign="center">
-                  <Link href="/signup" color="#21e6c1" p="2">
+                  <Link href="/signup" color="link" p="2">
                     Sign up for an account
                   </Link>
                 </Box>
