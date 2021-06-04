@@ -6,10 +6,10 @@ import { useDispatch } from 'react-redux';
 import { loginUser, updateUserData } from '@/src/slices/user';
 
 const Login = (): JSX.Element => {
+  const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
   const router = useRouter();
-  const dispatch = useDispatch();
 
   if (!user.error && user.status === 'success') {
     router.push('/home');

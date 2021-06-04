@@ -25,6 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       case 'DELETE': {
+        await db.collection('cards').remove({ columnId: cid });
         await db.collection('columns').deleteOne({ _id: cid });
 
         res.send({ messsage: 'Deleted' });

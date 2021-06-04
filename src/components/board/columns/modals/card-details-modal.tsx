@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   Modal,
   ModalBody,
@@ -11,20 +11,44 @@ import {
   ModalOverlay,
   Textarea
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { CardDetail } from '@/src/types/cards';
-import PropTypes from 'prop-types';
+import { deleteCard, fetchCards, updateCard } from '@/src/slices/cards';
 
 type Props = {
   onClose: () => void;
   isOpen: boolean;
-  cardDetail: CardDetail;
-  handleCardChange: (e) => void;
+  card: CardDetail;
 };
 
-const CardDetailsModal: FC<Props> = ({ onClose, isOpen, cardDetail, handleCardChange }) => {
+const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState(card?.title);
+  const [description, setDescription] = useState(card?.description);
+
+  const handleCardDelete = async () => {
+    await dispatch(deleteCard(card._id));
+    await dispatch(fetchCards());
+
+    onClose();
+  };
+
+  const handleModalClose = async () => {
+    const data = {
+      _id: card._id,
+      title,
+      description
+    };
+
+    await dispatch(updateCard(data));
+    await dispatch(fetchCards());
+
+    onClose();
+  };
+
   return (
     <>
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal onClose={handleModalClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create card</ModalHeader>
@@ -33,18 +57,19 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, cardDetail, handleCardCh
             <Input
               name="title"
               size="sm"
-              value={cardDetail.title}
-              onChange={(e) => handleCardChange(e)}
-              placeholder="card name"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Card title"
             />
             <Textarea
               my="4"
               name="description"
-              value={cardDetail.description}
-              onChange={(e) => handleCardChange(e)}
-              placeholder="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Description"
               overflow="hidden"
             />
+            <Button onClick={handleCardDelete}>Delete card</Button>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>
@@ -53,17 +78,6 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, cardDetail, handleCardCh
       </Modal>
     </>
   );
-};
-
-CardDetailsModal.propTypes = {
-  onClose: PropTypes.func,
-  isOpen: PropTypes.bool,
-  cardDetail: PropTypes.exact({
-    title: PropTypes.string,
-    description: PropTypes.string,
-    id: PropTypes.string
-  }),
-  handleCardChange: PropTypes.func
 };
 
 export default CardDetailsModal;

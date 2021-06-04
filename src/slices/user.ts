@@ -114,6 +114,7 @@ export const userSlice = createSlice({
     [loginUser.pending.toString()]: (state, { payload }) => {
       state.status = 'pending';
       state.doneFetching = false;
+      state.isFetching = true;
       state.message = payload && payload.message;
     },
     [loginUser.fulfilled.toString()]: (state, { payload }) => {
@@ -122,12 +123,14 @@ export const userSlice = createSlice({
       state.password = undefined;
       state.confirmPassword = undefined;
       state.error = (payload && payload.error) || '';
+      state.isFetching = false;
       state.doneFetching = true;
       state.message = payload && payload.message;
     },
     [loginUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
       state.doneFetching = true;
+      state.isFetching = false;
       state.error = (payload && payload.error) || '';
       state.message = payload && payload.message;
     },

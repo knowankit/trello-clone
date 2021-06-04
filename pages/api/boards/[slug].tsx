@@ -35,9 +35,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       case 'DELETE': {
+        await db.collection('cards').remove({ boardId: slug });
+        await db.collection('columns').remove({ boardId: slug });
         await db.collection('boards').deleteOne({ _id: slug });
 
-        res.send({ messsage: 'success' });
+        res.send({ messsage: 'Delete boards with columns and cards' });
 
         break;
       }

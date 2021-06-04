@@ -6,11 +6,13 @@ import { useDrop } from 'react-dnd';
 import { ItemTypes } from '@/util/items';
 import { useDispatch } from 'react-redux';
 import { deleteColumn, fetchColumns, updateColumn } from '@/src/slices/columns';
+import { addCard, fetchCards } from '@/src/slices/cards';
 import debounce from 'lodash.debounce';
 
-const Column = ({ showCardDetail, column, index, id }): JSX.Element => {
+const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   const dispatch = useDispatch();
   const [showEditBox, setEditBoxVisibility] = useState<boolean>(false);
+
   const [columnName, setColumnName] = useState<string>(column.columnName);
 
   const [_collectedProps, drop] = useDrop(() => ({
@@ -45,8 +47,9 @@ const Column = ({ showCardDetail, column, index, id }): JSX.Element => {
     );
   };
 
-  const addCard = () => {
-    console.log('Still to be implemented');
+  const handleCardAdd = async () => {
+    await dispatch(addCard(column._id));
+    await dispatch(fetchCards());
   };
 
   const handleChange = (e) => {
@@ -95,7 +98,7 @@ const Column = ({ showCardDetail, column, index, id }): JSX.Element => {
           </Button>
         </Box>
       </Box>
-      <Cards showCardDetail={showCardDetail} cards={column.cards} columnIndex={index} />
+      <Cards showCardDetail={showCardDetail} cards={cards} columnIndex={index} />
       <Button
         size="xs"
         my="10px"
@@ -104,7 +107,7 @@ const Column = ({ showCardDetail, column, index, id }): JSX.Element => {
         bg="brand"
         display="block"
         color="white"
-        onClick={addCard}>
+        onClick={handleCardAdd}>
         Add a card
       </Button>
     </Box>
