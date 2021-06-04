@@ -47,31 +47,6 @@ export const deleteColumn = createAsyncThunk(
   }
 );
 
-export const deleteAllColumn = createAsyncThunk(
-  'column/deleteAllColumn',
-  async (_obj, { getState }) => {
-    const { board } = getState() as { board: BoardSlice };
-
-    const url = `${host}/api/boards/${board.board._id}/columns`;
-
-    const response = await fetch(url, {
-      method: 'DELETE',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer'
-    });
-
-    const inJSON = await response.json();
-
-    return inJSON;
-  }
-);
-
 export const addColumnToBoard = createAsyncThunk(
   'column/add',
   async (columnId: string, { getState }) => {
@@ -182,15 +157,6 @@ export const columnsSlice = createSlice({
       state.status = 'success';
     },
     [updateColumn.rejected.toString()]: (state) => {
-      state.status = 'failed';
-    },
-    [deleteAllColumn.pending.toString()]: (state) => {
-      state.status = 'pending';
-    },
-    [deleteAllColumn.fulfilled.toString()]: (state, { payload }) => {
-      state.status = 'success';
-    },
-    [deleteAllColumn.rejected.toString()]: (state) => {
       state.status = 'failed';
     }
   }

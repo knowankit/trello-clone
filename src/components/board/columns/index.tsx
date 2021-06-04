@@ -47,16 +47,6 @@ const BoardColumns: FC = (): JSX.Element => {
 
     // Set the current card to state. This will update the fiels present in the modal
     setCardDetail({ ...tempCard });
-
-    // Fetch edit card column and update the edited card value in that column
-    const column = columns[currentColumnIndex];
-    column.cards[currentCardIndex] = tempCard;
-
-    // Fetch all the columns and update the edited column
-    const tempColumns = columns;
-    // tempColumns.splice(currentColumnIndex, 1, column);
-
-    // setColumns([...tempColumns]);
   };
 
   const filterCards = (columnId: string) => {

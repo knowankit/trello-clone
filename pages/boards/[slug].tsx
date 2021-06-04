@@ -44,7 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // https://github.com/reduxjs/redux-toolkit/issues/489
   await dispatch(fetchBoard(ctx.params.slug.toString()));
   await dispatch(fetchColumns());
-  // await dispatch(fetchCards());
+  await dispatch(fetchCards());
 
   if (ctx.req) {
     await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));

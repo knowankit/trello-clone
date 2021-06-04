@@ -50,7 +50,7 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
 
   const handleCardAdd = async () => {
     await dispatch(addCard(column._id));
-    await dispatch(fetchCards(column._id));
+    await dispatch(fetchCards());
   };
 
   const handleChange = (e) => {

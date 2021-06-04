@@ -11,27 +11,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     switch (requestType) {
       case 'GET': {
-        const columns = await db.collection('columns').find({ boardId: slug }).toArray();
+        const columns = await db.collection('cards').find({ boardId: slug }).toArray();
         res.send(columns);
 
         return;
       }
 
-      case 'POST': {
-        const { id, boardId, boardName, columnName, dateCreated, userId, cards } = req.body;
+      case 'DELETE': {
+        const { slug } = req.query;
 
-        const data = {
-          _id: id,
-          boardId,
-          boardName,
-          columnName,
-          dateCreated,
-          userId,
-          cards
-        };
-
-        const board = await db.collection('columns').insertOne(data);
-        res.send(board);
+        await db.collection('cards').deleteOne({ boardId: slug });
+        res.send({ message: 'All columns deleted' });
 
         return;
       }
