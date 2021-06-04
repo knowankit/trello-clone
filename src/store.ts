@@ -3,6 +3,7 @@ import boardsSlice from '@/src/slices/boards';
 import userSlice from '@/src/slices/user';
 import boardSlice from '@/src/slices/board';
 import columnsSlice from '@/src/slices/columns';
+import cardsSlice from '@/src/slices/cards';
 
 const createStore = (preloadedState = {}) => {
   return configureStore({
@@ -10,7 +11,8 @@ const createStore = (preloadedState = {}) => {
       boards: boardsSlice,
       board: boardSlice,
       user: userSlice,
-      columns: columnsSlice
+      columns: columnsSlice,
+      cards: cardsSlice
     },
     preloadedState
   });
@@ -21,7 +23,8 @@ const store = configureStore({
     boards: boardsSlice,
     user: userSlice,
     board: boardSlice,
-    columns: columnsSlice
+    columns: columnsSlice,
+    cards: cardsSlice
   }
 });
 

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDatabase } from '@/util/mongodb';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  const { slug } = req.query;
+  const { cardId, cid, slug } = req.query;
 
   const { db, client } = await connectToDatabase();
 
@@ -10,34 +10,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const requestType = req.method;
 
     switch (requestType) {
-      case 'GET': {
-        const columns = await db.collection('columns').find({ boardId: slug }).toArray();
-        res.send(columns);
-
-        return;
-      }
-
-      case 'POST': {
-        const { id, boardId, boardName, columnName, dateCreated, userId, cards } = req.body;
+      case 'PATCH': {
+        const { _id, boardName, columnName } = req.body;
 
         const data = {
-          _id: id,
-          boardId,
           boardName,
-          columnName,
-          dateCreated,
-          userId,
-          cards
+          columnName
         };
 
-        const board = await db.collection('columns').insertOne(data);
+        const board = await db.collection('cards').updateOne({ _id: cardId }, { $set: data });
         res.send(board);
 
-        return;
+        break;
+      }
+
+      case 'DELETE': {
+        await db.collection('cards').deleteOne({ _id: cardId, columnId: cid });
+
+        res.send({ messsage: 'Deleted' });
+
+        break;
       }
 
       default:
-        res.send({ message: 'DB error' });
+        res.send({ message: 'Invalid request type' });
         break;
     }
   } else {

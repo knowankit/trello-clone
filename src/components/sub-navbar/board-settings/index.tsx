@@ -24,7 +24,6 @@ import Link from 'next/link';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { updateBoardDetail, saveBoard, fetchBoard, deleteBoard } from '@/src/slices/board';
-import { deleteAllColumn } from '@/src/slices/columns';
 import { AiFillSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
@@ -44,7 +43,6 @@ const BoardSettings = (): JSX.Element => {
 
   const handleDelete = async () => {
     await dispatch(deleteBoard());
-    await dispatch(deleteAllColumn());
 
     if (boardDetail.status === 'success') {
       router.push('/boards');
