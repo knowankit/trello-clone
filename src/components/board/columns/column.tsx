@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { deleteColumn, fetchColumns, updateColumn } from '@/src/slices/columns';
 import { addCard, fetchCards } from '@/src/slices/cards';
 import debounce from 'lodash.debounce';
-import { useAppSelector } from '@/src/hooks';
 
 const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   const dispatch = useDispatch();

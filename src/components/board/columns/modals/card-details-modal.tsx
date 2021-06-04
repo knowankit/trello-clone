@@ -11,17 +11,27 @@ import {
   ModalOverlay,
   Textarea
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { CardDetail } from '@/src/types/cards';
-import PropTypes from 'prop-types';
+import { deleteCard, fetchCards } from '@/src/slices/cards';
 
 type Props = {
   onClose: () => void;
   isOpen: boolean;
-  cardDetail: CardDetail;
+  card: CardDetail;
   handleCardChange: (e) => void;
 };
 
-const CardDetailsModal: FC<Props> = ({ onClose, isOpen, cardDetail, handleCardChange }) => {
+const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card, handleCardChange }) => {
+  const dispatch = useDispatch();
+
+  const handleCardDelete = async () => {
+    await dispatch(deleteCard(card._id));
+    await dispatch(fetchCards());
+
+    onClose();
+  };
+
   return (
     <>
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -33,18 +43,19 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, cardDetail, handleCardCh
             <Input
               name="title"
               size="sm"
-              value={cardDetail.title}
+              value={card.title}
               onChange={(e) => handleCardChange(e)}
               placeholder="card name"
             />
             <Textarea
               my="4"
               name="description"
-              value={cardDetail.description}
+              value={card.description}
               onChange={(e) => handleCardChange(e)}
               placeholder="description"
               overflow="hidden"
             />
+            <Button onClick={handleCardDelete}>Delete card</Button>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>
@@ -53,17 +64,6 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, cardDetail, handleCardCh
       </Modal>
     </>
   );
-};
-
-CardDetailsModal.propTypes = {
-  onClose: PropTypes.func,
-  isOpen: PropTypes.bool,
-  cardDetail: PropTypes.exact({
-    title: PropTypes.string,
-    description: PropTypes.string,
-    id: PropTypes.string
-  }),
-  handleCardChange: PropTypes.func
 };
 
 export default CardDetailsModal;

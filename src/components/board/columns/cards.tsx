@@ -5,7 +5,7 @@ import Card from '@/src/components/board/columns/card';
 
 type Props = {
   cards: CardDetail[];
-  showCardDetail: (cardIndex: number, columnIndex: number) => void;
+  showCardDetail: (cardId: string) => void;
   columnIndex: number;
 };
 

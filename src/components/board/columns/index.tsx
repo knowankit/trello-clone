@@ -16,20 +16,13 @@ const BoardColumns: FC = (): JSX.Element => {
   const columns = useAppSelector((state) => state.columns.columns);
   const cards = useAppSelector((state) => state.cards.cards);
 
-  const [currentColumnIndex, setCurrentColumnIndex] = useState<number>(0);
-  const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [cardDetail, setCardDetail] = useState<CardDetail>({ id: '', title: '', description: '' });
+  const [cardDetail, setCardDetail] = useState<CardDetail>({ _id: '', title: '', description: '' });
 
-  const showCardDetail = (cardIndex, columnsIndex) => {
-    setCurrentColumnIndex(columnsIndex);
-    setCurrentCardIndex(cardIndex);
+  const showCardDetail = (cardId: string) => {
+    const card = cards.filter((card) => card._id === cardId);
 
-    const column = columns[columnsIndex];
-    const card = column.cards[cardIndex];
-
-    setCardDetail(card);
+    setCardDetail(card[0]);
     onOpen();
   };
 
@@ -78,7 +71,7 @@ const BoardColumns: FC = (): JSX.Element => {
       <CardDetailsModal
         isOpen={isOpen}
         onClose={onClose}
-        cardDetail={cardDetail}
+        card={cardDetail}
         handleCardChange={handleCardChange}
       />
     </Box>

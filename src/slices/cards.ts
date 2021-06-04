@@ -24,13 +24,10 @@ export const fetchCards = createAsyncThunk('cards/fetchCards', async (_obj, { ge
 
 export const deleteCard = createAsyncThunk(
   'card/deleteCard',
-  async (data: { columnId: string; cardId: string }, { getState }) => {
-    const columnId = data.columnId;
-    const cardId = data.cardId;
-
+  async (cardId: string, { getState }) => {
     const { board } = getState() as { board: BoardSlice };
 
-    const url = `${host}/api/boards/${board.board._id}/columns/${columnId}/cards/${cardId}`;
+    const url = `${host}/api/boards/${board.board._id}/cards/${cardId}`;
 
     const response = await fetch(url, {
       method: 'DELETE',

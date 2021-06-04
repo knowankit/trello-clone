@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd';
 import { ItemTypes } from '@/util/items';
 import { CardDetail } from '@/src/types/cards';
 type Props = {
-  showCardDetail: (cardIndex: number, columnIndex: number) => void;
+  showCardDetail: (cardId: string) => void;
   columnIndex: number;
   cardIndex: number;
   card: CardDetail;
@@ -14,7 +14,7 @@ const Card: FC<Props> = ({ cardIndex, showCardDetail, card, columnIndex }) => {
   const [{ opacity }, dragRef] = useDrag(
     () => ({
       type: ItemTypes.CARD,
-      item: { id: card.id, column: columnIndex },
+      item: { id: card._id, column: columnIndex },
       collect: (monitor) => ({
         opacity: monitor.isDragging() ? 0 : 1
       })
@@ -26,7 +26,7 @@ const Card: FC<Props> = ({ cardIndex, showCardDetail, card, columnIndex }) => {
     <Box
       m="5px"
       p="10px"
-      id={card.id}
+      id={card._id}
       height="80px"
       ref={dragRef}
       borderWidth="1px"
@@ -38,7 +38,7 @@ const Card: FC<Props> = ({ cardIndex, showCardDetail, card, columnIndex }) => {
       _hover={{
         backgroundColor: 'darkblue'
       }}
-      onClick={() => showCardDetail(cardIndex, columnIndex)}>
+      onClick={() => showCardDetail(card._id)}>
       {card.title}
     </Box>
   );
