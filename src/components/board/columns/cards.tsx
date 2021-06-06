@@ -12,16 +12,15 @@ type Props = {
 const Cards: FC<Props> = ({ cards, showCardDetail, columnIndex }) => {
   return (
     <>
-      {cards &&
-        cards.map((card, index) => (
-          <Card
-            key={index}
-            card={card}
-            cardIndex={index}
-            columnIndex={columnIndex}
-            showCardDetail={showCardDetail}
-          />
-        ))}
+      {cards?.map((card, index) => (
+        <Card
+          key={index}
+          card={card}
+          cardIndex={index}
+          columnIndex={columnIndex}
+          showCardDetail={showCardDetail}
+        />
+      ))}
     </>
   );
 };

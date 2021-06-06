@@ -17,7 +17,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       case 'POST': {
-        const { id, boardId, columnId, dateCreated, userId, title, type, description } = req.body;
+        const {
+          id,
+          boardId,
+          columnId,
+          dateCreated,
+          userId,
+          title,
+          type,
+          description,
+          sequence
+        } = req.body;
 
         const data = {
           _id: id,
@@ -27,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           type,
           dateCreated,
           userId,
+          sequence,
           description
         };
 

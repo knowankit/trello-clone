@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import checkEnvironment from '@/util/check-environment';
 import { SingleUser } from '@/src/types/user';
+import { CardSlice } from '@/src/types/cards';
+
 import { BoardSlice } from '@/src/types/boards';
 import shortId from 'shortid';
 
@@ -56,6 +58,15 @@ export const deleteCard = createAsyncThunk(
 export const addCard = createAsyncThunk('card/addCard', async (columnId: string, { getState }) => {
   const { board } = getState() as { board: BoardSlice };
   const { user } = getState() as { user: SingleUser };
+  const { cards } = getState() as { cards: CardSlice };
+
+  const filteredCards = cards.cards.filter((card) => card.columnId === columnId);
+
+  let sequence = 1;
+
+  if (filteredCards.length > 0) {
+    sequence = filteredCards[filteredCards.length - 1].sequence + 1;
+  }
 
   const cardId = shortId.generate();
 
@@ -67,7 +78,8 @@ export const addCard = createAsyncThunk('card/addCard', async (columnId: string,
     type: '',
     description: '',
     dateCreated: new Date().toLocaleString(),
-    userId: user.id
+    userId: user.id,
+    sequence
   };
 
   const url = `${host}/api/boards/${data.boardId}/columns/${columnId}/cards`;
