@@ -24,11 +24,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       case 'PATCH': {
-        const { title, description } = req.body;
+        const { title, description, columnId } = req.body;
 
         const updatedData = {
           title,
-          description
+          description,
+          columnId
         };
 
         await db

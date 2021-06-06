@@ -8,6 +8,8 @@ import { CardDetail } from '@/src/types/cards';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { addColumnToBoard, fetchColumns } from '@/src/slices/columns';
+import { updateCard, fetchCards } from '@/src/slices/cards';
+
 import shortId from 'shortid';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -43,11 +45,21 @@ const BoardColumns: FC = (): JSX.Element => {
     console.log('result', result);
     const { destination, source, draggableId } = result;
 
-    // If Card movement in the same column
+    const card = cards.filter((card) => card._id === draggableId)[0];
+
+    const patchCard = {
+      _id: card._id,
+      title: card.title,
+      description: card.description,
+      columnId: destination.droppableId
+    };
+    // If card movement in the same column
     if (destination.droppableId === source.droppableId) {
-      console.log('In the same column');
+      dispatch(updateCard(patchCard));
+      dispatch(fetchCards());
     } else {
-      console.log('In different column');
+      dispatch(updateCard(patchCard));
+      dispatch(fetchCards());
     }
   };
 

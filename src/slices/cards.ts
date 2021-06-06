@@ -10,6 +10,7 @@ type CardPatch = {
   _id: string;
   title: string;
   description: string;
+  columnId: string;
 };
 
 const initialState = {
@@ -106,11 +107,12 @@ export const updateCard = createAsyncThunk(
   'card/updateCard',
   async (obj: CardPatch, { getState }) => {
     const { board } = getState() as { board: BoardSlice };
-    const { _id, title, description } = obj;
+    const { _id, title, description, columnId } = obj;
 
     const data = {
       title,
-      description
+      description,
+      columnId
     };
 
     const url = `${host}/api/boards/${board.board._id}/cards/${_id}`;
