@@ -69,45 +69,39 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   };
 
   return (
-    <Box
-      rounded="lg"
-      key={index}
-      width="300px"
-      overflowY="auto"
-      maxHeight="calc(100vh - 150px)"
-      mt="10px"
-      mx="10px"
-      bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'}>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        {loadColumnTitle()}
-        <Box my="10px" mr="10px" float="right" cursor="grab" display="flex">
-          <Button size="xs" mr="5px" onClick={() => setEditBoxVisibility(!showEditBox)}>
-            <AiOutlineEdit />
-          </Button>
-          <Button size="xs" onClick={handleColumnDelete}>
-            <AiOutlineDelete />
-          </Button>
-        </Box>
-      </Box>
-      <Droppable droppableId={column._id}>
-        {(provided) => (
-          <Box ref={provided.innerRef} {...provided.droppableProps}>
-            <Cards showCardDetail={showCardDetail} cards={cardsInSortedSequence} />
-            {provided.placeholder}
+    <Box key={index} width="300px" height="auto" overflowY="auto" mt="10px" mx="10px">
+      <Box bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'} pb="5px" rounded="lg">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          {loadColumnTitle()}
+          <Box my="10px" mr="10px" float="right" cursor="grab" display="flex">
+            <Button size="xs" mr="5px" onClick={() => setEditBoxVisibility(!showEditBox)}>
+              <AiOutlineEdit />
+            </Button>
+            <Button size="xs" onClick={handleColumnDelete}>
+              <AiOutlineDelete />
+            </Button>
           </Box>
-        )}
-      </Droppable>
-      <Button
-        size="xs"
-        my="10px"
-        mx="auto"
-        width="80%"
-        bg="brand"
-        display="block"
-        color="white"
-        onClick={handleCardAdd}>
-        Add a card
-      </Button>
+        </Box>
+        <Droppable droppableId={column._id}>
+          {(provided) => (
+            <Box ref={provided.innerRef} {...provided.droppableProps}>
+              <Cards showCardDetail={showCardDetail} cards={cardsInSortedSequence} />
+              {provided.placeholder}
+            </Box>
+          )}
+        </Droppable>
+        <Button
+          size="xs"
+          my="10px"
+          mx="auto"
+          width="80%"
+          bg="brand"
+          display="block"
+          color="white"
+          onClick={handleCardAdd}>
+          Add a card
+        </Button>
+      </Box>
     </Box>
   );
 };
