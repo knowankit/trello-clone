@@ -2,29 +2,21 @@ import React, { useState, useCallback } from 'react';
 import { Box, Button, Heading, Input } from '@chakra-ui/react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import Cards from '@/src/components/board/columns/cards';
-import { useDrop } from 'react-dnd';
-import { ItemTypes } from '@/util/items';
+import { Droppable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
 import { deleteColumn, fetchColumns, updateColumn } from '@/src/slices/columns';
 import { addCard, fetchCards } from '@/src/slices/cards';
 import debounce from 'lodash.debounce';
+import { CardDetail } from '@/src/types/cards';
 
 const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   const dispatch = useDispatch();
   const [showEditBox, setEditBoxVisibility] = useState<boolean>(false);
 
   const [columnName, setColumnName] = useState<string>(column.columnName);
-
-  const [_collectedProps, drop] = useDrop(() => ({
-    accept: ItemTypes.CARD,
-    drop: (item, monitor) => {
-      console.log('item', item);
-      console.log('monitor', monitor);
-    },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver()
-    })
-  }));
+  const cardsInSortedSequence = cards.sort(
+    (cardA: CardDetail, cardB: CardDetail) => cardA.sequence - cardB.sequence
+  );
 
   const loadColumnTitle = () => {
     if (showEditBox) {
@@ -79,7 +71,6 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   return (
     <Box
       rounded="lg"
-      ref={drop}
       key={index}
       width="300px"
       overflowY="auto"
@@ -98,7 +89,14 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
           </Button>
         </Box>
       </Box>
-      <Cards showCardDetail={showCardDetail} cards={cards} columnIndex={index} />
+      <Droppable droppableId={column._id}>
+        {(provided) => (
+          <Box ref={provided.innerRef} {...provided.droppableProps}>
+            <Cards showCardDetail={showCardDetail} cards={cardsInSortedSequence} />
+            {provided.placeholder}
+          </Box>
+        )}
+      </Droppable>
       <Button
         size="xs"
         my="10px"

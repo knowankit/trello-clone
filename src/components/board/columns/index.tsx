@@ -8,7 +8,10 @@ import { CardDetail } from '@/src/types/cards';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { addColumnToBoard, fetchColumns } from '@/src/slices/columns';
+import { fetchCards, updateCardSequence } from '@/src/slices/cards';
+
 import shortId from 'shortid';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 const BoardColumns: FC = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -32,19 +35,65 @@ const BoardColumns: FC = (): JSX.Element => {
     await dispatch(fetchColumns());
   };
 
-  const handleCardChange = (event) => {
-    // Fetch active card and update the value
-    const tempCard = cardDetail;
-    tempCard[event.target.name] = event.target.value;
-
-    // Set the current card to state. This will update the fiels present in the modal
-    setCardDetail({ ...tempCard });
-  };
-
   const filterCards = (columnId: string) => {
     const filteredCards = cards.filter((card) => card.columnId === columnId);
 
     return filteredCards;
+  };
+
+  const onDragEnd = async (result) => {
+    const { destination, source, draggableId } = result;
+
+    // Don't do anything where there is not desitination
+    if (!destination) {
+      return;
+    }
+
+    // Do nothing if the card is put back where it was
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+
+    // If card movement in the same column
+    if (destination.droppableId === source.droppableId) {
+      await changeCardSequence(destination.index, destination.droppableId, draggableId);
+    } else {
+      await changeCardSequence(destination.index, destination.droppableId, draggableId);
+    }
+
+    await dispatch(fetchCards());
+  };
+
+  const changeCardSequence = async (
+    destinationIndex: number,
+    destinationColumnId: string,
+    cardId: string
+  ) => {
+    const cardsFromColumn = cards.filter(
+      (card) => card.columnId === destinationColumnId && card._id !== cardId
+    );
+    const sortedCards = cardsFromColumn.sort((a, b) => a.sequence - b.sequence);
+
+    let sequence = destinationIndex === 0 ? 1 : sortedCards[destinationIndex - 1].sequence + 1;
+
+    const patchCard = {
+      _id: cardId,
+      sequence,
+      columnId: destinationColumnId
+    };
+
+    await dispatch(updateCardSequence(patchCard));
+
+    for (let i = destinationIndex; i < sortedCards.length; i++) {
+      const card = sortedCards[i];
+      sequence += 1;
+      const patchCard = {
+        _id: card._id,
+        sequence
+      };
+
+      await dispatch(updateCardSequence(patchCard));
+    }
   };
 
   return (
@@ -55,16 +104,18 @@ const BoardColumns: FC = (): JSX.Element => {
       overflowX="auto"
       id="parent-of-columns">
       <Box display="flex" position="absolute" overflowY="auto" height="100%">
-        {columns.map((column, index) => (
-          <Column
-            key={index}
-            column={column}
-            id={column._id}
-            index={index}
-            cards={filterCards(column._id)}
-            showCardDetail={showCardDetail}
-          />
-        ))}
+        <DragDropContext onDragEnd={onDragEnd}>
+          {columns.map((column, index) => (
+            <Column
+              key={index}
+              column={column}
+              id={column._id}
+              index={index}
+              cards={filterCards(column._id)}
+              showCardDetail={showCardDetail}
+            />
+          ))}
+        </DragDropContext>
         <AddColumnButton addColumn={addColumn} />
       </Box>
       {isOpen && <CardDetailsModal isOpen={isOpen} onClose={onClose} card={cardDetail} />}

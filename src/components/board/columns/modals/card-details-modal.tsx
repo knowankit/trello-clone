@@ -37,7 +37,8 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
     const data = {
       _id: card._id,
       title,
-      description
+      description,
+      columnId: card.columnId
     };
 
     await dispatch(updateCard(data));

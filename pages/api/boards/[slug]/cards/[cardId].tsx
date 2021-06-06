@@ -24,16 +24,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       case 'PATCH': {
-        const { title, description } = req.body;
-
-        const updatedData = {
-          title,
-          description
-        };
-
         await db
           .collection('cards')
-          .updateOne({ _id: cardId, boardId: slug }, { $set: updatedData });
+          .updateOne({ _id: cardId, boardId: slug }, { $set: { ...req.body } });
 
         res.send({ message: 'Card updated' });
         return;
