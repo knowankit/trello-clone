@@ -55,12 +55,7 @@ const BoardColumns: FC = (): JSX.Element => {
     }
 
     // If card movement in the same column
-    if (destination.droppableId === source.droppableId) {
-      await changeCardSequence(destination.index, destination.droppableId, draggableId);
-    } else {
-      await changeCardSequence(destination.index, destination.droppableId, draggableId);
-    }
-
+    await changeCardSequence(destination.index, destination.droppableId, draggableId);
     await dispatch(fetchCards());
   };
 
@@ -86,7 +81,9 @@ const BoardColumns: FC = (): JSX.Element => {
 
     for (let i = destinationIndex; i < sortedCards.length; i++) {
       const card = sortedCards[i];
+
       sequence += 1;
+
       const patchCard = {
         _id: card._id,
         sequence
@@ -97,13 +94,8 @@ const BoardColumns: FC = (): JSX.Element => {
   };
 
   return (
-    <Box
-      display="block"
-      position="relative"
-      height="calc(100vh - 122px)"
-      overflowX="auto"
-      id="parent-of-columns">
-      <Box display="flex" position="absolute" overflowY="auto" height="100%">
+    <Box display="block" position="relative" height="calc(100vh - 122px)" overflowX="auto">
+      <Box display="flex" position="absolute" overflowY="auto">
         <DragDropContext onDragEnd={onDragEnd}>
           {columns.map((column, index) => (
             <Column

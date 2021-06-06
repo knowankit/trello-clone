@@ -19,7 +19,7 @@ type Props = {
 const BoardPage: FC<Props> = ({ state }) => {
   return (
     <Provider store={setOrGetStore(state)}>
-      <Board board={state.board.board} />;
+      <Board board={state.board.board} />
     </Provider>
   );
 };
