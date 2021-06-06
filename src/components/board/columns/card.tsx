@@ -11,7 +11,8 @@ type Props = {
 
 const Card: FC<Props> = ({ cardIndex, showCardDetail, card }) => {
   return (
-    <Draggable draggableId={card._id} index={cardIndex}>
+    // https://github.com/atlassian/react-beautiful-dnd/issues/1767
+    <Draggable draggableId={card._id} index={cardIndex} key={card._id}>
       {(provided) => (
         <Box
           {...provided.draggableProps}
