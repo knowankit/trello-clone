@@ -7,13 +7,16 @@ import { useDispatch } from 'react-redux';
 import { deleteColumn, fetchColumns, updateColumn } from '@/src/slices/columns';
 import { addCard, fetchCards } from '@/src/slices/cards';
 import debounce from 'lodash.debounce';
+import { CardDetail } from '@/src/types/cards';
 
 const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   const dispatch = useDispatch();
   const [showEditBox, setEditBoxVisibility] = useState<boolean>(false);
 
   const [columnName, setColumnName] = useState<string>(column.columnName);
-  const cardsInSortedSequence = cards.sort((a, b) => a.sequnce - b.sequnce);
+  const cardsInSortedSequence = cards.sort(
+    (cardA: CardDetail, cardB: CardDetail) => cardA.sequence - cardB.sequence
+  );
 
   const loadColumnTitle = () => {
     if (showEditBox) {
