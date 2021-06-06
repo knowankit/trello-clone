@@ -6,28 +6,20 @@ import Card from '@/src/components/board/columns/card';
 type Props = {
   cards: CardDetail[];
   showCardDetail: (cardId: string) => void;
-  columnIndex: number;
 };
 
-const Cards: FC<Props> = ({ cards, showCardDetail, columnIndex }) => {
+const Cards: FC<Props> = ({ cards, showCardDetail }) => {
   return (
     <>
       {cards?.map((card, index) => (
-        <Card
-          key={index}
-          card={card}
-          cardIndex={index}
-          columnIndex={columnIndex}
-          showCardDetail={showCardDetail}
-        />
+        <Card key={index} card={card} cardIndex={index} showCardDetail={showCardDetail} />
       ))}
     </>
   );
 };
 
 Cards.propTypes = {
-  showCardDetail: PropTypes.func,
-  columnIndex: PropTypes.number
+  showCardDetail: PropTypes.func
 };
 
 export default Cards;

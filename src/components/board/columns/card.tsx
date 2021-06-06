@@ -5,12 +5,11 @@ import { CardDetail } from '@/src/types/cards';
 
 type Props = {
   showCardDetail: (cardId: string) => void;
-  columnIndex: number;
   cardIndex: number;
   card: CardDetail;
 };
 
-const Card: FC<Props> = ({ cardIndex, showCardDetail, card, columnIndex }) => {
+const Card: FC<Props> = ({ cardIndex, showCardDetail, card }) => {
   return (
     <Draggable draggableId={card._id} index={cardIndex}>
       {(provided) => (

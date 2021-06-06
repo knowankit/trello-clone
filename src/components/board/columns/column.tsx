@@ -92,11 +92,7 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
       <Droppable droppableId={column._id}>
         {(provided) => (
           <Box ref={provided.innerRef} {...provided.droppableProps}>
-            <Cards
-              showCardDetail={showCardDetail}
-              cards={cardsInSortedSequence}
-              columnIndex={index}
-            />
+            <Cards showCardDetail={showCardDetail} cards={cardsInSortedSequence} />
             {provided.placeholder}
           </Box>
         )}

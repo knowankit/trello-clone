@@ -8,7 +8,7 @@ import { CardDetail } from '@/src/types/cards';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { addColumnToBoard, fetchColumns } from '@/src/slices/columns';
-import { updateCard, fetchCards } from '@/src/slices/cards';
+import { fetchCards, updateCardSequence } from '@/src/slices/cards';
 
 import shortId from 'shortid';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -41,25 +41,58 @@ const BoardColumns: FC = (): JSX.Element => {
     return filteredCards;
   };
 
-  const onDragEnd = (result) => {
-    console.log('result', result);
+  const onDragEnd = async (result) => {
     const { destination, source, draggableId } = result;
 
-    const card = cards.filter((card) => card._id === draggableId)[0];
+    // Don't do anything where there is not desitination
+    if (!destination) {
+      return;
+    }
 
-    const patchCard = {
-      _id: card._id,
-      title: card.title,
-      description: card.description,
-      columnId: destination.droppableId
-    };
+    // Do nothing if the card is put back where it was
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+
     // If card movement in the same column
     if (destination.droppableId === source.droppableId) {
-      dispatch(updateCard(patchCard));
-      dispatch(fetchCards());
+      await changeCardSequence(destination.index, destination.droppableId, draggableId);
     } else {
-      dispatch(updateCard(patchCard));
-      dispatch(fetchCards());
+      await changeCardSequence(destination.index, destination.droppableId, draggableId);
+    }
+
+    await dispatch(fetchCards());
+  };
+
+  const changeCardSequence = async (
+    destinationIndex: number,
+    destinationColumnId: string,
+    cardId: string
+  ) => {
+    const cardsFromColumn = cards.filter(
+      (card) => card.columnId === destinationColumnId && card._id !== cardId
+    );
+    const sortedCards = cardsFromColumn.sort((a, b) => a.sequence - b.sequence);
+
+    let sequence = destinationIndex === 0 ? 1 : sortedCards[destinationIndex - 1].sequence + 1;
+
+    const patchCard = {
+      _id: cardId,
+      sequence,
+      columnId: destinationColumnId
+    };
+
+    await dispatch(updateCardSequence(patchCard));
+
+    for (let i = destinationIndex; i < sortedCards.length; i++) {
+      const card = sortedCards[i];
+      sequence += 1;
+      const patchCard = {
+        _id: card._id,
+        sequence
+      };
+
+      await dispatch(updateCardSequence(patchCard));
     }
   };
 
