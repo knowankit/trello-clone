@@ -8,7 +8,7 @@ import { CardDetail } from '@/src/types/cards';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { addColumnToBoard, fetchColumns } from '@/src/slices/columns';
-import { fetchCards, updateCardSequence } from '@/src/slices/cards';
+import { updateCardSequence, updateCardSequenceToLocalState } from '@/src/slices/cards';
 
 import shortId from 'shortid';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -55,11 +55,10 @@ const BoardColumns: FC = (): JSX.Element => {
     }
 
     // If card movement in the same column
-    await changeCardSequence(destination.index, destination.droppableId, draggableId);
-    await dispatch(fetchCards());
+    await saveCardSequence(destination.index, destination.droppableId, draggableId);
   };
 
-  const changeCardSequence = async (
+  const saveCardSequence = async (
     destinationIndex: number,
     destinationColumnId: string,
     cardId: string
@@ -77,6 +76,9 @@ const BoardColumns: FC = (): JSX.Element => {
       columnId: destinationColumnId
     };
 
+    // This is just for updating local state so that there won't be any lag after saving the sequence and fetching again
+    // Now we don't to fetch the cards again
+    await dispatch(updateCardSequenceToLocalState(patchCard));
     await dispatch(updateCardSequence(patchCard));
 
     for (let i = destinationIndex; i < sortedCards.length; i++) {
@@ -86,9 +88,11 @@ const BoardColumns: FC = (): JSX.Element => {
 
       const patchCard = {
         _id: card._id,
-        sequence
+        sequence,
+        columnId: destinationColumnId
       };
 
+      await dispatch(updateCardSequenceToLocalState(patchCard));
       await dispatch(updateCardSequence(patchCard));
     }
   };

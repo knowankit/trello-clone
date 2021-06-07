@@ -5,6 +5,7 @@ import { CardSlice } from '@/src/types/cards';
 
 import { BoardSlice } from '@/src/types/boards';
 import shortId from 'shortid';
+import findIndex from 'lodash.findindex';
 
 type CardPatch = {
   _id: string;
@@ -176,9 +177,11 @@ export const cardsSlice = createSlice({
   initialState: initialState,
   reducers: {
     resetCards: () => initialState,
-    updateCardData: (state, { payload }) => {
-      const card = state.cards.filter((card) => card._id === payload.cardId);
-      // state.cards[] =
+    updateCardSequenceToLocalState: (state, { payload }) => {
+      const cardIndex = findIndex(state.cards, { _id: payload._id });
+
+      state.cards[cardIndex].sequence = payload.sequence;
+      state.cards[cardIndex].columnId = payload.columnId;
     }
   },
   extraReducers: {
@@ -231,6 +234,6 @@ export const cardsSlice = createSlice({
   }
 });
 
-export const { resetCards } = cardsSlice.actions;
+export const { resetCards, updateCardSequenceToLocalState } = cardsSlice.actions;
 
 export default cardsSlice.reducer;
