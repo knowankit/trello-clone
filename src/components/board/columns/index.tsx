@@ -3,20 +3,25 @@ import { Box, useDisclosure } from '@chakra-ui/react';
 import AddColumnButton from '@/src/components/board/columns/buttons/add-column-button';
 import CardDetailsModal from '@/src/components/board/columns/modals/card-details-modal';
 import Column from '@/src/components/board/columns/column';
-// import { GrDrag } from 'react-icons/gr';
 import { CardDetail } from '@/src/types/cards';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
-import { addColumnToBoard, fetchColumns } from '@/src/slices/columns';
+import {
+  addColumnToBoard,
+  fetchColumns,
+  updateColumnSequenceToLocalState,
+  updateColumnSequence
+} from '@/src/slices/columns';
 import { updateCardSequence, updateCardSequenceToLocalState } from '@/src/slices/cards';
 
 import shortId from 'shortid';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const BoardColumns: FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const columns = useAppSelector((state) => state.columns.columns);
   const cards = useAppSelector((state) => state.cards.cards);
+  const board = useAppSelector((state) => state.board.board);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [cardDetail, setCardDetail] = useState<CardDetail>({ _id: '', title: '', description: '' });
@@ -42,9 +47,9 @@ const BoardColumns: FC = (): JSX.Element => {
   };
 
   const onDragEnd = async (result) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
 
-    // Don't do anything where there is not desitination
+    // Don't do anything where there is not destination
     if (!destination) {
       return;
     }
@@ -54,8 +59,15 @@ const BoardColumns: FC = (): JSX.Element => {
       return;
     }
 
-    // If card movement in the same/different column
-    await saveCardSequence(destination.index, destination.droppableId, draggableId);
+    // If card is being dragged
+    if (type === 'card') {
+      await saveCardSequence(destination.index, destination.droppableId, draggableId);
+    }
+
+    // If column is being dragged
+    if (type === 'column') {
+      await saveColumnSequence(destination.index, draggableId);
+    }
   };
 
   const saveCardSequence = async (
@@ -83,7 +95,6 @@ const BoardColumns: FC = (): JSX.Element => {
 
     for (let i = destinationIndex; i < sortedCards.length; i++) {
       const card = sortedCards[i];
-
       sequence += 1;
 
       const patchCard = {
@@ -97,23 +108,66 @@ const BoardColumns: FC = (): JSX.Element => {
     }
   };
 
+  const saveColumnSequence = async (destinationIndex: number, columnId: string) => {
+    let sequence = destinationIndex === 0 ? 1 : columns[destinationIndex - 1].sequence + 1;
+
+    const patchColumn = {
+      _id: columnId,
+      sequence
+    };
+
+    // This is just for updating local state so that there won't be any lag after saving the sequence and fetching again
+    // Now we don't to fetch the cards again
+    await dispatch(updateColumnSequenceToLocalState(patchColumn));
+    // await dispatch(updateColumnSequence(patchColumn));
+    // await dispatch(fetchColumns())
+
+    for (let i = destinationIndex; i < columns.length; i++) {
+      const column = columns[i];
+
+      if (column._id !== columnId) {
+        sequence += 1;
+
+        const patchColumn = {
+          _id: column._id,
+          sequence
+        };
+
+        await dispatch(updateColumnSequenceToLocalState(patchColumn));
+        // await dispatch(updateColumnSequence(patchColumn));
+      }
+    }
+
+    // await dispatch(fetchColumns())
+  };
+
   return (
     <Box display="block" position="relative" height="calc(100vh - 122px)" overflowX="auto">
-      <Box display="flex" position="absolute" overflowY="auto">
-        <DragDropContext onDragEnd={onDragEnd}>
-          {columns.map((column, index) => (
-            <Column
-              key={index}
-              column={column}
-              id={column._id}
-              index={index}
-              cards={filterCards(column._id)}
-              showCardDetail={showCardDetail}
-            />
-          ))}
-        </DragDropContext>
-        <AddColumnButton addColumn={addColumn} />
-      </Box>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="all-collumns" direction="horizontal" type="column">
+          {(provided) => (
+            <Box
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              display="flex"
+              position="absolute"
+              overflowY="auto">
+              {columns.map((column, index) => (
+                <Column
+                  key={index}
+                  column={column}
+                  id={column._id}
+                  index={index}
+                  cards={filterCards(column._id)}
+                  showCardDetail={showCardDetail}
+                />
+              ))}
+              {provided.placeholder}
+              <AddColumnButton addColumn={addColumn} />
+            </Box>
+          )}
+        </Droppable>
+      </DragDropContext>
       {isOpen && <CardDetailsModal isOpen={isOpen} onClose={onClose} card={cardDetail} />}
     </Box>
   );

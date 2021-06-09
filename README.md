@@ -32,7 +32,7 @@ Install docker on your machine and start it
 
 ## What is next?
 
-1. Add card drag and drop - Ankit
+1. Add card drag and drop - Ankit (Done)
 2. Add column drag and drop - Ankit
 3. Delete user - Nidhi (Will not be taken for now)
 4. Add unsplash - Nidhi

@@ -18,7 +18,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       case 'POST': {
-        const { id, boardId, boardName, columnName, dateCreated, userId, cards } = req.body;
+        const {
+          id,
+          boardId,
+          boardName,
+          columnName,
+          dateCreated,
+          userId,
+          cards,
+          sequence
+        } = req.body;
 
         const data = {
           _id: id,
@@ -27,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           columnName,
           dateCreated,
           userId,
-          cards
+          sequence
         };
 
         const board = await db.collection('columns').insertOne(data);

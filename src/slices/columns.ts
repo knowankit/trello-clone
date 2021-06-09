@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import checkEnvironment from '@/util/check-environment';
 import { SingleUser } from '@/src/types/user';
+import { ColumnsSlice } from '@/src/types/columns';
+import findIndex from 'lodash.findindex';
+
 import { BoardSlice } from '@/src/types/boards';
 
 const initialState = {
@@ -53,14 +56,22 @@ export const addColumnToBoard = createAsyncThunk(
   async (columnId: string, { getState }) => {
     const { board } = getState() as { board: BoardSlice };
     const { user } = getState() as { user: SingleUser };
+    const { columns } = getState() as { columns: ColumnsSlice };
+
+    const columsArray = columns.columns;
+    let sequence = 1;
+
+    if (columns.columns.length > 0) {
+      sequence = columsArray[columsArray.length - 1].sequence + 1;
+    }
 
     const data = {
       id: columnId,
       boardId: board.board._id,
-      columnName: 'Add name',
+      columnName: 'Add title',
       dateCreated: new Date().toLocaleString(),
       userId: user.id,
-      cards: []
+      sequence
     };
 
     const url = `${host}/api/boards/${data.boardId}/columns`;
@@ -116,11 +127,47 @@ export const updateColumn = createAsyncThunk(
   }
 );
 
+export const updateColumnSequence = createAsyncThunk(
+  'card/updateCardSequence',
+  async (obj: { _id: string; sequence: number }, { getState }) => {
+    const { board } = getState() as { board: BoardSlice };
+    const { _id, sequence } = obj;
+
+    const data = {
+      _id,
+      sequence
+    };
+
+    const url = `${host}/api/boards/${board.board._id}/columns/${_id}`;
+
+    const response = await fetch(url, {
+      method: 'PATCH',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data)
+    });
+
+    const inJSON = await response.json();
+
+    return inJSON;
+  }
+);
+
 export const columnsSlice = createSlice({
   name: 'columns',
   initialState: initialState,
   reducers: {
-    resetColumns: () => initialState
+    resetColumns: () => initialState,
+    updateColumnSequenceToLocalState: (state, { payload }) => {
+      const columnIndex = findIndex(state.columns, { _id: payload._id });
+      state.columns[columnIndex].sequence = payload.sequence;
+    }
   },
   extraReducers: {
     [addColumnToBoard.pending.toString()]: (state) => {
@@ -140,7 +187,9 @@ export const columnsSlice = createSlice({
       state.isRequesting = true;
     },
     [fetchColumns.fulfilled.toString()]: (state, { payload }) => {
-      state.columns = payload;
+      const sortedColumns = payload.sort((a, b) => a.sequence - b.sequence);
+
+      state.columns = sortedColumns;
       state.status = 'success';
       state.isRequesting = false;
     },
@@ -175,6 +224,6 @@ export const columnsSlice = createSlice({
   }
 });
 
-export const { resetColumns } = columnsSlice.actions;
+export const { resetColumns, updateColumnSequenceToLocalState } = columnsSlice.actions;
 
 export default columnsSlice.reducer;

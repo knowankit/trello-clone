@@ -11,14 +11,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     switch (requestType) {
       case 'PATCH': {
-        const { boardName, columnName } = req.body;
+        const board = await db
+          .collection('columns')
+          .updateOne({ _id: cid }, { $set: { ...req.body } });
 
-        const data = {
-          boardName,
-          columnName
-        };
-
-        const board = await db.collection('columns').updateOne({ _id: cid }, { $set: data });
         res.send(board);
 
         break;
