@@ -84,7 +84,8 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
         </Box>
         <Droppable droppableId={column._id}>
           {(provided) => (
-            <Box ref={provided.innerRef} {...provided.droppableProps}>
+            // 2px height is needed to make the drop work when there is no card.
+            <Box ref={provided.innerRef} {...provided.droppableProps} minHeight="2px">
               <Cards showCardDetail={showCardDetail} cards={cardsInSortedSequence} />
               {provided.placeholder}
             </Box>
