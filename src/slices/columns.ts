@@ -6,6 +6,7 @@ import { BoardSlice } from '@/src/types/boards';
 const initialState = {
   columns: [],
   status: 'idle',
+  isRequesting: false,
   doneFetching: true,
   error: {}
 };
@@ -124,40 +125,52 @@ export const columnsSlice = createSlice({
   extraReducers: {
     [addColumnToBoard.pending.toString()]: (state) => {
       state.status = 'pending';
+      state.isRequesting = true;
     },
     [addColumnToBoard.fulfilled.toString()]: (state) => {
       state.status = 'success';
+      state.isRequesting = false;
     },
     [addColumnToBoard.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isRequesting = false;
     },
     [fetchColumns.pending.toString()]: (state) => {
       state.status = 'pending';
+      state.isRequesting = true;
     },
     [fetchColumns.fulfilled.toString()]: (state, { payload }) => {
       state.columns = payload;
       state.status = 'success';
+      state.isRequesting = false;
     },
     [fetchColumns.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isRequesting = false;
     },
     [deleteColumn.pending.toString()]: (state) => {
       state.status = 'pending';
+      state.isRequesting = true;
     },
     [deleteColumn.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
+      state.isRequesting = false;
     },
     [deleteColumn.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isRequesting = false;
     },
     [updateColumn.pending.toString()]: (state) => {
       state.status = 'pending';
+      state.isRequesting = true;
     },
     [updateColumn.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
+      state.isRequesting = false;
     },
     [updateColumn.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isRequesting = false;
     }
   }
 });
