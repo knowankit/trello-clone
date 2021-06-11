@@ -18,6 +18,7 @@ type CardPatch = {
 const initialState = {
   cards: [],
   status: 'idle',
+  isRequesting: false,
   doneFetching: true,
   error: {}
 };
@@ -186,13 +187,16 @@ export const cardsSlice = createSlice({
   },
   extraReducers: {
     [addCard.pending.toString()]: (state) => {
+      state.isRequesting = true;
       state.status = 'pending';
     },
     [addCard.fulfilled.toString()]: (state) => {
       state.status = 'success';
+      state.isRequesting = false;
     },
     [addCard.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isRequesting = false;
     },
     [fetchCards.pending.toString()]: (state) => {
       state.status = 'pending';

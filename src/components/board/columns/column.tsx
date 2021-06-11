@@ -13,7 +13,7 @@ import { useAppSelector } from '@/src/hooks';
 const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   const dispatch = useDispatch();
   const [showEditBox, setEditBoxVisibility] = useState<boolean>(false);
-  const cardRequest = useAppSelector((state) => state.columns.isRequesting);
+  const cardRequest = useAppSelector((state) => state.cards.isRequesting);
 
   const [columnName, setColumnName] = useState<string>(column.columnName);
   const cardsInSortedSequence = cards.sort(
@@ -98,10 +98,11 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
           my="10px"
           mx="auto"
           width="80%"
-          display="block"
           color="brand"
           variant="ghost"
+          disabled={cardRequest}
           isLoading={cardRequest}
+          display="flex"
           loadingText="Adding card"
           onClick={handleCardAdd}>
           + Add a card
