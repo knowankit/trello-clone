@@ -41,10 +41,9 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
       columnId: card.columnId
     };
 
+    onClose();
     await dispatch(updateCard(data));
     await dispatch(fetchCards());
-
-    onClose();
   };
 
   return (
@@ -73,7 +72,7 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
             <Button onClick={handleCardDelete}>Delete card</Button>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={handleModalClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

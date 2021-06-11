@@ -1,6 +1,5 @@
 import React from 'react';
 import { Flex, Box, FormControl, Input, Button, Image, Link } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { loginUser, updateUserData } from '@/src/slices/user';
@@ -9,10 +8,8 @@ const Login = (): JSX.Element => {
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
-  const router = useRouter();
-
   if (!user.error && user.status === 'success') {
-    router.push('/home');
+    window.location.href = `${window.location.origin}/home`;
   }
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

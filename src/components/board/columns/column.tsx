@@ -8,10 +8,12 @@ import { deleteColumn, fetchColumns, updateColumn } from '@/src/slices/columns';
 import { addCard, fetchCards } from '@/src/slices/cards';
 import debounce from 'lodash.debounce';
 import { CardDetail } from '@/src/types/cards';
+import { useAppSelector } from '@/src/hooks';
 
 const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   const dispatch = useDispatch();
   const [showEditBox, setEditBoxVisibility] = useState<boolean>(false);
+  const cardRequest = useAppSelector((state) => state.columns.isRequesting);
 
   const [columnName, setColumnName] = useState<string>(column.columnName);
   const cardsInSortedSequence = cards.sort(
@@ -96,11 +98,13 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
           my="10px"
           mx="auto"
           width="80%"
-          bg="brand"
           display="block"
-          color="white"
+          color="brand"
+          variant="ghost"
+          isLoading={cardRequest}
+          loadingText="Adding card"
           onClick={handleCardAdd}>
-          Add a card
+          + Add a card
         </Button>
       </Box>
     </Box>
