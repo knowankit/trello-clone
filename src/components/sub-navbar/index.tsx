@@ -1,7 +1,7 @@
 import { Box, Heading } from '@chakra-ui/react';
 import PropType from 'prop-types';
 import BoardSettings from '@/src/components/sub-navbar/board-settings';
-
+import InviteModal from '@/src/components/sub-navbar/invite-user/modal';
 import React from 'react';
 import { useAppSelector } from '@/src/hooks';
 
@@ -14,6 +14,9 @@ const SubNavbar = (): JSX.Element => {
         {board && board.name}
       </Heading>
       <BoardSettings />
+      <Box position="absolute" right="120px">
+        <InviteModal />
+      </Box>
     </Box>
   );
 };
