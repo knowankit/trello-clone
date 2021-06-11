@@ -18,6 +18,8 @@ type CardPatch = {
 const initialState = {
   cards: [],
   status: 'idle',
+  isRequesting: false,
+  isDeleting: false,
   doneFetching: true,
   error: {}
 };
@@ -186,41 +188,53 @@ export const cardsSlice = createSlice({
   },
   extraReducers: {
     [addCard.pending.toString()]: (state) => {
+      state.isRequesting = true;
       state.status = 'pending';
     },
     [addCard.fulfilled.toString()]: (state) => {
       state.status = 'success';
+      state.isRequesting = false;
     },
     [addCard.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isRequesting = false;
     },
     [fetchCards.pending.toString()]: (state) => {
       state.status = 'pending';
+      state.isRequesting = true;
     },
     [fetchCards.fulfilled.toString()]: (state, { payload }) => {
       state.cards = payload;
       state.status = 'success';
+      state.isRequesting = false;
     },
     [fetchCards.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isRequesting = false;
     },
     [deleteCard.pending.toString()]: (state) => {
       state.status = 'pending';
+      state.isDeleting = true;
     },
     [deleteCard.fulfilled.toString()]: (state) => {
       state.status = 'success';
+      state.isDeleting = false;
     },
     [deleteCard.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isDeleting = false;
     },
     [updateCard.pending.toString()]: (state) => {
       state.status = 'pending';
+      state.isRequesting = true;
     },
     [updateCard.fulfilled.toString()]: (state) => {
       state.status = 'success';
+      state.isRequesting = false;
     },
     [updateCard.rejected.toString()]: (state) => {
       state.status = 'failed';
+      state.isRequesting = false;
     },
     [updateCardSequence.pending.toString()]: (state) => {
       state.status = 'pending';

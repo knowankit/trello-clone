@@ -14,6 +14,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { CardDetail } from '@/src/types/cards';
 import { deleteCard, fetchCards, updateCard } from '@/src/slices/cards';
+import { useAppSelector } from '@/src/hooks';
 
 type Props = {
   onClose: () => void;
@@ -25,6 +26,8 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState(card?.title);
   const [description, setDescription] = useState(card?.description);
+  const cardRequest = useAppSelector((state) => state.cards.isRequesting);
+  const cardDelete = useAppSelector((state) => state.cards.isDeleting);
 
   const handleCardDelete = async () => {
     await dispatch(deleteCard(card._id));
@@ -41,9 +44,10 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
       columnId: card.columnId
     };
 
-    onClose();
     await dispatch(updateCard(data));
     await dispatch(fetchCards());
+
+    onClose();
   };
 
   return (
@@ -69,10 +73,22 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
               placeholder="Description"
               overflow="hidden"
             />
-            <Button onClick={handleCardDelete}>Delete card</Button>
+            <Button
+              onClick={handleCardDelete}
+              disabled={cardDelete}
+              isLoading={cardDelete}
+              loadingText="Deleting card">
+              Delete card
+            </Button>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={handleModalClose}>Close</Button>
+            <Button
+              onClick={handleModalClose}
+              disabled={cardRequest}
+              isLoading={cardRequest}
+              loadingText="Updating card">
+              Close
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -17,11 +17,18 @@ const AddColumnButton: FC<Props> = ({ addColumn }) => {
       width="300px"
       display="flex"
       flexDirection="column"
-      isLoading={columnRequest}
-      loadingText="Adding column"
       mt="10px"
       mx="10px">
-      <Button size="xs" my="10px" mx="5px" variant="outline" color="brand" onClick={addColumn}>
+      <Button
+        size="xs"
+        my="10px"
+        mx="5px"
+        variant="outline"
+        color="brand"
+        onClick={addColumn}
+        isLoading={columnRequest}
+        disabled={columnRequest}
+        loadingText="Adding column">
         + Add a Column
       </Button>
     </Box>
