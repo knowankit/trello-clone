@@ -54,7 +54,7 @@ const BoardColumns: FC = (): JSX.Element => {
       return;
     }
 
-    // If card movement in the same column
+    // If card movement in the same/different column
     await saveCardSequence(destination.index, destination.droppableId, draggableId);
   };
 

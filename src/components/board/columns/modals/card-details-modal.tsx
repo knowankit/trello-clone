@@ -3,19 +3,27 @@ import {
   Modal,
   ModalBody,
   ModalContent,
-  ModalHeader,
   ModalFooter,
   Button,
-  ModalCloseButton,
   Input,
   ModalOverlay,
-  Textarea
+  Textarea,
+  Text,
+  Box,
+  List,
+  ListItem,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { CardDetail } from '@/src/types/cards';
 import { deleteCard, fetchCards, updateCard } from '@/src/slices/cards';
 import { useAppSelector } from '@/src/hooks';
-import { AiOutlineDelete, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineClose, AiOutlineLaptop } from 'react-icons/ai';
+import { GrTextAlignFull } from 'react-icons/gr';
+import { MdLabelOutline } from 'react-icons/md';
 
 type Props = {
   onClose: () => void;
@@ -29,6 +37,29 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
   const [description, setDescription] = useState(card?.description);
   const cardRequest = useAppSelector((state) => state.cards.isRequesting);
   const cardDelete = useAppSelector((state) => state.cards.isDeleting);
+
+  const cardLabels = [
+    {
+      type: 'Performance',
+      color: '#0079bf'
+    },
+    {
+      type: 'Bug',
+      color: '#eb5a46'
+    },
+    {
+      type: 'Feature',
+      color: '#61bd4f'
+    },
+    {
+      type: 'Information',
+      color: '#ff9f1a'
+    },
+    {
+      type: 'Documentation',
+      color: '#0079bf'
+    }
+  ];
 
   const handleCardDelete = async () => {
     await dispatch(deleteCard(card._id));
@@ -53,34 +84,74 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
 
   return (
     <>
-      <Modal onClose={handleModalClose} isOpen={isOpen} isCentered>
+      <Modal size="xl" onClose={handleModalClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create card</ModalHeader>
           <ModalBody>
-            <Input
-              name="title"
-              size="sm"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Card title"
-            />
-            <Textarea
-              my="4"
-              name="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Description"
-              overflow="hidden"
-            />
+            <Box display="flex" marginTop="1rem">
+              <AiOutlineLaptop />
+              <Input
+                name="title"
+                size="sm"
+                marginLeft="1rem"
+                value={title}
+                fontWeight="bold"
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Card title"
+              />
+            </Box>
+            <Box display="flex">
+              <Box width="100%" marginTop="2rem">
+                <Box display="flex" fontWeight="bold">
+                  <GrTextAlignFull />
+                  <Text marginLeft="1rem">Description</Text>
+                </Box>
+                <Textarea
+                  my="4"
+                  name="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Add a more detailed Description..."
+                  overflow="hidden"
+                  marginLeft="1.5rem"
+                />
+              </Box>
+              <Box marginTop="2rem" marginLeft="2rem" flexDirection="column" width="20%">
+                <Text as="samp" whiteSpace="nowrap">
+                  ADD TO CARD
+                </Text>
+                <List spacing={3} p="5px">
+                  <ListItem>
+                    <Menu>
+                      <MenuButton
+                        leftIcon={<MdLabelOutline />}
+                        size="xs"
+                        whiteSpace="nowrap"
+                        as={Button}
+                        width="100%">
+                        Labels
+                      </MenuButton>
+                      <MenuList padding="5px">
+                        {cardLabels.map((item, index) => (
+                          <MenuItem bg={item.color} marginBottom="5px" key={index}>
+                            <Box minH="30px"></Box>
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </Menu>
+                  </ListItem>
+                </List>
+              </Box>
+            </Box>
           </ModalBody>
           <ModalFooter>
             <Button
+              size="xs"
               marginRight="1rem"
               onClick={handleCardDelete}
               disabled={cardDelete}
               isLoading={cardDelete}
-              loadingText="Deleting card"
+              loadingText="Deleting"
               bg="red.500"
               color="white"
               _hover={{
@@ -89,6 +160,7 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
               <AiOutlineDelete />
             </Button>
             <Button
+              size="xs"
               onClick={handleModalClose}
               disabled={cardRequest}
               isLoading={cardRequest}
