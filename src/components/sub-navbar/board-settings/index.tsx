@@ -24,7 +24,7 @@ import Link from 'next/link';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { updateBoardDetail, saveBoard, fetchBoard, deleteBoard } from '@/src/slices/board';
-import { AiFillSetting } from 'react-icons/ai';
+import { AiFillSetting, AiOutlineDelete, AiOutlineCheck } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 const BoardSettings = (): JSX.Element => {
@@ -49,6 +49,10 @@ const BoardSettings = (): JSX.Element => {
     }
   };
 
+  const handleModalClose = async () => {
+    onClose();
+  };
+
   return (
     <>
       <Box position="absolute" right="10px">
@@ -57,7 +61,7 @@ const BoardSettings = (): JSX.Element => {
             Boards
           </Button>
         </Link>
-        <Button onClick={onOpen} size="sm" as={Button} bg="darkblue">
+        <Button onClick={onOpen} size="sm" as={Button}>
           <AiFillSetting />
         </Button>
         <Modal onClose={onClose} isOpen={isOpen} size="xl" isCentered>
@@ -85,22 +89,29 @@ const BoardSettings = (): JSX.Element => {
                     </FormControl>
                     <Box mt="5px">Set Background Image</Box>
                     <Box align="right">
-                      <Button variant="ghost" mr="10px">
+                      <Button variant="ghost" mr="10px" onClick={handleModalClose}>
                         Cancel
                       </Button>
                       <Button
-                        colorScheme="blue"
+                        backgroundColor="success"
+                        color="white"
                         onClick={handleSave}
                         isLoading={boardDetail.isLoading}>
-                        Save
+                        <AiOutlineCheck /> &nbsp; Save
                       </Button>
                     </Box>
                   </TabPanel>
                   <TabPanel>
                     <p>To delete your board, Click on Delete button.</p>
                     <Box align="right">
-                      <Button bg="red.500" color="white" onClick={handleDelete}>
-                        Delete
+                      <Button
+                        bg="red.500"
+                        color="white"
+                        onClick={handleDelete}
+                        _hover={{
+                          backgroundColor: 'red.600'
+                        }}>
+                        <AiOutlineDelete /> &nbsp;Delete
                       </Button>
                     </Box>
                   </TabPanel>

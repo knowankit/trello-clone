@@ -20,10 +20,11 @@ const AddColumnButton: FC<Props> = ({ addColumn }) => {
       mt="10px"
       mx="10px">
       <Button
-        size="xs"
+        size="md"
         my="10px"
         mx="5px"
         variant="outline"
+        backgroundColor="primary"
         color="brand"
         onClick={addColumn}
         isLoading={columnRequest}

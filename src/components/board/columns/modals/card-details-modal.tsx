@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { CardDetail } from '@/src/types/cards';
 import { deleteCard, fetchCards, updateCard } from '@/src/slices/cards';
 import { useAppSelector } from '@/src/hooks';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 type Props = {
   onClose: () => void;
@@ -56,7 +57,6 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create card</ModalHeader>
-          <ModalCloseButton />
           <ModalBody>
             <Input
               name="title"
@@ -77,8 +77,13 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
               onClick={handleCardDelete}
               disabled={cardDelete}
               isLoading={cardDelete}
-              loadingText="Deleting card">
-              Delete card
+              loadingText="Deleting card"
+              bg="red.500"
+              color="white"
+              _hover={{
+                backgroundColor: 'red.600'
+              }}>
+              <AiOutlineDelete /> &nbsp; Delete card
             </Button>
           </ModalBody>
           <ModalFooter>

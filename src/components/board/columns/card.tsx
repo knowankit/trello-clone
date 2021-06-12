@@ -28,7 +28,7 @@ const Card: FC<Props> = ({ cardIndex, showCardDetail, card }) => {
           borderRadius="md"
           overflow="auto"
           _hover={{
-            backgroundColor: 'darkblue'
+            backgroundColor: 'lightblue'
           }}
           onClick={() => showCardDetail(card._id)}>
           {card.title}
