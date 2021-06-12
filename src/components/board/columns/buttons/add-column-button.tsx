@@ -20,7 +20,7 @@ const AddColumnButton: FC<Props> = ({ addColumn }) => {
       mt="10px"
       mx="10px">
       <Button
-        size="md"
+        size="xs"
         my="10px"
         mx="5px"
         variant="outline"

@@ -49,10 +49,6 @@ const BoardSettings = (): JSX.Element => {
     }
   };
 
-  const handleModalClose = async () => {
-    onClose();
-  };
-
   return (
     <>
       <Box position="absolute" right="10px">
@@ -89,9 +85,6 @@ const BoardSettings = (): JSX.Element => {
                     </FormControl>
                     <Box mt="5px">Set Background Image</Box>
                     <Box align="right">
-                      <Button variant="ghost" mr="10px" onClick={handleModalClose}>
-                        Cancel
-                      </Button>
                       <Button
                         backgroundColor="success"
                         color="white"
