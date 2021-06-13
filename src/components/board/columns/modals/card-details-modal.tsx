@@ -10,12 +10,7 @@ import {
   Textarea,
   Text,
   Box,
-  List,
-  ListItem,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem
+  Badge
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { CardDetail } from '@/src/types/cards';
@@ -23,7 +18,7 @@ import { deleteCard, fetchCards, updateCard } from '@/src/slices/cards';
 import { useAppSelector } from '@/src/hooks';
 import { AiOutlineDelete, AiOutlineClose, AiOutlineLaptop } from 'react-icons/ai';
 import { GrTextAlignFull } from 'react-icons/gr';
-import { MdLabelOutline } from 'react-icons/md';
+import CardLabel from '@/src/components/board/columns/modals/card-labels-menu';
 
 type Props = {
   onClose: () => void;
@@ -37,29 +32,6 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
   const [description, setDescription] = useState(card?.description);
   const cardRequest = useAppSelector((state) => state.cards.isRequesting);
   const cardDelete = useAppSelector((state) => state.cards.isDeleting);
-
-  const cardLabels = [
-    {
-      type: 'Performance',
-      color: '#0079bf'
-    },
-    {
-      type: 'Bug',
-      color: '#eb5a46'
-    },
-    {
-      type: 'Feature',
-      color: '#61bd4f'
-    },
-    {
-      type: 'Information',
-      color: '#ff9f1a'
-    },
-    {
-      type: 'Documentation',
-      color: '#0079bf'
-    }
-  ];
 
   const handleCardDelete = async () => {
     await dispatch(deleteCard(card._id));
@@ -86,8 +58,14 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
     <>
       <Modal size="xl" onClose={handleModalClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
-        <ModalContent>
+        {/* https://github.com/chakra-ui/chakra-ui/discussions/2676 */}
+        <ModalContent maxW="56rem">
           <ModalBody>
+            {card.label && (
+              <Badge bg={card.label.type} color={card.label.textColor}>
+                {card.label.type}
+              </Badge>
+            )}
             <Box display="flex" marginTop="1rem">
               <AiOutlineLaptop />
               <Input
@@ -116,32 +94,7 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
                   marginLeft="1.5rem"
                 />
               </Box>
-              <Box marginTop="2rem" marginLeft="2rem" flexDirection="column" width="20%">
-                <Text as="samp" whiteSpace="nowrap">
-                  ADD TO CARD
-                </Text>
-                <List spacing={3} p="5px">
-                  <ListItem>
-                    <Menu>
-                      <MenuButton
-                        leftIcon={<MdLabelOutline />}
-                        size="xs"
-                        whiteSpace="nowrap"
-                        as={Button}
-                        width="100%">
-                        Labels
-                      </MenuButton>
-                      <MenuList padding="5px">
-                        {cardLabels.map((item, index) => (
-                          <MenuItem bg={item.color} marginBottom="5px" key={index}>
-                            <Box minH="30px"></Box>
-                          </MenuItem>
-                        ))}
-                      </MenuList>
-                    </Menu>
-                  </ListItem>
-                </List>
-              </Box>
+              <CardLabel id={card._id} boardId={card.boardId} />
             </Box>
           </ModalBody>
           <ModalFooter>
@@ -165,7 +118,7 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
               disabled={cardRequest}
               isLoading={cardRequest}
               loadingText="Updating">
-              <AiOutlineClose /> &nbsp; Close
+              <AiOutlineClose /> Close
             </Button>
           </ModalFooter>
         </ModalContent>

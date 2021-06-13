@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               serialize('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== 'development',
-                maxAge: 60 * 60 * 24,
+                maxAge: 60 * 60 * 24 * 1000,
                 sameSite: 'strict',
                 path: '/'
               })
