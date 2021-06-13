@@ -71,7 +71,14 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
   };
 
   return (
-    <Box key={index} width="300px" height="auto" overflowY="auto" mt="10px" mx="10px">
+    <Box
+      key={index}
+      width="272px"
+      height="auto"
+      overflowY="auto"
+      mt="10px"
+      mx="10px"
+      maxH="calc(100vh - 140px)">
       <Box bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'} pb="5px" rounded="lg">
         <Box display="flex" alignItems="center" justifyContent="space-between">
           {loadColumnTitle()}

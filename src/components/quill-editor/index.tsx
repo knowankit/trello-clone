@@ -33,6 +33,7 @@ const QuillEditor = ({ value, onChange }) => {
     <Box className="text-editor">
       <ReactQuill
         theme="snow"
+        style={{ height: '120px' }}
         value={value}
         onChange={(value) => onChange(value)}
         modules={modules}

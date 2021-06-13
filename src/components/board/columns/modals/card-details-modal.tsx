@@ -84,7 +84,7 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
                   <GrTextAlignFull />
                   <Text marginLeft="1rem">Description</Text>
                 </Box>
-                <Box marginLeft="1.5rem">
+                <Box marginLeft="1.5rem" minHeight="200px">
                   <QuillEditor value={description} onChange={setDescription} />
                 </Box>
               </Box>

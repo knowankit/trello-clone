@@ -97,6 +97,7 @@ const Login = (): JSX.Element => {
                   name="password"
                   value={user.password}
                   placeholder="Enter Password"
+                  autoComplete="off"
                   onChange={handleChange}
                 />
               </FormControl>

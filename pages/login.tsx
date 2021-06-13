@@ -2,13 +2,11 @@ import Login from '@/src/components/login';
 import { setOrGetStore } from '@/util/initialise-store';
 import withStore from '@/src/hoc/with-store';
 import isValidUser from '@/util/is-valid-user';
-import { updateUserData } from '@/src/slices/user';
 
 const LoginPageWithStore = withStore(Login);
 
 LoginPageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
-  const { dispatch } = reduxStore;
 
   const userDetails = isValidUser(ctx);
 
@@ -18,12 +16,6 @@ LoginPageWithStore.getInitialProps = async (ctx) => {
     });
 
     ctx.res.end();
-  }
-
-  await dispatch(updateUserData({ type: 'isValid', value: true }));
-
-  if (ctx.req) {
-    await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
   }
 
   return {
