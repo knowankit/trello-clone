@@ -19,6 +19,7 @@ import { useAppSelector } from '@/src/hooks';
 import { AiOutlineDelete, AiOutlineClose, AiOutlineLaptop } from 'react-icons/ai';
 import { GrTextAlignFull } from 'react-icons/gr';
 import CardLabel from '@/src/components/board/columns/modals/card-labels-menu';
+import QuillEditor from '@/src/components/quill-editor';
 
 type Props = {
   onClose: () => void;
@@ -84,15 +85,9 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
                   <GrTextAlignFull />
                   <Text marginLeft="1rem">Description</Text>
                 </Box>
-                <Textarea
-                  my="4"
-                  name="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Add a more detailed Description..."
-                  overflow="hidden"
-                  marginLeft="1.5rem"
-                />
+                <Box marginLeft="1.5rem">
+                  <QuillEditor value={description} onChange={setDescription} />
+                </Box>
               </Box>
               <CardLabel id={card._id} boardId={card.boardId} />
             </Box>
