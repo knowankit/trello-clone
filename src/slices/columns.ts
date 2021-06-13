@@ -152,7 +152,7 @@ export const columnsSlice = createSlice({
       state.status = 'pending';
       state.isRequesting = true;
     },
-    [deleteColumn.fulfilled.toString()]: (state, { payload }) => {
+    [deleteColumn.fulfilled.toString()]: (state) => {
       state.status = 'success';
       state.isRequesting = false;
     },
@@ -164,7 +164,7 @@ export const columnsSlice = createSlice({
       state.status = 'pending';
       state.isRequesting = true;
     },
-    [updateColumn.fulfilled.toString()]: (state, { payload }) => {
+    [updateColumn.fulfilled.toString()]: (state) => {
       state.status = 'success';
       state.isRequesting = false;
     },

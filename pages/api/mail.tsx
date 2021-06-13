@@ -5,7 +5,7 @@ import sgMail from '@sendgrid/mail';
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-  const { db, client } = await connectToDatabase();
+  const { client } = await connectToDatabase();
 
   if (client.isConnected()) {
     const requestType = req.method;

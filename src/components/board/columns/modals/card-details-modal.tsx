@@ -7,7 +7,6 @@ import {
   Button,
   Input,
   ModalOverlay,
-  Textarea,
   Text,
   Box,
   Badge
@@ -63,7 +62,7 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
         <ModalContent maxW="56rem">
           <ModalBody>
             {card.label && (
-              <Badge bg={card.label.type} color={card.label.textColor}>
+              <Badge bg={card.label.type} color="white">
                 {card.label.type}
               </Badge>
             )}

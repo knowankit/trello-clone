@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import {
   Button,
   Text,
@@ -23,28 +23,23 @@ type IProps = {
 const cardLabels = [
   {
     type: 'performance',
-    bg: '#0079bf',
-    textColor: 'white'
+    bg: '#0079bf'
   },
   {
     type: 'bug',
-    bg: '#eb5a46',
-    textColor: 'white'
+    bg: '#eb5a46'
   },
   {
-    type: 'Feature',
-    bg: '#61bd4f',
-    textColor: '#ffffff'
+    type: 'feature',
+    bg: '#61bd4f'
   },
   {
     type: 'information',
-    bg: '#ff9f1a',
-    textColor: 'black'
+    bg: '#ff9f1a'
   },
   {
     type: 'warning',
-    bg: '#f2d600',
-    textColor: 'black'
+    bg: '#f2d600'
   }
 ];
 
