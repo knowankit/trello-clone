@@ -12,7 +12,6 @@ const initialState: UserDetail = {
   isValid: false,
   isCreating: false,
   isFetching: false,
-  doneFetching: true,
   message: '',
   error: ''
 };
@@ -111,11 +110,9 @@ export const userSlice = createSlice({
       state.isCreating = false;
       state.message = payload && payload.message;
     },
-    [loginUser.pending.toString()]: (state, { payload }) => {
+    [loginUser.pending.toString()]: (state) => {
       state.status = 'pending';
-      state.doneFetching = false;
       state.isFetching = true;
-      state.message = payload && payload.message;
     },
     [loginUser.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
@@ -124,32 +121,27 @@ export const userSlice = createSlice({
       state.confirmPassword = undefined;
       state.error = (payload && payload.error) || '';
       state.isFetching = false;
-      state.doneFetching = true;
       state.message = payload && payload.message;
     },
     [loginUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
-      state.doneFetching = true;
       state.isFetching = false;
       state.error = (payload && payload.error) || '';
       state.message = payload && payload.message;
     },
     [fetchUser.pending.toString()]: (state, { payload }) => {
       state.status = 'pending';
-      state.doneFetching = false;
       state.message = payload && payload.message;
     },
     [fetchUser.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
       state.error = payload && payload.error;
-      state.doneFetching = true;
       state.id = payload && payload.id;
       state.message = payload && payload.message;
       state.email = payload && payload.email;
     },
     [fetchUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
-      state.doneFetching = true;
       state.error = payload && payload.error;
       state.message = payload && payload.message;
     }
