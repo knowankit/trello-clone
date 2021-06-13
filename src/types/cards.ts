@@ -11,7 +11,6 @@ export type CardDetail = {
 export type Label = {
   bg: string;
   type: string;
-  textColor: string;
 };
 
 export type CardSlice = {

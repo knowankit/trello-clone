@@ -32,7 +32,7 @@ const Card: FC<Props> = ({ cardIndex, showCardDetail, card }) => {
           }}
           onClick={() => showCardDetail(card._id)}>
           {card.label && (
-            <Badge bg={card.label.type} color={card.label.textColor}>
+            <Badge bg={card.label.type} color="white">
               {card.label.type}
             </Badge>
           )}

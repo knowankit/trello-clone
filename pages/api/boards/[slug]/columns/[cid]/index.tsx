@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     switch (requestType) {
       case 'PATCH': {
-        const { _id, boardName, columnName } = req.body;
+        const { boardName, columnName } = req.body;
 
         const data = {
           boardName,

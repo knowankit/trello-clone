@@ -3,7 +3,6 @@ import { Button, Image, Flex, Box, Spacer } from '@chakra-ui/react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useAppSelector } from '@/src/hooks';
-import { useRouter } from 'next/router';
 
 type IProps = {
   bg?: string;
@@ -11,7 +10,6 @@ type IProps = {
 
 const NavBar: FC<IProps> = ({ bg }) => {
   const user = useAppSelector((state) => state.user);
-  const router = useRouter();
 
   const logout = async () => {
     const URL = '/api/logout';

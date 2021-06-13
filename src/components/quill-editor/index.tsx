@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 //https://github.com/zenoamaro/react-quill/issues/122
 const ReactQuill = typeof window === 'object' ? require('react-quill') : () => false;
 import 'react-quill/dist/quill.snow.css';
 import { Box } from '@chakra-ui/react';
 
-class QuillEditor extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  modules = {
+const QuillEditor = ({ value, onChange }) => {
+  const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
@@ -19,7 +15,7 @@ class QuillEditor extends Component {
     ]
   };
 
-  formats = [
+  const formats = [
     'header',
     'bold',
     'italic',
@@ -33,18 +29,16 @@ class QuillEditor extends Component {
     'image'
   ];
 
-  render() {
-    return (
-      <Box className="text-editor">
-        <ReactQuill
-          theme="snow"
-          value={this.props.value}
-          onChange={(value) => this.props.onChange(value)}
-          modules={this.modules}
-          formats={this.formats}></ReactQuill>
-      </Box>
-    );
-  }
-}
+  return (
+    <Box className="text-editor">
+      <ReactQuill
+        theme="snow"
+        value={value}
+        onChange={(value) => onChange(value)}
+        modules={modules}
+        formats={formats}></ReactQuill>
+    </Box>
+  );
+};
 
 export default QuillEditor;
