@@ -3,7 +3,15 @@ export type CardDetail = {
   title: string;
   description: string;
   columnId?: string;
+  boardId?: string;
   sequence?: number;
+  label?: Label;
+};
+
+export type Label = {
+  bg: string;
+  type: string;
+  textColor: string;
 };
 
 export type CardSlice = {

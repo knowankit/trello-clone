@@ -111,15 +111,8 @@ export const updateCard = createAsyncThunk(
   'card/updateCard',
   async (obj: CardPatch, { getState }) => {
     const { board } = getState() as { board: BoardSlice };
-    const { _id, title, description, columnId } = obj;
 
-    const data = {
-      title,
-      description,
-      columnId
-    };
-
-    const url = `${host}/api/boards/${board.board._id}/cards/${_id}`;
+    const url = `${host}/api/boards/${board.board._id}/cards/${obj._id}`;
 
     const response = await fetch(url, {
       method: 'PATCH',
@@ -131,7 +124,7 @@ export const updateCard = createAsyncThunk(
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data)
+      body: JSON.stringify(obj)
     });
 
     const inJSON = await response.json();

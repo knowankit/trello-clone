@@ -12,7 +12,11 @@ const theme = extendTheme({
     info: '#ff9f1a',
     warning: '#f2d600',
     darkblue: '#eae6ff',
-    lightblue: '#f2faf9'
+    lightblue: '#f2faf9',
+    performance: '#0079bf',
+    bug: '#eb5a46',
+    feature: '#61bd4f',
+    information: '#ff9f1a'
   }
 });
 
