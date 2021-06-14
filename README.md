@@ -32,12 +32,7 @@ Install docker on your machine and start it
 
 ## What is next?
 
-1. Add card drag and drop - Ankit
-2. Add column drag and drop - Ankit
-3. Delete user - Nidhi (Will not be taken for now)
-4. Add unsplash - Nidhi
-5. Load only boards assigned to user - Ankit (Done)
-6. Verify email on sign up - Ankit
-7. Add card type (Nidhi)
-8. Dark theme (Nidhi)
-9. Board creation page redesign (Nidhi)
+Add unsplash
+Verify email on sign up
+Dark theme
+Board creation page redesign

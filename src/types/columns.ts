@@ -1,6 +1,6 @@
 export type Column = {
   _id: string;
-  cards: [];
+  sequence?: number;
 };
 
 export type ColumnsSlice = {
