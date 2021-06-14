@@ -32,7 +32,7 @@ Install docker on your machine and start it
 
 ## What is next?
 
-Add unsplash
-Verify email on sign up
-Dark theme
-Board creation page redesign
+* Add unsplash
+* Verify email on sign up
+* Dark theme
+* Board creation page redesign
