@@ -20,7 +20,6 @@ import {
   Tab,
   TabPanel
 } from '@chakra-ui/react';
-import Link from 'next/link';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { updateBoardDetail, saveBoard, fetchBoard, deleteBoard } from '@/src/slices/board';
@@ -51,70 +50,63 @@ const BoardSettings = (): JSX.Element => {
 
   return (
     <>
-      <Box position="absolute" right="10px">
-        <Link href="/boards">
-          <Button size="xs" ml="10px" mr="10px">
-            Boards
-          </Button>
-        </Link>
-        <Button onClick={onOpen} size="sm" as={Button}>
-          <AiFillSetting />
-        </Button>
-        <Modal onClose={onClose} isOpen={isOpen} size="xl" isCentered>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Board Settings</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Tabs isFitted variant="enclosed">
-                <TabList mb="2rem">
-                  <Tab>Basic</Tab>
-                  <Tab>Advance</Tab>
-                </TabList>
-                <TabPanels>
-                  <TabPanel>
-                    <FormControl id="email">
-                      <FormLabel>Board name</FormLabel>
-                      <Input
-                        value={board.name}
-                        onChange={(e) =>
-                          dispatch(updateBoardDetail({ type: 'name', value: e.target.value }))
-                        }
-                      />
-                      <FormHelperText>You can change this any time</FormHelperText>
-                    </FormControl>
-                    <Box mt="5px">Set Background Image</Box>
-                    <Box align="right">
-                      <Button
-                        backgroundColor="success"
-                        color="white"
-                        onClick={handleSave}
-                        isLoading={boardDetail.isLoading}>
-                        <AiOutlineCheck /> &nbsp; Save
-                      </Button>
-                    </Box>
-                  </TabPanel>
-                  <TabPanel>
-                    <p>To delete your board, Click on Delete button.</p>
-                    <Box align="right">
-                      <Button
-                        bg="red.500"
-                        color="white"
-                        onClick={handleDelete}
-                        _hover={{
-                          backgroundColor: 'red.600'
-                        }}>
-                        <AiOutlineDelete /> &nbsp;Delete
-                      </Button>
-                    </Box>
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </ModalBody>
-            <ModalFooter />
-          </ModalContent>
-        </Modal>
-      </Box>
+      <Button onClick={onOpen} size="sm" as={Button} mr="10px">
+        <AiFillSetting />
+      </Button>
+      <Modal onClose={onClose} isOpen={isOpen} size="xl" isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Board Settings</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Tabs isFitted variant="enclosed">
+              <TabList mb="2rem">
+                <Tab>Basic</Tab>
+                <Tab>Advance</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <FormControl id="email">
+                    <FormLabel>Board name</FormLabel>
+                    <Input
+                      value={board.name}
+                      onChange={(e) =>
+                        dispatch(updateBoardDetail({ type: 'name', value: e.target.value }))
+                      }
+                    />
+                    <FormHelperText>You can change this any time</FormHelperText>
+                  </FormControl>
+                  <Box mt="5px">Set Background Image</Box>
+                  <Box align="right">
+                    <Button
+                      backgroundColor="success"
+                      color="white"
+                      onClick={handleSave}
+                      isLoading={boardDetail.isLoading}>
+                      <AiOutlineCheck /> &nbsp; Save
+                    </Button>
+                  </Box>
+                </TabPanel>
+                <TabPanel>
+                  <p>To delete your board, Click on Delete button.</p>
+                  <Box align="right">
+                    <Button
+                      bg="red.500"
+                      color="white"
+                      onClick={handleDelete}
+                      _hover={{
+                        backgroundColor: 'red.600'
+                      }}>
+                      <AiOutlineDelete /> &nbsp;Delete
+                    </Button>
+                  </Box>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </ModalBody>
+          <ModalFooter />
+        </ModalContent>
+      </Modal>
     </>
   );
 };
