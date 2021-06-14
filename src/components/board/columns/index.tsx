@@ -19,9 +19,9 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const BoardColumns: FC = (): JSX.Element => {
   const dispatch = useDispatch();
+
   const columns = useAppSelector((state) => state.columns.columns);
   const cards = useAppSelector((state) => state.cards.cards);
-  const board = useAppSelector((state) => state.board.board);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [cardDetail, setCardDetail] = useState<CardDetail>({ _id: '', title: '', description: '' });
@@ -103,13 +103,18 @@ const BoardColumns: FC = (): JSX.Element => {
         columnId: destinationColumnId
       };
 
-      await dispatch(updateCardSequenceToLocalState(patchCard));
+      // await dispatch(updateCardSequenceToLocalState(patchCard));
       await dispatch(updateCardSequence(patchCard));
     }
   };
 
   const saveColumnSequence = async (destinationIndex: number, columnId: string) => {
-    let sequence = destinationIndex === 0 ? 1 : columns[destinationIndex - 1].sequence + 1;
+    // Remove the column which is dragged from the list
+    const filteredColumns = columns.filter((column) => column._id !== columnId);
+
+    const sortedColumns = filteredColumns.sort((a, b) => a.sequence - b.sequence);
+
+    let sequence = destinationIndex === 0 ? 1 : sortedColumns[destinationIndex - 1].sequence + 1;
 
     const patchColumn = {
       _id: columnId,
@@ -119,26 +124,24 @@ const BoardColumns: FC = (): JSX.Element => {
     // This is just for updating local state so that there won't be any lag after saving the sequence and fetching again
     // Now we don't to fetch the cards again
     await dispatch(updateColumnSequenceToLocalState(patchColumn));
-    // await dispatch(updateColumnSequence(patchColumn));
-    // await dispatch(fetchColumns())
+    await dispatch(updateColumnSequence(patchColumn));
 
-    for (let i = destinationIndex; i < columns.length; i++) {
-      const column = columns[i];
+    for (let i = destinationIndex; i < sortedColumns.length; i++) {
+      const column = sortedColumns[i];
 
-      if (column._id !== columnId) {
-        sequence += 1;
+      sequence += 1;
 
-        const patchColumn = {
-          _id: column._id,
-          sequence
-        };
+      const patchColumn = {
+        _id: column._id,
+        sequence
+      };
 
-        await dispatch(updateColumnSequenceToLocalState(patchColumn));
-        // await dispatch(updateColumnSequence(patchColumn));
-      }
+      await dispatch(updateColumnSequenceToLocalState(patchColumn));
+      await dispatch(updateColumnSequence(patchColumn));
     }
 
-    // await dispatch(fetchColumns())
+    // Added temporarily to refresh the page on column, otherwise it will not reflect the changes
+    window.location.reload();
   };
 
   return (

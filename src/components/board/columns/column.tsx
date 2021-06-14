@@ -119,7 +119,7 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
               display="flex"
               loadingText="Adding card"
               onClick={handleCardAdd}>
-                + Add a card
+              + Add a card
             </Button>
           </Box>
         </Box>
