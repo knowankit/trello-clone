@@ -128,7 +128,17 @@ const SignUp = (): JSX.Element => {
               />
               {emailErr && <p color="red">Invalid email.</p>}
             </FormControl>
-            <FormControl my="8">
+            <FormControl my="4" isRequired>
+              <Input
+                type="text"
+                name="fullName"
+                value={user.fullName}
+                placeholder="Full name"
+                onChange={handleChange}
+                autoComplete="off"
+              />
+            </FormControl>
+            <FormControl my="4">
               <Input
                 type="password"
                 name="password"
@@ -138,7 +148,7 @@ const SignUp = (): JSX.Element => {
               />
               {passwordErr && <p color="red">Invalid password.</p>}
             </FormControl>
-            <FormControl my="8">
+            <FormControl my="4">
               <Input
                 type="password"
                 name="confirmPassword"

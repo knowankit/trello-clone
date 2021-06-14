@@ -6,6 +6,7 @@ export type UserDetail = {
   status: string;
   isCreating: boolean;
   isValid: boolean;
+  fullName: string;
   isFetching: boolean;
   message: string;
   error: string;

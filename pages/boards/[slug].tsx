@@ -6,7 +6,7 @@ import { resetServerContext } from 'react-beautiful-dnd';
 import { Provider } from 'react-redux';
 import { RootState } from '@/src/store';
 import { GetServerSideProps } from 'next';
-import { updateUserData } from '@/src/slices/user';
+import { updateUserData, fetchUser } from '@/src/slices/user';
 import { fetchColumns } from '@/src/slices/columns';
 import { fetchCards } from '@/src/slices/cards';
 
@@ -53,6 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   if (ctx.req) {
     await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
+    await dispatch(fetchUser());
   }
 
   const state = await reduxStore.getState();

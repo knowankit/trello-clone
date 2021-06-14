@@ -16,7 +16,7 @@ const isUserExists = async (db, email) => {
 };
 
 const createUser = async (body, res) => {
-  const { email, password, confirmPassword, id } = body;
+  const { email, password, confirmPassword, id, fullName } = body;
 
   if (password === confirmPassword) {
     // Check if user email already exists
@@ -36,7 +36,10 @@ const createUser = async (body, res) => {
         let user = {};
         hash(password, SALTROUNDS, async (err, hash) => {
           // Store hash in your password DB.
-          user = await db.collection('users').insertOne({ _id: id, email, password: hash });
+
+          user = await db
+            .collection('users')
+            .insertOne({ _id: id, email, password: hash, fullName });
         });
 
         if (user) {
@@ -46,6 +49,8 @@ const createUser = async (body, res) => {
 
           res.status(200).send(data);
         }
+
+        res.status(200).send({ message: 'failed' });
       }
 
       return;
