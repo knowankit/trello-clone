@@ -103,7 +103,7 @@ const BoardColumns: FC = (): JSX.Element => {
         columnId: destinationColumnId
       };
 
-      // await dispatch(updateCardSequenceToLocalState(patchCard));
+      await dispatch(updateCardSequenceToLocalState(patchCard));
       await dispatch(updateCardSequence(patchCard));
     }
   };
@@ -122,7 +122,6 @@ const BoardColumns: FC = (): JSX.Element => {
     };
 
     // This is just for updating local state so that there won't be any lag after saving the sequence and fetching again
-    // Now we don't to fetch the cards again
     await dispatch(updateColumnSequenceToLocalState(patchColumn));
     await dispatch(updateColumnSequence(patchColumn));
 
@@ -141,6 +140,7 @@ const BoardColumns: FC = (): JSX.Element => {
     }
 
     // Added temporarily to refresh the page on column, otherwise it will not reflect the changes
+    // Will be fixed later
     window.location.reload();
   };
 
