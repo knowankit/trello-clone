@@ -80,7 +80,7 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
         <Box
           key={index}
           width="272px"
-          height="auto"
+          height="calc(100vh - 90px)"
           overflowY="auto"
           mt="10px"
           mx="10px"
@@ -112,7 +112,7 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
               my="10px"
               mx="auto"
               width="80%"
-              color="brand"
+              color="black"
               variant="ghost"
               disabled={cardRequest}
               isLoading={cardRequest}

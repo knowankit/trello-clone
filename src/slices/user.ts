@@ -119,8 +119,8 @@ export const userSlice = createSlice({
     [loginUser.fulfilled.toString()]: (state, { payload }) => {
       state.status = 'success';
       state.id = payload && payload.id;
-      state.password = undefined;
-      state.confirmPassword = undefined;
+      state.password = '';
+      state.confirmPassword = '';
       state.error = (payload && payload.error) || '';
       state.isFetching = false;
       state.message = payload && payload.message;
@@ -131,7 +131,7 @@ export const userSlice = createSlice({
       state.error = (payload && payload.error) || '';
       state.message = payload && payload.message;
     },
-    [fetchUser.pending.toString()]: (state, { payload }) => {
+    [fetchUser.pending.toString()]: (state) => {
       state.status = 'pending';
     },
     [fetchUser.fulfilled.toString()]: (state, { payload }) => {

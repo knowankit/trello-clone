@@ -25,7 +25,7 @@ const AddColumnButton: FC<Props> = ({ addColumn }) => {
         mx="5px"
         variant="outline"
         backgroundColor="primary"
-        color="brand"
+        color="black"
         onClick={addColumn}
         isLoading={columnRequest}
         disabled={columnRequest}
