@@ -50,7 +50,7 @@ const BoardSettings = (): JSX.Element => {
 
   return (
     <>
-      <Button onClick={onOpen} size="sm" as={Button} mr="10px">
+      <Button onClick={onOpen} size="xs" as={Button} mr="10px">
         <AiFillSetting />
       </Button>
       <Modal onClose={onClose} isOpen={isOpen} size="xl" isCentered>

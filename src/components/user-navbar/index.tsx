@@ -1,5 +1,16 @@
 import React, { FC } from 'react';
-import { Button, Image, Flex, Box, Spacer } from '@chakra-ui/react';
+import {
+  Button,
+  Image,
+  Flex,
+  Box,
+  Spacer,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Avatar
+} from '@chakra-ui/react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useAppSelector } from '@/src/hooks';
@@ -8,7 +19,7 @@ type IProps = {
   bg?: string;
 };
 
-const NavBar: FC<IProps> = ({ bg }) => {
+const UserNavBar: FC<IProps> = ({ bg }) => {
   const user = useAppSelector((state) => state.user);
 
   const logout = async () => {
@@ -37,16 +48,21 @@ const NavBar: FC<IProps> = ({ bg }) => {
   const renderButtons = () => {
     if (user?.isValid) {
       return (
-        <Button
-          fontSize="20"
-          color="danger"
-          variant="link"
-          float="right"
-          mr="2"
-          pr="2"
-          onClick={logout}>
-          Log out
-        </Button>
+        <>
+          <Menu>
+            <MenuButton size="xs" mr="5px">
+              <Avatar
+                size="sm"
+                name={user.fullName}
+                color="white"
+                src="https://bit.ly/tioluwani-kolawole"
+              />
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={logout}>Log out</MenuItem>
+            </MenuList>
+          </Menu>
+        </>
       );
     }
 
@@ -63,9 +79,9 @@ const NavBar: FC<IProps> = ({ bg }) => {
   };
 
   return (
-    <Box bg={bg} boxShadow="lg">
+    <Box boxShadow="sm">
       <Flex>
-        <Image height="8" src="/trello-logo.svg" alt="brand logo" m="5"></Image>
+        <Image height="4" src="/trello-logo.svg" alt="brand logo" m="4"></Image>
         <Spacer />
         {renderButtons()}
       </Flex>
@@ -73,8 +89,8 @@ const NavBar: FC<IProps> = ({ bg }) => {
   );
 };
 
-NavBar.propTypes = {
+UserNavBar.propTypes = {
   bg: PropTypes.string
 };
 
-export default NavBar;
+export default UserNavBar;

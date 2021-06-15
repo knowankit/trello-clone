@@ -145,7 +145,7 @@ const BoardColumns: FC = (): JSX.Element => {
   };
 
   return (
-    <Box display="block" position="relative" height="calc(100vh - 122px)" overflowX="auto">
+    <Box display="block" position="relative" height="calc(100vh - 90px)" overflowX="auto">
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-collumns" direction="horizontal" type="column">
           {(provided) => (

@@ -11,14 +11,8 @@ const SubNavbar = (): JSX.Element => {
   const user = useAppSelector((state) => state.user);
 
   return (
-    <Box
-      height="50px"
-      bg="brand"
-      boxShadow="md"
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between">
-      <Heading ml="0.5rem" color="white" as="h3" size="lg" whiteSpace="nowrap" d="block">
+    <Box height="40px" display="flex" alignItems="center" justifyContent="space-between">
+      <Heading ml="0.5rem" color="black" as="h4" size="sm" whiteSpace="nowrap" d="block">
         {board && board.name}
       </Heading>
       <Box>
