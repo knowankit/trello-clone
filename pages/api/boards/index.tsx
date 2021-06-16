@@ -10,14 +10,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     switch (requestType) {
       case 'POST': {
-        const { _id, name, dateCreated, createdBy, columns } = req.body;
+        const { _id, name, dateCreated, createdBy } = req.body;
 
         const data = {
           _id,
           name,
           dateCreated,
-          createdBy,
-          columns
+          createdBy
         };
 
         const board = await db.collection('boards').insertOne(data);

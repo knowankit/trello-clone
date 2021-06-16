@@ -32,7 +32,7 @@ export const createBoard = createAsyncThunk('board/create', async (_obj, { getSt
     name: board.board.name,
     dateCreated: board.board.dateCreated,
     createdBy: user.id,
-    columns: []
+    backgroundImage: '/boards/board-background.jpg'
   };
 
   const url = `${host}/api/boards`;

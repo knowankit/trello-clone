@@ -4,6 +4,7 @@ export type Board = {
   columns?: Columns[];
   createdBy?: string;
   dateCreated?: string;
+  backgroundImage?: string;
 };
 
 export type BoardSlice = {
