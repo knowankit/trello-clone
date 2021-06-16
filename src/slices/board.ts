@@ -106,7 +106,6 @@ export const boardSlice = createSlice({
       state.isLoading = true;
     },
     [saveBoard.fulfilled.toString()]: (state, { payload }) => {
-      state.board = payload;
       state.isLoading = false;
       state.status = 'success';
     },

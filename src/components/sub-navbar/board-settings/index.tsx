@@ -76,7 +76,6 @@ const BoardSettings = (): JSX.Element => {
                     />
                     <FormHelperText>You can change this any time</FormHelperText>
                   </FormControl>
-                  <Box mt="5px">Set Background Image</Box>
                   <Box align="right">
                     <Button
                       backgroundColor="success"
