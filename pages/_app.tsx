@@ -3,7 +3,6 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import '@/src/styles/default.css';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Router from 'next/router';
 import NextNprogress from 'nextjs-progressbar';
 
 import 'nprogress/nprogress.css';
