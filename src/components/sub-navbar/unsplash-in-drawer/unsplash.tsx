@@ -6,8 +6,10 @@ import { Box, InputGroup, Input, InputRightElement, Button } from '@chakra-ui/re
 
 const Unsplash = () => {
   const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+
   const dispatch = useDispatch();
   const unsplash = createApi({ accessKey: 'KrXomw6R-ONxYE9KGwBAPmmLRYT-NgSQVhgayIfQw8k' });
 
@@ -20,6 +22,7 @@ const Unsplash = () => {
   }, []);
 
   const findImages = async (value = 'nature') => {
+    setIsLoading(true);
     const images = await unsplash.search.getPhotos({
       query: value,
       page: currentPage,
@@ -28,21 +31,26 @@ const Unsplash = () => {
     });
 
     setImages(images.response.results);
+    setIsLoading(false);
   };
 
-  // const loadMoreImages = async () => {
-  //   const images = await unsplash.search.getPhotos({
-  //     query: value,
-  //     page: currentPage + 1,
-  //     perPage: 10,
-  //     orientation: 'landscape'
-  //   });
+  const loadMoreImages = async () => {
+    setIsLoading(true);
+    const imagesSet = await unsplash.search.getPhotos({
+      query: value || 'nature',
+      page: currentPage + 1,
+      perPage: 10,
+      orientation: 'landscape'
+    });
 
-  //   setCurrentPage(currentPage + 1);
-  //   let imageClone = images;
-  //   const sumAllImages = images.concat(images.response.results);
-  //   setImages(sumAllImages);
-  // };
+    setCurrentPage(currentPage + 1);
+
+    const response = imagesSet.response.results;
+    const sumAllImages = images.concat(response);
+    setImages(sumAllImages);
+
+    setIsLoading(false);
+  };
 
   const handleImageClick = async (imageURL) => {
     const data = {
@@ -91,7 +99,15 @@ const Unsplash = () => {
           );
         })}
       </Box>
-      {/* <Button onClick={loadMoreImages}>Load more</Button> */}
+      <Box display="flex" justifyContent="center" mt="20px">
+        <Button
+          onClick={loadMoreImages}
+          size="xs"
+          isLoading={isLoading}
+          loadingText="Loading Images...">
+          Load more
+        </Button>
+      </Box>
     </>
   );
 };
