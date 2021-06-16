@@ -1,37 +1,25 @@
-import {
-  Box,
-  Heading,
-  Button,
-  Avatar,
-  Tooltip,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  Input
-} from '@chakra-ui/react';
+import { Box, Heading, Button, Avatar, Tooltip } from '@chakra-ui/react';
+
 import PropType from 'prop-types';
 import BoardSettings from '@/src/components/sub-navbar/board-settings';
 import InviteModal from '@/src/components/sub-navbar/invite-user/modal';
 import React from 'react';
 import { useAppSelector } from '@/src/hooks';
 import Link from 'next/link';
-import { RiArchiveDrawerLine } from 'react-icons/ri';
-import Unsplash from './board-settings/unsplash';
+import UnsplashDrawer from '@/src/components/sub-navbar/unsplash-in-drawer';
 
 const SubNavbar = (): JSX.Element => {
   const board = useAppSelector((state) => state.board.board);
   const user = useAppSelector((state) => state.user);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
 
   return (
-    <Box height="40px" display="flex" alignItems="center" justifyContent="space-between">
-      <Heading ml="0.5rem" color="black" as="h4" size="sm" whiteSpace="nowrap" d="block">
+    <Box
+      height="40px"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      bg="rgba(0,0,0,0.1)">
+      <Heading ml="0.5rem" color="white" as="h4" size="sm" whiteSpace="nowrap" d="block">
         {board && board.name}
       </Heading>
       <Box>
@@ -47,32 +35,7 @@ const SubNavbar = (): JSX.Element => {
           </Button>
         </Link>
         <BoardSettings />
-        <Button size="xs" ml="10px" mr="10px" ref={btnRef} onClick={onOpen}>
-          <RiArchiveDrawerLine />
-        </Button>
-        <Drawer
-          size="md"
-          isOpen={isOpen}
-          placement="right"
-          onClose={onClose}
-          finalFocusRef={btnRef}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>Choose background image</DrawerHeader>
-
-            <DrawerBody>
-              <Unsplash />
-            </DrawerBody>
-
-            <DrawerFooter>
-              <Button variant="outline" mr={3} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="blue">Save</Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
+        <UnsplashDrawer />
       </Box>
     </Box>
   );

@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { createApi } from 'unsplash-js';
-import { saveBoard, updateBoardDetail } from '@/src/slices/board';
+import { updateBoardDetail } from '@/src/slices/board';
 import { useDispatch } from 'react-redux';
-import {
-  Box,
-  InputGroup,
-  InputLeftElement,
-  Input,
-  InputRightElement,
-  Button,
-  Image
-} from '@chakra-ui/react';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { Box, InputGroup, Input, InputRightElement, Button } from '@chakra-ui/react';
+
 const Unsplash = () => {
   const [value, setValue] = useState('');
   const [images, setImages] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const unsplash = createApi({ accessKey: 'KrXomw6R-ONxYE9KGwBAPmmLRYT-NgSQVhgayIfQw8k' });
+
   useEffect(() => {
-    console.log('api', process.env.UNSPLASH_API);
     async function fetchImages() {
       await findImages();
     }
@@ -57,8 +49,8 @@ const Unsplash = () => {
       type: 'backgroundImage',
       value: imageURL
     };
+
     await dispatch(updateBoardDetail(data));
-    await dispatch(saveBoard());
   };
 
   return (
