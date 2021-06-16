@@ -8,7 +8,7 @@ import PropType from 'prop-types';
 const Board = ({ board }): JSX.Element => {
   return (
     <Box
-      backgroundImage="url('/boards/board-background.jpg')"
+      backgroundImage={`url('${board.backgroundImage}')`}
       backgroundPosition="center"
       h="100vh"
       backgroundRepeat="no-repeat"

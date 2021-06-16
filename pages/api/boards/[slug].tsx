@@ -18,14 +18,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       case 'PATCH': {
-        const { _id, name, columns, dateCreated, createdBy } = req.body;
+        const { _id, name, dateCreated, createdBy, backgroundImage } = req.body;
 
         const data = {
           _id,
           name,
-          columns,
           dateCreated,
-          createdBy
+          createdBy,
+          backgroundImage
         };
 
         const board = await db.collection('boards').updateOne({ _id: slug }, { $set: data });
