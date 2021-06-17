@@ -102,10 +102,9 @@ export const userSlice = createSlice({
       state.isCreating = true;
       state.message = payload && payload.message;
     },
-    [registerUser.fulfilled.toString()]: (state, { payload }) => {
+    [registerUser.fulfilled.toString()]: (state) => {
       state.status = 'success';
       state.isCreating = false;
-      state.message = payload && payload.message;
     },
     [registerUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
