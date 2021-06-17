@@ -16,52 +16,50 @@ const isUserExists = async (db, email) => {
 };
 
 const createUser = async (body, res) => {
-  const { email, password, confirmPassword, id, fullName } = body;
+  const { email, password, id, fullName } = body;
+  // Check if user email already exists
+  const { db, client } = await connectToDatabase();
 
-  if (password === confirmPassword) {
-    // Check if user email already exists
-    const { db, client } = await connectToDatabase();
+  if (client.isConnected()) {
+    const isExistingUser = await isUserExists(db, email);
 
-    if (client.isConnected()) {
-      const isExistingUser = await isUserExists(db, email);
-
-      if (isExistingUser) {
-        const data = {
-          message: 'Email id already in use',
-          status: 400
-        };
-
-        res.send(data);
-      } else {
-        let user = {};
-        hash(password, SALTROUNDS, async (err, hash) => {
-          // Store hash in your password DB.
-
-          user = await db
-            .collection('users')
-            .insertOne({ _id: id, email, password: hash, fullName });
-        });
-
-        if (user) {
-          const data = {
-            message: 'success'
-          };
-
-          res.status(200).send(data);
-        }
-
-        res.status(200).send({ message: 'failed' });
-      }
-
-      return;
-    } else {
+    if (isExistingUser) {
       const data = {
-        message: 'DB error',
+        message: 'Email id already in use',
         status: 400
       };
 
       res.send(data);
+      return;
     }
+
+    // Create User
+    let user = {};
+
+    hash(password, SALTROUNDS, async (err, hash) => {
+      // Store hash in your password DB.
+      user = await db.collection('users').insertOne({ _id: id, email, password: hash, fullName });
+    });
+
+    if (user) {
+      const data = {
+        message: 'success'
+      };
+
+      res.status(200).send(data);
+      return;
+    }
+
+    res.status(200).send({ message: 'failed' });
+
+    return;
+  } else {
+    const data = {
+      message: 'DB error',
+      status: 400
+    };
+
+    res.send(data);
   }
 };
 
