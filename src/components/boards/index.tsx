@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/src/hooks';
 import { updateBoardDetail, resetBoard } from '@/src/slices/board';
 import { createBoard } from '@/src/slices/boards';
-
+import { AiOutlinePlus } from 'react-icons/ai';
 import { fetchBoards } from '@/src/slices/boards';
 
 import shortId from 'shortid';
@@ -56,7 +56,12 @@ const Boards = (): JSX.Element => {
   const createBoardModal = () => {
     return (
       <>
-        <Button onClick={onOpen} colorScheme="green" size="lg" mt="1rem">
+        <Button
+          onClick={onOpen}
+          leftIcon={<AiOutlinePlus />}
+          colorScheme="green"
+          size="lg"
+          mt="1rem">
           Create a board
         </Button>
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -82,7 +87,7 @@ const Boards = (): JSX.Element => {
 
   const loadExistingBoards = () => {
     return (
-      <Box mt="1rem" minWidth="50vw">
+      <Box mt="1rem" minWidth="50vw" display="flex">
         {boards.map((board, index) => (
           <Link
             key={index}
@@ -92,14 +97,13 @@ const Boards = (): JSX.Element => {
             }}>
             <Box
               display="inline-block"
-              key={index}
               mr="1rem"
               mt="1rem"
               height="150px"
               width="150px"
               background={`linear-gradient(
-                rgba(0, 0, 0, 0.65),
-                rgba(0, 0, 0, 0.65)
+                rgba(0, 0, 0, 0.4),
+                rgba(0, 0, 0, 0.4)
               ),
               url(${board.backgroundImage})`}
               backgroundPosition="center"

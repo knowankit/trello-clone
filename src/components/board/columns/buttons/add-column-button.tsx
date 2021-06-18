@@ -14,7 +14,7 @@ const AddColumnButton: FC<Props> = ({ addColumn }) => {
     <Box
       rounded="lg"
       height="auto"
-      width="300px"
+      width="272px"
       display="flex"
       flexDirection="column"
       mt="10px"
@@ -23,7 +23,6 @@ const AddColumnButton: FC<Props> = ({ addColumn }) => {
         size="xs"
         my="10px"
         mx="5px"
-        variant="outline"
         backgroundColor="primary"
         color="black"
         onClick={addColumn}
