@@ -28,6 +28,7 @@ const SubNavbar = (): JSX.Element => {
 
   const handleSave = async () => {
     await dispatch(saveBoard());
+    onClose();
   };
 
   return (

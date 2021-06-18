@@ -10,7 +10,8 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalFooter,
-  Input
+  Input,
+  Text
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
@@ -89,9 +90,35 @@ const Boards = (): JSX.Element => {
               pathname: '/boards/[slug]',
               query: { slug: board._id }
             }}>
-            <Button key={index} mr=".5rem">
-              {board.name}
-            </Button>
+            <Box
+              display="inline-block"
+              key={index}
+              mr="1rem"
+              mt="1rem"
+              height="150px"
+              width="150px"
+              background={`linear-gradient(
+                rgba(0, 0, 0, 0.65),
+                rgba(0, 0, 0, 0.65)
+              ),
+              url(${board.backgroundImage})`}
+              backgroundPosition="center"
+              backgroundRepeat="no-repeat"
+              backgroundSize="cover"
+              borderRadius="5px"
+              boxShadow="lg"
+              cursor="pointer">
+              <Text
+                marginTop="calc(50% - 25px)"
+                height="25px"
+                textAlign="center"
+                textTransform="capitalize"
+                color="white"
+                fontSize="20px"
+                fontWeight="bold">
+                {board.name}
+              </Text>
+            </Box>
           </Link>
         ))}
       </Box>
@@ -100,7 +127,6 @@ const Boards = (): JSX.Element => {
 
   return (
     <Box flexGrow={3} mx="2%" boxShadow="md" rounded="lg" bg="white" p="1rem">
-      <h1>Boards page</h1>
       {createBoardModal()}
       {loadExistingBoards()}
     </Box>
