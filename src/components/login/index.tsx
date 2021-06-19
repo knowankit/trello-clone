@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Box, FormControl, Input, Button, Image, Link } from '@chakra-ui/react';
+import { Flex, Box, FormControl, Input, Button, Image, Link, Text } from '@chakra-ui/react';
 import { useAppSelector } from '@/src/hooks';
 import { useDispatch } from 'react-redux';
 import { loginUser, updateUserData } from '@/src/slices/user';
@@ -31,16 +31,11 @@ const Login = (): JSX.Element => {
 
   return (
     <>
-      <Box display="flex">
-        <Image
-          height="30px"
-          ml="auto"
-          mr="auto"
-          my="40px"
-          src="/trello-logo.svg"
-          display="inline-block"
-          alt="brand logo"
-        />
+      <Box display="flex" justifyContent="center" alignItems="center" my="40px">
+        <Image height="20px" mt="2" src="/trello-icon.svg" alt="brand logo"></Image>
+        <Text fontWeight="bold" fontSize="28px" m="4px">
+          Trello
+        </Text>
       </Box>
       <Flex
         alignItems="center"

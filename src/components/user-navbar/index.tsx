@@ -9,7 +9,8 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Avatar
+  Avatar,
+  Text
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
@@ -75,12 +76,20 @@ const UserNavBar: FC = () => {
   };
 
   return (
-    <Box boxShadow="sm" bg="rgba(0,0,0,0.2)">
-      <Flex>
-        <Image height="4" src="/trello-logo.svg" alt="brand logo" m="4"></Image>
-        <Spacer />
-        {renderButtons()}
-      </Flex>
+    <Box boxShadow="sm" bg="rgba(0,0,0,0.2)" display="flex">
+      <Image height="20px" src="/trello-icon.svg" alt="brand logo" my="5px" margin="5px"></Image>
+      <Link href="/boards">
+        <Button size="xs" ml="5px" mr="10px" my="5px">
+          Boards
+        </Button>
+      </Link>
+      <Spacer />
+      <Text fontWeight="bold" fontSize="20px" textAlign="center" color="color">
+        Trello clone
+      </Text>
+      {/* <Image height="4" src="/trello-logo.svg" alt="brand logo" m="4"></Image> */}
+      <Spacer />
+      {renderButtons()}
     </Box>
   );
 };

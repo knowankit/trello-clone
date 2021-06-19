@@ -45,7 +45,7 @@ const InviteModal = () => {
 
   return (
     <>
-      <Button onClick={onOpen} size="xs">
+      <Button onClick={onOpen} size="xs" ml="5px">
         Invite
       </Button>
       <Modal onClose={onClose} isOpen={isOpen}>

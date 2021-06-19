@@ -14,7 +14,7 @@ import { saveBoard } from '@/src/slices/board';
 
 import PropType from 'prop-types';
 import React from 'react';
-import { RiArchiveDrawerLine } from 'react-icons/ri';
+import { BsImages } from 'react-icons/bs';
 import Unsplash from '@/src/components/sub-navbar/unsplash-in-drawer/unsplash';
 import { useAppSelector } from '@/src/hooks';
 
@@ -33,8 +33,8 @@ const SubNavbar = (): JSX.Element => {
 
   return (
     <>
-      <Button size="xs" ml="10px" mr="10px" ref={btnRef} onClick={onOpen}>
-        <RiArchiveDrawerLine />
+      <Button size="xs" ml="2px" mr="10px" ref={btnRef} onClick={onOpen}>
+        <BsImages />
       </Button>
       <Drawer size="sm" isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
         <DrawerOverlay />
