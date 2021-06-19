@@ -63,7 +63,7 @@ const NavBar: FC<IProps> = ({ bg }) => {
   };
 
   return (
-    <Box bg={bg} boxShadow="lg">
+    <Box bg={bg} boxShadow="md">
       <Flex>
         <Image height="8" src="/trello-logo.svg" alt="brand logo" m="5"></Image>
         <Spacer />

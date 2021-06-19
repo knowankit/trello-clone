@@ -15,11 +15,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useAppSelector } from '@/src/hooks';
 
-type IProps = {
-  bg?: string;
-};
-
-const UserNavBar: FC<IProps> = ({ bg }) => {
+const UserNavBar: FC = () => {
   const user = useAppSelector((state) => state.user);
 
   const logout = async () => {
