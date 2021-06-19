@@ -3,7 +3,7 @@ import { Box, Image, Text } from '@chakra-ui/react';
 
 const Settings = (): JSX.Element => {
   return (
-    <Box minHeight="50vh" flexGrow={3} ml="2%" boxShadow="lg" rounded="lg" bg="white" p="1rem">
+    <Box minHeight="50vh" flexGrow={3} mx="2%" boxShadow="base" rounded="lg" bg="white" p="1rem">
       <Box display="flex">
         <Image
           height="250px"

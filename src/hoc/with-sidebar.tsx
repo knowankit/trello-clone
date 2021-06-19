@@ -41,7 +41,7 @@ const withSidebar = (App, props) => {
         <>
           <NavBar bg="white" />
           <Box display="flex" mt="2%">
-            <Box height="80vh" width="20vw" boxShadow="md" rounded="lg" p="1em" ml="20px">
+            <Box height="80vh" width="20vw" boxShadow="base" rounded="lg" p="1em" ml="20px">
               <Box display="flex" flexDirection="column">
                 {sidebarMenu.map((menu, index) => (
                   <Link href={menu.path} key={index}>
@@ -50,9 +50,10 @@ const withSidebar = (App, props) => {
                       mb="5px"
                       height="4rem"
                       borderRadius="1rem"
+                      boxShadow={page === menu.page ? 'inner' : 'base'}
                       display="flex"
                       justifyContent="left"
-                      colorScheme={page === menu.page ? 'blue' : 'gray'}>
+                      colorScheme="gray">
                       <>
                         <menu.icon size="20px" /> &nbsp; {menu.buttonName}
                       </>
