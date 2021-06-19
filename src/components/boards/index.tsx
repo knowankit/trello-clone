@@ -95,33 +95,35 @@ const Boards = (): JSX.Element => {
               pathname: '/boards/[slug]',
               query: { slug: board._id }
             }}>
-            <Box
-              display="inline-block"
-              mr="1rem"
-              mt="1rem"
-              height="150px"
-              width="150px"
-              background={`linear-gradient(
+            <Box display="flex" flexWrap="inherit">
+              <Box
+                // display="inline-block"
+                mr="1rem"
+                mt="1rem"
+                height="150px"
+                width="150px"
+                background={`linear-gradient(
                 rgba(0, 0, 0, 0.4),
                 rgba(0, 0, 0, 0.4)
               ),
               url(${board.backgroundImage})`}
-              backgroundPosition="center"
-              backgroundRepeat="no-repeat"
-              backgroundSize="cover"
-              borderRadius="5px"
-              boxShadow="lg"
-              cursor="pointer">
-              <Text
-                marginTop="calc(50% - 25px)"
-                height="25px"
-                textAlign="center"
-                textTransform="capitalize"
-                color="white"
-                fontSize="20px"
-                fontWeight="bold">
-                {board.name}
-              </Text>
+                backgroundPosition="center"
+                backgroundRepeat="no-repeat"
+                backgroundSize="cover"
+                borderRadius="5px"
+                boxShadow="lg"
+                cursor="pointer">
+                <Text
+                  marginTop="calc(50% - 25px)"
+                  height="25px"
+                  textAlign="center"
+                  textTransform="capitalize"
+                  color="white"
+                  fontSize="20px"
+                  fontWeight="bold">
+                  {board.name}
+                </Text>
+              </Box>
             </Box>
           </Link>
         ))}
