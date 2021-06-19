@@ -87,7 +87,7 @@ const Boards = (): JSX.Element => {
 
   const loadExistingBoards = () => {
     return (
-      <Box mt="1rem" minWidth="50vw" display="flex">
+      <Box mt="1rem" minWidth="50vw" display="flex" flexWrap="wrap">
         {boards.map((board, index) => (
           <Link
             key={index}
@@ -96,7 +96,6 @@ const Boards = (): JSX.Element => {
               query: { slug: board._id }
             }}>
             <Box
-              display="inline-block"
               mr="1rem"
               mt="1rem"
               height="150px"

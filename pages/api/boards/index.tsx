@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const boards = await db
           .collection('boards')
           .find({ createdBy: userid })
-          .limit(10)
+          .limit(30)
           .toArray();
         res.send(boards);
 
