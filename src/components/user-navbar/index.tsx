@@ -16,6 +16,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useAppSelector } from '@/src/hooks';
 import { AiOutlineHome } from 'react-icons/ai';
+import { SiTrello } from 'react-icons/si';
 
 const UserNavBar: FC = () => {
   const user = useAppSelector((state) => state.user);
@@ -89,11 +90,12 @@ const UserNavBar: FC = () => {
         </Button>
       </Link>
       <Spacer />
-      <Image height="25px" mt="5px" src="/trello-icon.svg" alt="brand logo" opacity="0.5"></Image>
-      <Text fontWeight="bold" fontSize="20px" ml="3px">
-        Trello Clone
+      <Box size="md" m="10px" color="white">
+        <SiTrello />
+      </Box>
+      <Text fontWeight="bold" fontSize="20px" mt="2px" color="white">
+        Trello clone
       </Text>
-      {/* <Image height="4" src="/trello-logo.svg" alt="brand logo" m="4"></Image> */}
       <Spacer />
       {renderButtons()}
     </Box>
