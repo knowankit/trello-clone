@@ -1,6 +1,18 @@
 import React, { useState, useCallback } from 'react';
-import { Box, Button, Heading, Input } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Text,
+  MenuDivider
+} from '@chakra-ui/react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import { FiMoreHorizontal } from 'react-icons/fi';
 import Cards from '@/src/components/board/columns/cards';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
@@ -90,12 +102,26 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
             <Box display="flex" alignItems="center" justifyContent="space-between">
               {loadColumnTitle(provided.dragHandleProps)}
               <Box my="10px" mr="10px" float="right" cursor="grab" display="flex">
-                <Button size="xs" mr="5px" onClick={() => setEditBoxVisibility(!showEditBox)}>
-                  <AiOutlineEdit />
-                </Button>
-                <Button size="xs" onClick={handleColumnDelete}>
-                  <AiOutlineDelete />
-                </Button>
+                <Menu>
+                  <MenuButton aria-label="Options">
+                    <FiMoreHorizontal />
+                  </MenuButton>
+                  <MenuList justifyContent="center" alignItems="center">
+                    <MenuItem onClick={() => setEditBoxVisibility(!showEditBox)}>
+                      <Button size="xs">
+                        <AiOutlineEdit />
+                      </Button>
+                      <Text marginLeft="5px">Edit board name</Text>
+                    </MenuItem>
+                    <MenuDivider />
+                    <MenuItem onClick={handleColumnDelete}>
+                      <Button size="xs">
+                        <AiOutlineDelete />
+                      </Button>
+                      <Text marginLeft="5px">Delete board</Text>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
               </Box>
             </Box>
             <Droppable droppableId={column._id} type="card">
