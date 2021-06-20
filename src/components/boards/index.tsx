@@ -30,6 +30,8 @@ const Boards = (): JSX.Element => {
   const dispatch = useDispatch();
   const board = useAppSelector((state) => state.board.board);
 
+  const boardRequest = useAppSelector((state) => state.boards.isRequesting);
+
   const handleCreate = async () => {
     const id = shortId.generate();
     const date = new Date().toLocaleString();
@@ -77,7 +79,9 @@ const Boards = (): JSX.Element => {
               />
             </ModalBody>
             <ModalFooter>
-              <Button onClick={handleCreate}>Create</Button>
+              <Button onClick={handleCreate} isLoading={boardRequest} loadingText="Creating board">
+                Create
+              </Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

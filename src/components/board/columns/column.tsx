@@ -1,6 +1,18 @@
 import React, { useState, useCallback } from 'react';
-import { Box, Button, Heading, Input } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Text,
+  MenuDivider
+} from '@chakra-ui/react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import { FiMoreHorizontal } from 'react-icons/fi';
 import Cards from '@/src/components/board/columns/cards';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
@@ -32,6 +44,8 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
           width="60%"
           ml="20px"
           onChange={handleChange}
+          onBlur={() => setEditBoxVisibility(false)}
+          onKeyDown={handleKeyDown}
         />
       );
     }
@@ -43,6 +57,13 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
         </Box>
       </Heading>
     );
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      setEditBoxVisibility(false);
+    }
   };
 
   const handleCardAdd = async () => {
@@ -89,13 +110,23 @@ const Column = ({ showCardDetail, column, index, id, cards }): JSX.Element => {
           <Box bg={column.columnName === 'addColumn' ? '' : '#F0F0F0'} pb="5px" rounded="lg">
             <Box display="flex" alignItems="center" justifyContent="space-between">
               {loadColumnTitle(provided.dragHandleProps)}
-              <Box my="10px" mr="10px" float="right" cursor="grab" display="flex">
-                <Button size="xs" mr="5px" onClick={() => setEditBoxVisibility(!showEditBox)}>
-                  <AiOutlineEdit />
-                </Button>
-                <Button size="xs" onClick={handleColumnDelete}>
-                  <AiOutlineDelete />
-                </Button>
+              <Box my="10px" mr="10px" cursor="grab" display="flex">
+                <Menu>
+                  <MenuButton aria-label="Options">
+                    <FiMoreHorizontal />
+                  </MenuButton>
+                  <MenuList justifyContent="center" alignItems="center">
+                    <MenuItem onClick={() => setEditBoxVisibility(!showEditBox)}>
+                      <AiOutlineEdit />
+                      <Text marginLeft="5px">Edit</Text>
+                    </MenuItem>
+                    <MenuDivider />
+                    <MenuItem onClick={handleColumnDelete}>
+                      <AiOutlineDelete />
+                      <Text marginLeft="5px">Delete</Text>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
               </Box>
             </Box>
             <Droppable droppableId={column._id} type="card">

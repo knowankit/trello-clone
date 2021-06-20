@@ -7,6 +7,7 @@ const initialState = {
   boards: [],
   status: 'idle',
   doneFetching: true,
+  isRequesting: false,
   error: {}
 };
 
@@ -72,12 +73,15 @@ export const boardSlice = createSlice({
       state.status = 'failed';
     },
     [createBoard.pending.toString()]: (state) => {
+      state.isRequesting = true;
       state.status = 'pending';
     },
     [createBoard.fulfilled.toString()]: (state) => {
+      state.isRequesting = false;
       state.status = 'success';
     },
     [createBoard.rejected.toString()]: (state) => {
+      state.isRequesting = false;
       state.status = 'failed';
     }
   }
