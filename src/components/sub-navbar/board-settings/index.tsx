@@ -30,6 +30,7 @@ const BoardSettings = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const board = useAppSelector((state) => state.board.board);
   const boardDetail = useAppSelector((state) => state.board);
+  const boardDelete = useAppSelector((state) => state.board.isLoading);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -95,7 +96,9 @@ const BoardSettings = (): JSX.Element => {
                       onClick={handleDelete}
                       _hover={{
                         backgroundColor: 'red.600'
-                      }}>
+                      }}
+                      isLoading={boardDelete}
+                      loadingText="Deleting">
                       <AiOutlineDelete /> &nbsp;Delete
                     </Button>
                   </Box>
