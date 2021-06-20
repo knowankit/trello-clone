@@ -19,7 +19,14 @@ const InviteModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [email, setEmail] = useState('');
   const [emailErr, setEmailErr] = useState(false);
+  const [isMailSending, setMailSending] = useState(false);
   const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
+
+  const handleClick = async () => {
+    setMailSending(true);
+    await sendEmail();
+    setMailSending(false);
+  };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -80,7 +87,9 @@ const InviteModal = () => {
               disabled={!validEmail.test(email)}
               colorScheme="blue"
               mr={3}
-              onClick={sendEmail}>
+              onClick={handleClick}
+              isLoading={isMailSending}
+              loadingText="Sending">
               Invite
             </Button>
           </ModalFooter>

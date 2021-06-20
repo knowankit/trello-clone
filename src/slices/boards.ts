@@ -81,6 +81,7 @@ export const boardSlice = createSlice({
       state.status = 'success';
     },
     [createBoard.rejected.toString()]: (state) => {
+      state.isRequesting = false;
       state.status = 'failed';
     }
   }
