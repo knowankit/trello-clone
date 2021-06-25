@@ -34,6 +34,5 @@ Install docker on your machine and start it
 
 * Verify email on sign up
 * Dark theme
-* Board creation page redesign
 * Add user to the page
 * Add comments in the card
