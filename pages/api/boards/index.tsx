@@ -17,7 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           name,
           dateCreated,
           createdBy,
-          backgroundImage
+          backgroundImage,
+          users: []
         };
 
         const board = await db.collection('boards').insertOne(data);

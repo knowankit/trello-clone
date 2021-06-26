@@ -82,6 +82,7 @@ const InviteModal = () => {
               placeholder="Enter your email"
             />
           </ModalBody>
+          {emailErr && <p>{emailErr}</p>}
           <ModalFooter>
             <Button
               disabled={!validEmail.test(email)}

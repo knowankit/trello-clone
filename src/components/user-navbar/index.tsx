@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import {
   Button,
-  Image,
-  Flex,
   Box,
   Spacer,
   Menu,
@@ -52,7 +50,7 @@ const UserNavBar: FC = () => {
             <MenuButton size="xs" mr="5px">
               <Avatar
                 size="sm"
-                name={user.fullName}
+                name={user?.fullName}
                 color="white"
                 src="https://bit.ly/tioluwani-kolawole"
               />
