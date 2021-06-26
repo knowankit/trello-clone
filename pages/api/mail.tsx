@@ -17,10 +17,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const msg = {
           to: email,
           from: 'knowankitonweb@gmail.com',
-          template_id: 'd-5b4b95fcc7104e708edfefcf510987d2',
-          subject: 'Sending with SendGrid is Fun',
-          text: 'and easy to do anywhere, even with Node.js',
-          html: '<strong>and easy to do anywhere, even with Node.js</strong>'
+          subject: 'You are invited to join to a trello clone board',
+          html: `<div>
+            <div style="height:100px; background-color:#26292c; color: white">
+              <p> Trello Clone</p>
+            <div>
+            <div style="height:200px; background-color:#0079bf;">
+              <button>Join</button>
+            </div>
+            <div style="height:100px; background-color:#26292c;">
+
+            </div>
+          </div>`
         };
 
         sgMail
