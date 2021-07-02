@@ -1,42 +1,48 @@
 import React, { Component } from 'react';
 import { setOrGetStore } from '@/util/initialise-store';
 import isValidUser from '@/util/is-valid-user';
-import { updateUserData } from '@/src/slices/user';
+import { updateUserData, fetchUser } from '@/src/slices/user';
 
 const WithAuth = (App) => {
   return class AppWithAuth extends Component {
     constructor(props) {
       super(props);
     }
+
     static async getInitialProps(ctx) {
-      let isAuthenticated;
-      const appProps = {};
+      let appProps = {};
 
       // Is code running on the server
-      if (typeof window === 'undefined') {
-        // Check if cookie is present
-        const reduxStore = setOrGetStore();
-        const { dispatch } = reduxStore;
+      console.log('with auth');
 
-        const userDetails = isValidUser(ctx);
+      // Check if cookie is present
+      const reduxStore = setOrGetStore();
+      const { dispatch } = reduxStore;
 
-        if (userDetails && userDetails.isValid) {
-          ctx.res.writeHead(307, {
-            Location: '/home'
-          });
+      const userDetails = isValidUser(ctx);
 
-          ctx.res.end();
-        }
+      if (userDetails && !userDetails.isValid) {
+        ctx.res.writeHead(307, {
+          Location: '/login'
+        });
 
-        await dispatch(updateUserData({ type: 'isValid', value: true }));
+        ctx.res.end();
+      }
 
-        if (ctx.req) {
-          await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
-        }
+      if (App.getInitialProps) {
+        appProps = await App.getInitialProps(ctx);
+      }
+
+      await dispatch(updateUserData({ type: 'isValid', value: true }));
+
+      if (ctx.req) {
+        await dispatch(updateUserData({ type: 'id', value: userDetails && userDetails.id }));
+        await dispatch(fetchUser());
       }
 
       return {
-        ...appProps
+        ...appProps,
+        reduxState: reduxStore.getState()
       };
     }
 

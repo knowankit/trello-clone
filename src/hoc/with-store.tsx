@@ -4,7 +4,7 @@ import { setOrGetStore } from '@/util/initialise-store';
 import { RootState } from '@/src/store';
 
 type Props = {
-  initialReduxStore: RootState;
+  reduxState: RootState;
 };
 
 const WithStore = (App) => {
@@ -26,7 +26,7 @@ const WithStore = (App) => {
 
     render() {
       return (
-        <Provider store={setOrGetStore(this.props.initialReduxStore)}>
+        <Provider store={setOrGetStore(this.props.reduxState)}>
           <App />
         </Provider>
       );
