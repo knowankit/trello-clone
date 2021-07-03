@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDatabase } from '@/util/mongodb';
 import sgMail from '@sendgrid/mail';
-import { nanoid } from 'nanoid';
 import shortId from 'shortid';
 
 const sendMail = (email, res, emailData) => {
@@ -45,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       case 'POST': {
         const { email, boardId } = req.body;
 
-        const token = nanoid();
+        const token = shortId.generate();
         const id = shortId.generate();
 
         const emailData = {
