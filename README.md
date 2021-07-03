@@ -1,10 +1,10 @@
-# trello-clone
+# trello-clone ![Build status](https://github.com/knowankit/trello-clone/actions/workflows/main.yml/badge.svg)
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
 ![Trello clone](https://github.com/knowankit/trello-clone/blob/develop/demo.gif)
 
-[Preview](https://trello-clone-one.vercel.app/) This is a clone application for trello. This has been built for learning purposes. My plan is to improve the project and add more features in every release.
+[Preview](https://trello-clone-one.vercel.app/) This is a clone application for trello. This has been built for learning purpose. My plan is to improve the project and add more features in every release.
 
 ## Features 🤩
 
@@ -32,7 +32,7 @@ First install the MongoDB Compass for better visualization of data with MongoDB 
 
 `For unsplash gallery, api key is needed which can be generated from unsplash website`
 
-### If you want to run using docker to run this project
+### If you want to run the project using docker
 
 Install docker on your machine and start it
 
@@ -57,8 +57,12 @@ Install docker on your machine and start it
 
 Reach out to the maintainer at one of the following places:
 
-- [GitHub discussions](https://github.com/dec0dOS/amazing-github-template/discussions)
-- The email which is located [in GitHub profile](https://github.com/dec0dOS)
+- The email which is located [in GitHub profile](https://github.com/knowankit)
+- [Portfolio] (https://knowankit.com)
+
+## Contributing
+
+All contributions are welcome!
 
 ## License
 
