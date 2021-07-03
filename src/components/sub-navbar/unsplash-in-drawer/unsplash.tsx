@@ -11,7 +11,7 @@ const Unsplash = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch();
-  const unsplash = createApi({ accessKey: 'KrXomw6R-ONxYE9KGwBAPmmLRYT-NgSQVhgayIfQw8k' });
+  const unsplash = createApi({ accessKey: process.env.NEXT_PUBLIC_UNSPLASH_API });
 
   useEffect(() => {
     async function fetchImages() {
