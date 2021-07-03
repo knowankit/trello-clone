@@ -157,7 +157,7 @@ const BoardColumns: FC = (): JSX.Element => {
               overflowY="auto">
               {columns.map((column, index) => (
                 <Column
-                  key={index}
+                  key={column._id}
                   column={column}
                   id={column._id}
                   index={index}
