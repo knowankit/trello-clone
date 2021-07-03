@@ -20,7 +20,8 @@ const WithStore = (App) => {
       }
 
       return {
-        ...appProps
+        ...appProps,
+        reduxState: ctx.reduxState
       };
     }
 

@@ -12,10 +12,6 @@ const WithAuth = (App) => {
     static async getInitialProps(ctx) {
       let appProps = {};
 
-      // Is code running on the server
-      console.log('with auth');
-
-      // Check if cookie is present
       const reduxStore = setOrGetStore();
       const { dispatch } = reduxStore;
 
@@ -40,9 +36,10 @@ const WithAuth = (App) => {
         await dispatch(fetchUser());
       }
 
+      ctx.reduxState = reduxStore.getState();
+
       return {
-        ...appProps,
-        reduxState: reduxStore.getState()
+        ...appProps
       };
     }
 
