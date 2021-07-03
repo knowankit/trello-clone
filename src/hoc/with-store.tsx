@@ -21,7 +21,7 @@ const WithStore = (App) => {
 
       return {
         ...appProps,
-        reduxState: ctx.reduxState
+        reduxState: ctx.reduxState || setOrGetStore().getState()
       };
     }
 
