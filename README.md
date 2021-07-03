@@ -4,11 +4,11 @@
 
 ![Trello clone](https://github.com/knowankit/trello-clone/blob/develop/demo.gif)
 
-This is a clone application for trello. This has built for leaning purpose. [Preview](https://trello-clone-one.vercel.app/)
+[Preview](https://trello-clone-one.vercel.app/) This is a clone application for trello. This has been built for learning purposes. My plan is to improve the project and add more features in every release.
 
 ## Features 🤩
 
-- Login/Register with JWT token authorization
+- Login/Register with JWT token authentication
 - Ability to create/update/delete the board
 - Ability to add/update/move/delete the card
 - Background image library for the board
@@ -30,7 +30,9 @@ First install the MongoDB Compass for better visualization of data with MongoDB 
 3. Run `yarn install`
 4. Run `yarn dev`
 
-## If you are using docker to run this project
+`For unsplash gallery, api key is needed which can be generated from unsplash website`
+
+### If you want to run using docker to run this project
 
 Install docker on your machine and start it
 
@@ -39,8 +41,6 @@ Install docker on your machine and start it
 3. Run `docker-compose up`
 
 ## Tech stacks
-
-Below are the tech stacks which have been used to build it.
 
 - Nextjs with typescript
 - MongoDB for local development
@@ -52,3 +52,16 @@ Below are the tech stacks which have been used to build it.
 1. [Color Code](https://www.designpieces.com/palette/trello-color-palette-hex-and-rgb/)
 2. [Illustration](https://undraw.co/illustrations)
 3. [Icons](https://github.com/react-icons/react-icons)
+
+## Support
+
+Reach out to the maintainer at one of the following places:
+
+- [GitHub discussions](https://github.com/dec0dOS/amazing-github-template/discussions)
+- The email which is located [in GitHub profile](https://github.com/dec0dOS)
+
+## License
+
+This project is licensed under the **MIT license**. Feel free to edit and distribute this template as you like.
+
+See [LICENSE](LICENSE) for more information.
