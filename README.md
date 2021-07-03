@@ -1,11 +1,25 @@
 # trello-clone
 
-This is a clone application for trello. This has built for leaning purpose. Below are the tech stacks which have been used to build it.
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-- Nextjs with typescript
-- MongoDB for local development
-- Mongo Atlas for production DB
-- Chakra UI library
+![Trello clone](https://github.com/knowankit/trello-clone/blob/develop/demo.gif)
+
+This is a clone application for trello. This has built for leaning purpose. [Preview](https://trello-clone-one.vercel.app/)
+
+## Features 🤩
+
+- Login/Register with JWT token authorization
+- Ability to create/update/delete the board
+- Ability to add/update/move/delete the card
+- Background image library for the board
+- Add labels to the card
+- Supports adding of detail description in the card
+
+## What's next 🚀
+
+- Assign a card to the user
+- Comment on the card
+- Invite user to the board (In progress)
 
 ## Steps to run this on your local
 
@@ -24,15 +38,17 @@ Install docker on your machine and start it
 2. Add `LOCAL_MONGODB=mongodb://mongodb:27017/trello`
 3. Run `docker-compose up`
 
+## Tech stacks
+
+Below are the tech stacks which have been used to build it.
+
+- Nextjs with typescript
+- MongoDB for local development
+- Mongo Atlas for production DB
+- Chakra UI library
+
 ## Some free resources used in this project
 
 1. [Color Code](https://www.designpieces.com/palette/trello-color-palette-hex-and-rgb/)
 2. [Illustration](https://undraw.co/illustrations)
 3. [Icons](https://github.com/react-icons/react-icons)
-
-## What is next?
-
-* Verify email on sign up
-* Dark theme
-* Add user to the page
-* Add comments in the card
