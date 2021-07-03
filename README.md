@@ -4,7 +4,7 @@
 
 ![Trello clone](https://github.com/knowankit/trello-clone/blob/develop/demo.gif)
 
-[Preview](https://trello-clone-one.vercel.app/) This is a clone application for trello. This has been built for learning purposes. My plan is to improve the project and add more features in every release.
+[Preview](https://trello-clone-one.vercel.app/) This is a clone application for trello. This has been built for learning purpose. My plan is to improve the project and add more features in every release.
 
 ## Features 🤩
 
