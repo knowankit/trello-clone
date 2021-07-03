@@ -1,19 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDatabase } from '@/util/mongodb';
+import checkEnvironment from '@/util/check-environment';
 import sgMail from '@sendgrid/mail';
 import shortId from 'shortid';
+import uniqid from 'uniqid';
 
-const sendMail = (email, res, emailData) => {
+const sendMail = (email, res, emailData, user) => {
+  const url = checkEnvironment();
+  const page = user ? 'signup' : 'login';
+
   const msg = {
     to: email,
     from: 'yourregisteredemail@gmail.com',
     subject: 'You are invited to join to a trello clone board',
     html: `<div>
       <div style="height:100px; background-color:#26292c; color: white">
-        <p> Trello Clone</p>
+        <p>Trello Clone</p>
       <div>
       <div style="height:200px; background-color:#0079bf;">
-        <a href='https://trello-clone-one.vercel.app/signup?token=${emailData.token}&email=${email}&id=${emailData.id}&boardId=${emailData.boardId}'>Join</a>
+        <a href='${url}/${page}?token=${emailData.token}&email=${email}&boardId=${emailData.boardId}'>Join</a>
       </div>
       <div style="height:100px; background-color:#26292c;">
 
@@ -44,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       case 'POST': {
         const { email, boardId } = req.body;
 
-        const token = shortId.generate();
+        const token = uniqid();
         const id = shortId.generate();
 
         const emailData = {
@@ -53,10 +58,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           boardId
         };
 
-        await db.collection('token').insertOne({ token, status: 'valid' });
-        await db.collection('users').insertOne({ _id: id, email, status: 'unconfirmed' });
+        await db
+          .collection('token')
+          .insertOne({ token, userId: id, status: 'valid', email, boardId });
+        const user = await db.collection('users').findOne({ email });
 
-        await sendMail(email, res, emailData);
+        await sendMail(email, res, emailData, user);
 
         res.status(200);
 

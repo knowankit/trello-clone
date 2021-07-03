@@ -17,7 +17,7 @@ const isUserExists = async (db, email) => {
 
 const createUser = async (body, res) => {
   const { email, password, id, fullName } = body;
-  // Check if user email already exists
+
   const { db, client } = await connectToDatabase();
 
   if (client.isConnected()) {
