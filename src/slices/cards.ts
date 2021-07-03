@@ -29,7 +29,6 @@ const host = checkEnvironment();
 export const fetchCards = createAsyncThunk('cards/fetchCards', async (_obj, { getState }) => {
   const { board } = getState() as { board: BoardSlice };
   const url = `${host}/api/boards/${board.board._id}/cards`;
-  console.log('url', url);
   const response = await fetch(url).then((response) => response.json());
 
   return response;

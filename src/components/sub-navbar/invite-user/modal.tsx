@@ -12,6 +12,7 @@ import {
   Input
 } from '@chakra-ui/react';
 import checkEnvironment from '@/util/check-environment';
+import { useAppSelector } from '@/src/hooks';
 
 const host = checkEnvironment();
 
@@ -20,6 +21,8 @@ const InviteModal = () => {
   const [email, setEmail] = useState('');
   const [emailErr, setEmailErr] = useState(false);
   const [isMailSending, setMailSending] = useState(false);
+  const board = useAppSelector((state) => state.board.board);
+
   const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
 
   const handleClick = async () => {
@@ -53,7 +56,7 @@ const InviteModal = () => {
       },
       redirect: 'follow',
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify({ email })
+      body: JSON.stringify({ email, boardId: board._id })
     });
 
     const inJSON = await response.json();

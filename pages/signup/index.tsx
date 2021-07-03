@@ -27,7 +27,7 @@ RegisterPageWithStore.getInitialProps = async (ctx) => {
   }
 
   return {
-    initialReduxStore: reduxStore.getState()
+    reduxState: reduxStore.getState()
   };
 };
 
