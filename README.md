@@ -25,7 +25,9 @@
 
 ## Overview
 
-[Preview](https://trello-clone-one.vercel.app/) This is a clone application for trello. This has been built for learning purpose. My plan is to improve the project and add more features in every release.
+This is a clone application for trello. This has been built for learning purpose. My plan is to improve this project and add more features in every release.
+
+### [Demo](https://trello-clone-one.vercel.app/) 
 
 ## Features 🤩
 
@@ -78,11 +80,17 @@ Install docker on your machine and start it
 
 Reach out to the maintainer at one of the following places:
 
-- [Portfolio] (https://knowankit.com)
+- [Portfolio](https://knowankit.com)
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/knowankit)
 
 ## Contributing
 
 All contributions are welcome!
+
+### Contributors
+
+[![](https://github.com/nidhirathee-dev.png?size=50&borderRadius=50)](https://github.com/nidhirathee-dev)
 
 ## License
 
