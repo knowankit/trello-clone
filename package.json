@@ -1,7 +1,7 @@
 {
   "name": "trello-clone",
   "version": "1.0.0",
-  "description": "",
+  "description": "A clone of trello app which does the basic features of real world trello",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
