@@ -92,6 +92,11 @@ All contributions are welcome!
 
 [![](https://github.com/nidhirathee-dev.png?size=50&borderRadius=50)](https://github.com/nidhirathee-dev)
 
+## Other interesting repositories
+
+- [Thanos Snap](https://github.com/knowankit/thanos-snap)
+- [Hover on](https://github.com/knowankit/hoveron)
+
 ## License
 
 This project is licensed under the **MIT license**. Feel free to edit and distribute this template as you like.
