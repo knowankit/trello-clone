@@ -10,13 +10,17 @@
 </p>
 
 - [Overview](#overview)
-- [Features](#features-🤩)
+- [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#steps-to-run-this-on-your-local)
   - [1. **Clone the application**](#1-clone-the-application)
   - [2. **Install necessary dependencies for the application**](#2-install-necessary-dependencies-for-the-application)
   - [3. **Create a .env file and copy the contents from .env.example**](#3-create-a-env-file-and-copy-the-contents-from-envexample)
   - [4. **Start the application**](#4-start-the-application)
+- [What is next?](#Whats-next)
+- [Tech Stack](#tech-stacks)
+- [Support](#support)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
@@ -61,6 +65,7 @@ Install docker on your machine and start it
 - Assign a card to the user
 - Comment on the card
 - Invite user to the board (In progress)
+- Add cypress testing
 
 ## Tech stacks
 
@@ -69,17 +74,10 @@ Install docker on your machine and start it
 - Mongo Atlas for production DB
 - Chakra UI library
 
-## Some free resources used in this project
-
-1. [Color Code](https://www.designpieces.com/palette/trello-color-palette-hex-and-rgb/)
-2. [Illustration](https://undraw.co/illustrations)
-3. [Icons](https://github.com/react-icons/react-icons)
-
 ## Support
 
 Reach out to the maintainer at one of the following places:
 
-- The email which is located [in GitHub profile](https://github.com/knowankit)
 - [Portfolio] (https://knowankit.com)
 
 ## Contributing
