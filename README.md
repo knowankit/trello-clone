@@ -90,8 +90,11 @@ All contributions are welcome!
 
 ### Contributors
 
-[![](https://github.com/nidhirathee-dev.png?size=50&borderRadius=50)](https://github.com/nidhirathee-dev)
+<a href="https://github.com/knowankit/trello-clone/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=knowankit/trello-clone" />
+</a>
 
+Made with [contributors-img](https://contrib.rocks).
 ## Other interesting repositories
 
 - [Thanos Snap](https://github.com/knowankit/thanos-snap)
