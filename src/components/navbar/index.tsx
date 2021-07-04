@@ -3,6 +3,7 @@ import { Button, Image, Flex, Box, Spacer } from '@chakra-ui/react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useAppSelector } from '@/src/hooks';
+import { GrLogout } from 'react-icons/gr';
 
 type IProps = {
   bg?: string;
@@ -45,7 +46,7 @@ const NavBar: FC<IProps> = ({ bg }) => {
           mr="2"
           pr="2"
           onClick={logout}>
-          Log out
+          <GrLogout />
         </Button>
       );
     }
