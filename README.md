@@ -49,6 +49,7 @@ First install the MongoDB Compass for better visualization of data with MongoDB 
 
 1. Clone this repo using `git clone https://github.com/knowankit/trello-clone.git`
 2. Create _.env.local_ and add this env variable `LOCAL_MONGODB=mongodb://localhost:27017/trello`
+    Add `JWT_SECRET_KEY=randomstrings`
 3. Run `yarn install`
 4. Run `yarn dev`
 
