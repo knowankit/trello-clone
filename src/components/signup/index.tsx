@@ -66,6 +66,14 @@ const SignUp = (): JSX.Element => {
       isClosable: true
     });
   };
+
+  const isButtonDisabled = () => {
+    const isValidPassword = user.password !== user.confirmPassword;
+    const isDisabled = !user.email || !user.fullName;
+
+    return isValidPassword || isDisabled || !user.password || !user.confirmPassword;
+  };
+
   return (
     <>
       <Box display="flex">
@@ -161,7 +169,7 @@ const SignUp = (): JSX.Element => {
               fontWeight="semibold"
               width="full"
               mt={4}
-              disabled={user.password !== user.confirmPassword}
+              disabled={isButtonDisabled()}
               bg="success"
               color="white"
               onClick={handleSubmit}
