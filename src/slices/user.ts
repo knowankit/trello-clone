@@ -100,16 +100,14 @@ export const userSlice = createSlice({
     [registerUser.pending.toString()]: (state, { payload }) => {
       state.status = 'pending';
       state.isCreating = true;
-      state.message = payload && payload.message;
     },
-    [registerUser.fulfilled.toString()]: (state) => {
-      state.status = 'success';
+    [registerUser.fulfilled.toString()]: (state, { payload }) => {
+      state.status = payload.message;
       state.isCreating = false;
     },
     [registerUser.rejected.toString()]: (state, { payload }) => {
-      state.status = 'failed';
+      state.status = payload && payload.message;
       state.isCreating = false;
-      state.message = payload && payload.message;
     },
     [loginUser.pending.toString()]: (state) => {
       state.status = 'pending';

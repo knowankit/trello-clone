@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Flex, Box, FormControl, Input, Button, Image, Link, useToast } from '@chakra-ui/react';
 import { updateUserData, registerUser, resetUserData } from '@/src/slices/user';
 import { useDispatch } from 'react-redux';
@@ -12,14 +12,21 @@ const SignUp = (): JSX.Element => {
   const toast = useToast();
   const router = useRouter();
 
+  useEffect(() => {
+    if (!user.isCreating && user.status === 'success') {
+      dispatch(resetUserData());
+
+      showToast();
+      setTimeout(() => {
+        router.push('/login');
+      }, 3000);
+    }
+  }, [user]);
+
   const [emailErr, setEmailErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
   const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
   const validPassword = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$');
-
-  if (!user.isCreating && user.message === 'success') {
-    dispatch(resetUserData());
-  }
 
   const validate = () => {
     if (!validEmail.test(user.email)) {
@@ -49,10 +56,6 @@ const SignUp = (): JSX.Element => {
     e.preventDefault();
 
     await dispatch(registerUser());
-    showToast();
-    setTimeout(() => {
-      router.push('/login');
-    }, 3000);
   };
 
   const showToast = () => {
