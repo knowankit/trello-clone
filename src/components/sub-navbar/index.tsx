@@ -28,7 +28,7 @@ const SubNavbar = (): JSX.Element => {
         </Tooltip>
       </Box>
       <Box>
-        <InviteModal />
+        {/* <InviteModal /> */}
         <BoardSettings />
         <UnsplashDrawer />
       </Box>

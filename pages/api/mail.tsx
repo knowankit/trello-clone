@@ -6,7 +6,7 @@ import shortId from 'shortid';
 const sendMail = (email, res, emailData) => {
   const msg = {
     to: email,
-    from: 'knowankitonweb@gmail.com',
+    from: 'yourregisteredemail@gmail.com',
     subject: 'You are invited to join to a trello clone board',
     html: `<div>
       <div style="height:100px; background-color:#26292c; color: white">
