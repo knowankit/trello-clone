@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import checkEnvironment from '@/util/check-environment';
-import shortId from 'shortid';
 import { UserDetail } from '@/src/types/user';
 
 const initialState: UserDetail = {
@@ -18,37 +17,6 @@ const initialState: UserDetail = {
 };
 
 const host = checkEnvironment();
-
-export const registerUser = createAsyncThunk('user/register', async (obj, { getState }) => {
-  const id = shortId.generate();
-  const { user } = getState() as { user: UserDetail };
-
-  const data = {
-    id: id,
-    email: user.email,
-    password: user.password,
-    confirmPassword: user.confirmPassword,
-    fullName: user.fullName
-  };
-
-  const url = `${host}/api/register`;
-
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(data)
-  });
-
-  const inJSON = await response.json();
-  return inJSON;
-});
 
 export const loginUser = createAsyncThunk('user/login', async (obj, { getState }) => {
   const { user } = getState() as { user: UserDetail };
@@ -97,18 +65,6 @@ export const userSlice = createSlice({
     resetUserData: () => initialState
   },
   extraReducers: {
-    [registerUser.pending.toString()]: (state, { payload }) => {
-      state.status = 'pending';
-      state.isCreating = true;
-    },
-    [registerUser.fulfilled.toString()]: (state, { payload }) => {
-      state.status = payload.message;
-      state.isCreating = false;
-    },
-    [registerUser.rejected.toString()]: (state, { payload }) => {
-      state.status = payload && payload.message;
-      state.isCreating = false;
-    },
     [loginUser.pending.toString()]: (state) => {
       state.status = 'pending';
       state.isFetching = true;
