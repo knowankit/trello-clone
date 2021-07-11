@@ -2,7 +2,7 @@ import { Box, Heading, Avatar, Tooltip } from '@chakra-ui/react';
 
 import PropType from 'prop-types';
 import BoardSettings from '@/src/components/sub-navbar/board-settings';
-import InviteModal from '@/src/components/sub-navbar/invite-user/modal';
+// import InviteModal from '@/src/components/sub-navbar/invite-user/modal';
 import React from 'react';
 import { useAppSelector } from '@/src/hooks';
 
