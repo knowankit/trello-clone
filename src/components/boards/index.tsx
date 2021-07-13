@@ -62,7 +62,7 @@ const Boards = (): JSX.Element => {
           onClick={onOpen}
           leftIcon={<AiOutlinePlus />}
           colorScheme="green"
-          size="lg"
+          size="md"
           mt="1rem">
           Create a board
         </Button>
@@ -102,8 +102,8 @@ const Boards = (): JSX.Element => {
             <Box
               mr="1rem"
               mt="1rem"
-              height="150px"
-              width="150px"
+              height={['80px', '80px', '150px', '150px']}
+              width={['80px', '80px', '150px', '150px']}
               background={`linear-gradient(
                 rgba(0, 0, 0, 0.4),
                 rgba(0, 0, 0, 0.4)
@@ -121,7 +121,7 @@ const Boards = (): JSX.Element => {
                 textAlign="center"
                 textTransform="capitalize"
                 color="white"
-                fontSize="20px"
+                fontSize={['10px', '10px', '20px', '20px']}
                 fontWeight="bold">
                 {board.name}
               </Text>
