@@ -1,32 +1,55 @@
 import React from 'react';
 import { Flex, Box, FormControl, Input, Button, Image, Link, Text } from '@chakra-ui/react';
-import { useAppSelector } from '@/src/hooks';
-import { useDispatch } from 'react-redux';
-import { loginUser, updateUserData } from '@/src/slices/user';
+import { useState } from 'react';
+import checkEnvironment from '@/util/check-environment';
 
-const Login = (): JSX.Element => {
-  const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
+const Login = () => {
+  const [values, setValues] = useState({
+    email: '',
+    password: ''
+  });
 
-  if (!user.error && user.status === 'success') {
-    window.location.href = `${window.location.origin}/home`;
-  }
+  const [isFetching, setIsFetching] = useState(false);
+  const host = checkEnvironment();
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+    setIsFetching(true);
+
+    const data = {
+      email: values.email,
+      password: values.password
+    };
+
+    const url = `${host}/api/login`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    setIsFetching(false);
+
+    if (result.message === 'success') {
+      window.location.href = `${window.location.origin}/home`;
+    }
+  };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    const payload = {
-      type: name,
-      value: value
-    };
-
-    await dispatch(updateUserData(payload));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    await dispatch(loginUser());
+    setValues({
+      ...values,
+      [name]: value
+    });
   };
 
   return (
@@ -80,7 +103,7 @@ const Login = (): JSX.Element => {
                 <Input
                   type="email"
                   name="email"
-                  value={user.email}
+                  value={values.email}
                   placeholder="Enter Email "
                   onChange={handleChange}
                   autoComplete="off"
@@ -90,7 +113,7 @@ const Login = (): JSX.Element => {
                 <Input
                   type="password"
                   name="password"
-                  value={user.password}
+                  value={values.password}
                   placeholder="Enter Password"
                   autoComplete="off"
                   onChange={handleChange}
@@ -101,8 +124,8 @@ const Login = (): JSX.Element => {
                 mt={4}
                 bg="success"
                 color="white"
-                onClick={handleSubmit}
-                isLoading={user.isFetching}
+                onClick={loginUser}
+                isLoading={isFetching}
                 loadingText="Logging">
                 Sign In
               </Button>
