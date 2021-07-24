@@ -55,7 +55,6 @@ const withSidebar = (App, props) => {
                       justifyContent="left"
                       colorScheme="gray">
                       <>
-                        {/* <menu.icon size="20px" /> &nbsp;{menu.buttonName} */}
                         <Box display="flex">
                           <menu.icon size="20px" /> &nbsp;
                           <Text fontSize={['0', '15', '15', '15']}> {menu.buttonName}</Text>
