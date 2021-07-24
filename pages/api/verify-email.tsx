@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDatabase } from '@/util/mongodb';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  const { slug } = req.query;
+  const { email } = req.query;
 
   const { db, client } = await connectToDatabase();
 
@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     switch (requestType) {
       case 'GET': {
-        const user = await db.collection('users').findOne({ _id: slug });
+        const user = await db.collection('users').findOne({ email });
         if (user) {
           res.send({ status: 200, message: 'Found' });
         } else {
