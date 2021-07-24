@@ -37,8 +37,7 @@ const SignUp = (): JSX.Element => {
     toast({
       position: 'top',
       title: 'Account created.',
-      description:
-        "We've created your account for you. Redirecting you to login page in 3 seconds ",
+      description: "We've created your account. Redirecting you to login page in 3 seconds ",
       status: 'success',
       duration: 2500,
       isClosable: true
