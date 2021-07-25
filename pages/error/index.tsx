@@ -10,11 +10,10 @@ const ErrorPage = () => {
           mr="auto"
           my="40px"
           src="/error/access_denied.svg"
-          display="inline-block"
-          alt="brand logo"
+          alt="error"
         />
       </Box>
-      <Text textAlign="center" fontWeight="bold" fontSize="25px">
+      <Text textAlign="center" fontWeight="bold" fontSize={['15px', '15px', '25px', '25px']}>
         Something bad happened!
       </Text>
     </>
