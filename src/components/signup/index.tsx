@@ -3,6 +3,8 @@ import { Flex, Box, FormControl, Input, Button, Image, Link, useToast } from '@c
 import { useState } from 'react';
 import shortId from 'shortid';
 import checkEnvironment from '@/util/check-environment';
+import { useRouter } from 'next/router';
+import inviteUser from '@/util/invite-user';
 
 const SignUp = (): JSX.Element => {
   const [values, setValues] = useState({
@@ -14,6 +16,7 @@ const SignUp = (): JSX.Element => {
   const [isCreating, setIsCreatingStatus] = useState(false);
 
   const toast = useToast();
+  const router = useRouter();
 
   const [emailErr, setEmailErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
@@ -26,6 +29,7 @@ const SignUp = (): JSX.Element => {
     } else {
       setEmailErr(false);
     }
+
     if (!validPassword.test(values.password)) {
       setPasswordErr(true);
     } else {
@@ -79,13 +83,28 @@ const SignUp = (): JSX.Element => {
     const result = await response.json();
     setIsCreatingStatus(false);
 
-    if (result.message === 'success') {
-      showToast();
+    const { email: inviteEmail, token, boardId } = router.query;
+    const isInvitedUser = inviteEmail && token && boardId;
 
-      setTimeout(() => {
-        window.location.href = '/login';
-      }, 3000);
+    if (isInvitedUser && result.message === 'success') {
+      const hasInvited = inviteUser({ email: inviteEmail, boardId });
+
+      if (hasInvited) {
+        redirectToLoginPage();
+      }
+    } else {
+      if (result.message === 'success') {
+        redirectToLoginPage();
+      }
     }
+  };
+
+  const redirectToLoginPage = () => {
+    showToast();
+
+    setTimeout(() => {
+      window.location.href = '/login';
+    }, 3000);
   };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -7,7 +7,7 @@ import uniqid from 'uniqid';
 
 const sendMail = (email, res, emailData, user) => {
   const url = checkEnvironment();
-  const page = user ? 'signup' : 'login';
+  const page = 'signup';
 
   const msg = {
     to: email,

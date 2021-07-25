@@ -35,7 +35,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .find({ createdBy: userid })
           .limit(30)
           .toArray();
-        res.send(boards);
+
+        const invitedBoards = await db.collection('boards').find({ users: userid }).toArray();
+        const updatedBoards = boards.concat(invitedBoards);
+
+        res.send(updatedBoards);
 
         return;
       }
