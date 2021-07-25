@@ -11,7 +11,7 @@ const sendMail = (email, res, emailData, user) => {
 
   const msg = {
     to: email,
-    from: 'knowankitonweb@gmail.com',
+    from: 'dell41ankit@gmail.com',
     subject: 'You are invited to join to a trello clone board',
     html: `<div>
       <div style="height:100px; background-color:#26292c; color: white">
