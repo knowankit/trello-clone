@@ -3,7 +3,7 @@ export type UserDetail = {
   email: string;
   password: string;
   confirmPassword?: string;
-  status: string;
+  status: string | number;
   isCreating: boolean;
   isValid: boolean;
   fullName: string;

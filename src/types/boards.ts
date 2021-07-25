@@ -5,6 +5,7 @@ export type Board = {
   createdBy?: string;
   dateCreated?: string;
   backgroundImage?: string;
+  users?: Array<string>;
 };
 
 export type BoardSlice = {

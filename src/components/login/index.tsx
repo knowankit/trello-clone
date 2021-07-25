@@ -2,6 +2,8 @@ import React from 'react';
 import { Flex, Box, FormControl, Input, Button, Image, Link, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import checkEnvironment from '@/util/check-environment';
+import { useRouter } from 'next/router';
+import inviteUser from '@/util/invite-user';
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -11,6 +13,7 @@ const Login = () => {
 
   const [isFetching, setIsFetching] = useState(false);
   const host = checkEnvironment();
+  const router = useRouter();
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -39,7 +42,16 @@ const Login = () => {
     const result = await response.json();
     setIsFetching(false);
 
-    if (result.message === 'success') {
+    const { email: inviteEmail, token, boardId } = router.query;
+    const isInvitedUser = inviteEmail && token && boardId;
+
+    if (isInvitedUser && result.message === 'success') {
+      const hasInvited = inviteUser({ email: inviteEmail, boardId });
+
+      if (hasInvited) {
+        window.location.href = `${window.location.origin}/home`;
+      }
+    } else if (result.message === 'success') {
       window.location.href = `${window.location.origin}/home`;
     }
   };

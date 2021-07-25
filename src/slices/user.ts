@@ -27,6 +27,13 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async (obj, { getSt
   return responseInjson;
 });
 
+export const verifyEmail = createAsyncThunk('verify-email', async (email) => {
+  const response = await fetch(`${host}/api/verify-email/?email=${email}`);
+  const responseInjson = await response.json();
+
+  return responseInjson;
+});
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
@@ -49,6 +56,18 @@ export const userSlice = createSlice({
     [fetchUser.rejected.toString()]: (state, { payload }) => {
       state.status = 'failed';
       state.error = payload && payload.error;
+      state.message = payload && payload.message;
+    },
+    [verifyEmail.pending.toString()]: (state) => {
+      state.status = 'pending';
+    },
+    [verifyEmail.fulfilled.toString()]: (state, { payload }) => {
+      state.status = 'success';
+      state.status = payload && payload.status;
+      state.message = payload && payload.message;
+    },
+    [verifyEmail.rejected.toString()]: (state, { payload }) => {
+      state.status = 'failed';
       state.message = payload && payload.message;
     }
   }

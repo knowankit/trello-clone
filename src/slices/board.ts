@@ -9,7 +9,8 @@ const initialState = {
     columns: [],
     createdBy: '',
     dateCreated: '',
-    backgroundImage: ''
+    backgroundImage: '',
+    users: []
   },
   status: 'idle',
   isLoading: false,
@@ -44,8 +45,9 @@ export const saveBoard = createAsyncThunk('board/save', async (obj, { getState }
     body: JSON.stringify(data)
   });
 
-  const inJSON = await response.json();
-  return inJSON;
+  const json = await response.json();
+
+  return json;
 });
 
 export const fetchBoard = createAsyncThunk('board/get', async (slug: string) => {
@@ -76,14 +78,14 @@ export const deleteBoard = createAsyncThunk('board/delete', async (obj, { getSta
     referrerPolicy: 'no-referrer'
   });
 
-  const inJSON = await response.json();
+  const json = await response.json();
 
-  return inJSON;
+  return json;
 });
 
 export const boardSlice = createSlice({
   name: 'board',
-  initialState: initialState,
+  initialState,
   reducers: {
     updateBoardDetail: (state, { payload }) => {
       state.board[payload.type] = payload.value;
