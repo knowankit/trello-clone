@@ -46,7 +46,7 @@ const Login = () => {
     const isInvitedUser = inviteEmail && token && boardId;
 
     if (isInvitedUser && result.message === 'success') {
-      const hasInvited = inviteUser({ email: inviteEmail, boardId });
+      const hasInvited = await inviteUser({ email: inviteEmail, boardId });
 
       if (hasInvited) {
         window.location.href = `${window.location.origin}/home`;
