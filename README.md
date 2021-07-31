@@ -65,9 +65,9 @@ Install docker on your machine and start it
 
 ## What's next 🚀
 
-- Assign a card to the user
+- Assign a card to the user (Done)
 - Comment on the card
-- Invite user to the board (In progress)
+- Invite user to the board (Done)
 - Add cypress testing
 
 ## Tech stacks
