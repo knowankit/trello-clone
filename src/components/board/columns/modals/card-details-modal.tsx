@@ -86,7 +86,7 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
         <MenuList>
           {users.map((user, index) => (
             <MenuItem key={index} onClick={() => handleClick(user._id)}>
-              {user.fullName}
+              {user?.fullName}
             </MenuItem>
           ))}
           <MenuItem onClick={() => handleClick('')}>Unassign</MenuItem>
