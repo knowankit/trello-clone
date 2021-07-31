@@ -13,7 +13,6 @@ type CardPatch = {
   description?: string;
   columnId?: string;
   sequence?: number;
-  assignedTo: [];
 };
 
 const initialState = {
@@ -22,7 +21,6 @@ const initialState = {
   isRequesting: false,
   isDeleting: false,
   doneFetching: true,
-  assignedTo: [],
   error: {}
 };
 
