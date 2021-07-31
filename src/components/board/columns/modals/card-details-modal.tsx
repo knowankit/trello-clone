@@ -89,6 +89,7 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
               {user.fullName}
             </MenuItem>
           ))}
+          <MenuItem onClick={() => handleClick('')}>Unassign</MenuItem>
         </MenuList>
       </Menu>
     );
