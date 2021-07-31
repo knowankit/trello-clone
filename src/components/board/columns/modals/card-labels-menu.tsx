@@ -57,7 +57,7 @@ const CardLabel: FC<IProps> = ({ id, boardId }) => {
   };
 
   return (
-    <Box marginTop="2rem" marginLeft="2rem" flexDirection="column" width="20%">
+    <Box marginTop="2rem" flexDirection="column" width="20%">
       <Text as="samp" whiteSpace="nowrap">
         ADD TO CARD
       </Text>

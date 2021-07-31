@@ -9,6 +9,10 @@ import {
   ModalOverlay,
   Text,
   Box,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Badge
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
@@ -19,6 +23,7 @@ import { AiOutlineDelete, AiOutlineClose, AiOutlineLaptop } from 'react-icons/ai
 import { GrTextAlignFull } from 'react-icons/gr';
 import CardLabel from '@/src/components/board/columns/modals/card-labels-menu';
 import QuillEditor from '@/src/components/quill-editor';
+import { AiOutlineDown } from 'react-icons/ai';
 
 type Props = {
   onClose: () => void;
@@ -30,8 +35,11 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState(card?.title);
   const [description, setDescription] = useState(card?.description);
+  const [assigned, assignUser] = useState(card?.assignedTo);
+
   const cardRequest = useAppSelector((state) => state.cards.isRequesting);
   const cardDelete = useAppSelector((state) => state.cards.isDeleting);
+  const users = useAppSelector((state) => state.users.users);
 
   const handleCardDelete = async () => {
     await dispatch(deleteCard(card._id));
@@ -45,7 +53,8 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
       _id: card._id,
       title,
       description,
-      columnId: card.columnId
+      columnId: card.columnId,
+      assignedTo: assigned
     };
 
     await dispatch(updateCard(data));
@@ -54,12 +63,43 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
     onClose();
   };
 
+  const handleClick = async (userId) => {
+    assignUser(userId);
+
+    const data = {
+      _id: card._id,
+      title,
+      description,
+      columnId: card.columnId,
+      assignedTo: userId
+    };
+
+    await dispatch(updateCard(data));
+  };
+
+  const assignToMenu = () => {
+    return (
+      <Menu>
+        <MenuButton as={Button} size="xs" rightIcon={<AiOutlineDown />}>
+          Assign To
+        </MenuButton>
+        <MenuList>
+          {users.map((user, index) => (
+            <MenuItem key={index} onClick={() => handleClick(user._id)}>
+              {user.fullName}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
+    );
+  };
+
   return (
     <>
       <Modal size="xl" onClose={handleModalClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         {/* https://github.com/chakra-ui/chakra-ui/discussions/2676 */}
-        <ModalContent maxW="56rem">
+        <ModalContent maxW="64rem">
           <ModalBody>
             {card.label && (
               <Badge bg={card.label.type} color="white">
@@ -84,11 +124,14 @@ const CardDetailsModal: FC<Props> = ({ onClose, isOpen, card }) => {
                   <GrTextAlignFull />
                   <Text marginLeft="1rem">Description</Text>
                 </Box>
-                <Box marginLeft="1.5rem" minHeight="200px">
+                <Box marginLeft="1.5rem" minHeight="200px" width="90%">
                   <QuillEditor value={description} onChange={setDescription} />
                 </Box>
               </Box>
-              <CardLabel id={card._id} boardId={card.boardId} />
+              <Box display="flex" flexDirection="column">
+                <CardLabel id={card._id} boardId={card.boardId} />
+                {assignToMenu()}
+              </Box>
             </Box>
           </ModalBody>
           <ModalFooter>

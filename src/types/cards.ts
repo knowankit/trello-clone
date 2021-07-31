@@ -3,6 +3,7 @@ export type CardDetail = {
   title: string;
   description: string;
   columnId?: string;
+  assignedTo?: string;
   boardId?: string;
   sequence?: number;
   label?: Label;
