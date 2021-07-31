@@ -2,18 +2,11 @@ import Login from '@/src/components/login';
 import { setOrGetStore } from '@/util/initialise-store';
 import withStore from '@/src/hoc/with-store';
 import isValidUser from '@/util/is-valid-user';
-import inviteUser from '@/util/invite-user';
 
 const LoginPageWithStore = withStore(Login);
 
 LoginPageWithStore.getInitialProps = async (ctx) => {
   const reduxStore = setOrGetStore();
-  const { email: inviteEmail, token, boardId } = ctx.query;
-  const isInvitedUser = inviteEmail && token && boardId;
-
-  if (isInvitedUser) {
-    await inviteUser({ email: inviteEmail, boardId });
-  }
 
   const userDetails = isValidUser(ctx);
 
