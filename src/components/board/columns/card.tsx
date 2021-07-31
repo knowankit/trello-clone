@@ -20,7 +20,7 @@ const Card: FC<Props> = ({ cardIndex, showCardDetail, card }) => {
 
     return (
       <Box display="flex" justifyContent="flex-end">
-        <Avatar size="xs" name={user[0].fullName} />
+        <Avatar size="xs" name={user[0]?.fullName} />
       </Box>
     );
   };
