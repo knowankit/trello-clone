@@ -1,5 +1,19 @@
 import React from 'react';
-import { Flex, Box, FormControl, Input, Button, Image, Link, Text } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  FormControl,
+  Input,
+  Button,
+  Image,
+  Link,
+  Text,
+  Alert,
+  AlertDescription,
+  CloseButton,
+  AlertTitle,
+  AlertIcon
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import checkEnvironment from '@/util/check-environment';
 import { useRouter } from 'next/router';
@@ -12,6 +26,8 @@ const Login = () => {
   });
 
   const [isFetching, setIsFetching] = useState(false);
+  const [hasError, setErrorState] = useState(false);
+
   const host = checkEnvironment();
   const router = useRouter();
 
@@ -54,6 +70,10 @@ const Login = () => {
     } else if (result.message === 'success') {
       window.location.href = `${window.location.origin}/home`;
     }
+
+    if (response.status === 404) {
+      setErrorState(true);
+    }
   };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +84,24 @@ const Login = () => {
     });
   };
 
+  const showLoginError = () => {
+    if (!hasError) return;
+
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle mr={2}>Error</AlertTitle>
+        <AlertDescription>Invalid username or password</AlertDescription>
+        <CloseButton
+          position="absolute"
+          right="8px"
+          top="8px"
+          onClick={() => setErrorState(!hasError)}
+        />
+      </Alert>
+    );
+  };
+
   return (
     <>
       <Box display="flex" justifyContent="center" alignItems="center" my="40px">
@@ -72,6 +110,7 @@ const Login = () => {
           Trello
         </Text>
       </Box>
+
       <Flex
         alignItems="center"
         flexDirection={['column', 'column', 'row', 'row']}
@@ -146,6 +185,7 @@ const Login = () => {
                   Sign up for an account
                 </Link>
               </Box>
+              {showLoginError()}
             </form>
           </Box>
         </Box>
