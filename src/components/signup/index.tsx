@@ -18,7 +18,6 @@ import { useState } from 'react';
 import shortId from 'shortid';
 import checkEnvironment from '@/util/check-environment';
 import { useRouter } from 'next/router';
-import inviteUser from '@/util/invite-user';
 
 const SignUp = (): JSX.Element => {
   const [values, setValues] = useState({
@@ -106,11 +105,7 @@ const SignUp = (): JSX.Element => {
     const isInvitedUser = inviteEmail && token && boardId;
 
     if (isInvitedUser && result.message === 'success') {
-      const hasInvited = await inviteUser({ email: inviteEmail, boardId });
-
-      if (hasInvited) {
-        redirectToLoginPage();
-      }
+      redirectToLoginPage(`/login?token=${token}&email=${inviteEmail}&boardId=${boardId}`);
     } else {
       if (result.message === 'success') {
         redirectToLoginPage();
@@ -118,11 +113,11 @@ const SignUp = (): JSX.Element => {
     }
   };
 
-  const redirectToLoginPage = () => {
+  const redirectToLoginPage = (path = '/login') => {
     showToast();
 
     setTimeout(() => {
-      window.location.href = '/login';
+      window.location.href = path;
     }, 3000);
   };
 
