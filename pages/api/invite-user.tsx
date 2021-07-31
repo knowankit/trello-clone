@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         } else {
           const board = await db
             .collection('boards')
-            .updateOne({ _id: boardId }, { $push: { users: user._id } });
+            .updateOne({ _id: boardId }, { $push: { users: user?._id } });
 
           if (board) {
             res.send({ status: 200, message: 'Invited' });
