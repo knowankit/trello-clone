@@ -12,6 +12,7 @@ type CardPatch = {
   title?: string;
   description?: string;
   columnId?: string;
+  assignedTo?: string;
   sequence?: number;
 };
 
@@ -83,6 +84,7 @@ export const addCard = createAsyncThunk('card/addCard', async (columnId: string,
     description: '',
     dateCreated: new Date().toLocaleString(),
     userId: user.id,
+    assignedTo: '',
     sequence
   };
 
