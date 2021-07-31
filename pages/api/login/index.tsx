@@ -49,12 +49,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             res.send({ message: 'success', token, id: userDetail._id, status: 200 });
           } else {
-            res.status(403).send({ error: 'Invalid username or password' });
+            res.status(404).send({ error: 'Invalid username or password' });
           }
         });
       } else {
         // User does not exits
-        res.status(403).send({ error: 'Invalid username or password' });
+        res.status(404).send({ error: 'Invalid username or password' });
       }
     }
   }

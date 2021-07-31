@@ -1,5 +1,19 @@
 import React from 'react';
-import { Flex, Box, FormControl, Input, Button, Image, Link, useToast } from '@chakra-ui/react';
+import {
+  Flex,
+  Box,
+  FormControl,
+  Input,
+  Button,
+  Image,
+  Link,
+  useToast,
+  Alert,
+  AlertDescription,
+  CloseButton,
+  AlertTitle,
+  AlertIcon
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import shortId from 'shortid';
 import checkEnvironment from '@/util/check-environment';
@@ -14,6 +28,7 @@ const SignUp = (): JSX.Element => {
     confirmPassword: ''
   });
   const [isCreating, setIsCreatingStatus] = useState(false);
+  const [hasError, setErrorState] = useState(false);
 
   const toast = useToast();
   const router = useRouter();
@@ -83,6 +98,10 @@ const SignUp = (): JSX.Element => {
     const result = await response.json();
     setIsCreatingStatus(false);
 
+    if (response.status === 404) {
+      setErrorState(true);
+    }
+
     const { email: inviteEmail, token, boardId } = router.query;
     const isInvitedUser = inviteEmail && token && boardId;
 
@@ -105,6 +124,24 @@ const SignUp = (): JSX.Element => {
     setTimeout(() => {
       window.location.href = '/login';
     }, 3000);
+  };
+
+  const showSignUpError = () => {
+    if (!hasError) return;
+
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle mr={2}>Error</AlertTitle>
+        <AlertDescription>Email already in use</AlertDescription>
+        <CloseButton
+          position="absolute"
+          right="8px"
+          top="8px"
+          onClick={() => setErrorState(!hasError)}
+        />
+      </Alert>
+    );
   };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -232,6 +269,7 @@ const SignUp = (): JSX.Element => {
                 Already have an account? Log in.
               </Link>
             </Box>
+            {showSignUpError()}
           </Box>
         </Box>
       </Flex>
