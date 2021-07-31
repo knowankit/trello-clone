@@ -25,11 +25,10 @@ const createUser = async (body, res) => {
 
     if (isExistingUser) {
       const data = {
-        message: 'Email id already in use',
-        status: 400
+        message: 'Email is already registered'
       };
 
-      res.send(data);
+      res.status(404).send(data);
       return;
     }
 
@@ -50,7 +49,7 @@ const createUser = async (body, res) => {
       return;
     }
 
-    res.status(200).send({ message: 'failed' });
+    res.status(404).send({ message: 'failed' });
 
     return;
   } else {
