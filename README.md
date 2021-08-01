@@ -37,6 +37,8 @@ This is a clone application for trello. This has been built for learning purpose
 - Background image library for the board
 - Add labels to the card
 - Supports adding of detail description in the card
+- Invite user to the board
+- Assign a card to the user
 
 ## Requirements
 
@@ -65,9 +67,7 @@ Install docker on your machine and start it
 
 ## What's next 🚀
 
-- Assign a card to the user (Done)
 - Comment on the card
-- Invite user to the board (Done)
 - Add cypress testing
 
 ## Tech stacks
