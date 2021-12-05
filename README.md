@@ -99,8 +99,8 @@ Made with [contributors-img](https://contrib.rocks).
 ## Other interesting repositories
 
 - [My Portfolio](https://github.com/knowankit/knowankit.com)
-- [Thanos Snap](https://github.com/knowankit/thanos-snap)
-- [Hover on](https://github.com/knowankit/hoveron)
+- [React bubble effect button](https://github.com/knowankit/react-bubbly-effect-button)
+- [Particle text effect](https://github.com/knowankit/particle-text-effect)
 
 ## License
 
