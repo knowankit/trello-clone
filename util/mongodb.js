@@ -6,7 +6,7 @@ if (NODE_ENV !== 'development' && !MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
 }
 
-if (NODE_ENV !== 'development' && !LOCAL_MONGODB) {
+if (NODE_ENV === 'development' && !LOCAL_MONGODB) {
   throw new Error('Please define the LOCAL_MONGODB environment variable inside .en.local during development mode);
 }
 
