@@ -104,6 +104,6 @@ Made with [contributors-img](https://contrib.rocks).
 
 ## License
 
-This project is licensed under the **MIT license**. Feel free to edit and distribute this template as you like.
+This project is licensed under the **MIT license**.
 
 See [LICENSE](LICENSE) for more information.
