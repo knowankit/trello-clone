@@ -31,7 +31,7 @@
     "cookie": "^0.4.1",
     "framer-motion": "^4",
     "js-cookie": "^2.2.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash.debounce": "^4.0.8",
     "lodash.findindex": "^4.6.0",
     "mongodb": "^3.6.6",
