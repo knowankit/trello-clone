@@ -30,7 +30,7 @@
     "bcrypt": "^5.0.1",
     "cookie": "^0.4.1",
     "framer-motion": "^4",
-    "js-cookie": "^2.2.1",
+    "js-cookie": "^3.0.7",
     "jsonwebtoken": "^8.5.1",
     "lodash.debounce": "^4.0.8",
     "lodash.findindex": "^4.6.0",
